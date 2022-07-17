@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+#title {
+  text-align: center;
+}
+h1 {
+  margin: 2rem auto;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  color: white;
+  background-color: #041c3b;
+}
+.upload {
+  width: 15rem;
+  text-align: center;
+}
+canvas {
+  border-radius: 2rem;
+  border: 2px solid white;
+  image-rendering: pixelated;
+}
+.main-canvas {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+.upload input {
+  display: none;
+}
+.custom-file-upload {
+  width: 100%;
+  border-radius: 3rem;
+  border: 2px solid white;
+  display: inline-block;
+  padding: 1rem 0px;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+#upload-wrapper {
+  gap: 25px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+#wrapper {
+  text-align: center;
+  width: 70rem;
+  margin: 0px auto;
+}
+#confirm-button {
+  font-family: 'Poppins', sans-serif;
+  border: 0px;
+  color: white;
+  border-radius: 3rem;
+  background-color: #ef38a9;
+  margin: 1rem auto;
+  display: block;
+  width: 15rem;
+  height: 4rem;
+}
+#output {
+  gap: 1rem;
+  display: grid;
+  width: 100%;
+  grid-template-columns: auto auto auto;
+}
+.output-canvas {
+  width: 100%;
+  height: auto;
+}
