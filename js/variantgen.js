@@ -13,8 +13,6 @@ const paletteCtx = paletteCanvas.getContext('2d');
 const reader = new FileReader();
 const texture = new Image();
 const palette = new Image();
-var paletteData = "";
-var textureData = "";
 
 textureButton.addEventListener('change', uploadTexture);
 paletteButton.addEventListener('change', uploadPalette);
@@ -55,8 +53,8 @@ function isCanvasBlank(canvas) {
 }
 function processImages(e){
   //get image data
-  textureData = textureCtx.getImageData(0,0,textureCanvas.width,textureCanvas.height);
-  paletteData = paletteCtx.getImageData(0,0,paletteCanvas.width,paletteCanvas.height);
+  var textureData = textureCtx.getImageData(0,0,textureCanvas.width,textureCanvas.height);
+  var paletteData = paletteCtx.getImageData(0,0,paletteCanvas.width,paletteCanvas.height);
   if(isCanvasBlank(textureCanvas) || isCanvasBlank(paletteCanvas)){
     errorShake(submit);
     return
