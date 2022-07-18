@@ -13,6 +13,8 @@ const paletteCtx = paletteCanvas.getContext('2d');
 const reader = new FileReader();
 const texture = new Image();
 const palette = new Image();
+var paletteData = "";
+var textureData = "";
 
 textureButton.addEventListener('change', uploadTexture);
 paletteButton.addEventListener('change', uploadPalette);
@@ -40,11 +42,25 @@ function uploadPalette (e){
   }
   reader.readAsDataURL(e.target.files[0]);
 }
+function errorShake(button){
+  button.classList.add("shake");
+  setTimeout(function(){
+    button.classList.remove("shake");
+  },400);
+} 
+function isCanvasBlank(canvas) {
+  return !canvas.getContext('2d')
+    .getImageData(0, 0, canvas.width, canvas.height).data
+    .some(channel => channel !== 0);
+}
 function processImages(e){
-  //if something isnt input, end early
   //get image data
-  var textureData = textureCtx.getImageData(0,0,textureCanvas.width,textureCanvas.height);
-  var paletteData = paletteCtx.getImageData(0,0,paletteCanvas.width,paletteCanvas.height);
+  textureData = textureCtx.getImageData(0,0,textureCanvas.width,textureCanvas.height);
+  paletteData = paletteCtx.getImageData(0,0,paletteCanvas.width,paletteCanvas.height);
+  if(isCanvasBlank(textureCanvas) || isCanvasBlank(paletteCanvas)){
+    errorShake(submit);
+    return
+  }
   //seperate recoloring and variant pixels into objects so i dont have to deal with a lot of numbers in array brackets. Its annoying
   const templatePixels = [];
   for(let i = 0; i<paletteData.width; i++){
@@ -82,7 +98,6 @@ function processImages(e){
        //if they pixels colors match...
       if(textureData.data[4*i] == templatePixels[j].red && textureData.data[4*i+1] == templatePixels[j].green && textureData.data[4*i+2] == templatePixels[j].blue &&textureData.data[4*i+3] == templatePixels[j].alpha)
       {
-        console.log('piksel na poziciji ' + i + ' ima recolorable boju na paleti horizontalne pozicije pozicije' + j);
         //recolor that pixel in the new arrays once per variant
         for(let k = 0; k < paletteData.height - 1; k++){
           variantImageData[k][4*i] = variants[k][j].red;
