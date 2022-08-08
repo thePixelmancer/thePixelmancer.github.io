@@ -19,18 +19,23 @@
       "arrow" : {
          "textures" : "textures/items/arrow"
       },
-      "axe" : {
-         "textures" : [
-            "textures/items/wood_axe",
-            "textures/items/stone_axe",
-            "textures/items/iron_axe",
-            "textures/items/gold_axe",
-            "textures/items/diamond_axe",
-            "textures/items/netherite_axe"
-         ]
+      "wood_axe" : {
+         "textures" : "textures/items/wood_axe"
       },
-      "banner_pattern" : {
-         "textures" : "textures/items/banner_pattern"
+      "stone_axe" : {
+         "textures" : "textures/items/wood_axe"
+      },
+      "gold_axe" : {
+         "textures" : "textures/items/wood_axe"
+      },
+      "iron_axe" : {
+         "textures" : "textures/items/wood_axe"
+      },
+      "diamond_axe" : {
+         "textures" : "textures/items/wood_axe"
+      },
+      "netherite_axe" : {
+         "textures" : "textures/items/wood_axe"
       },
       "bed" : {
          "textures" : [
@@ -321,21 +326,6 @@
       },
       "emerald" : {
          "textures" : "textures/items/emerald"
-      },
-      "empty_armor_slot_boots" : {
-         "textures" : "textures/items/empty_armor_slot_boots"
-      },
-      "empty_armor_slot_chestplate" : {
-         "textures" : "textures/items/empty_armor_slot_chestplate"
-      },
-      "empty_armor_slot_helmet" : {
-         "textures" : "textures/items/empty_armor_slot_helmet"
-      },
-      "empty_armor_slot_leggings" : {
-         "textures" : "textures/items/empty_armor_slot_leggings"
-      },
-      "empty_armor_slot_shield" : {
-         "textures" : "textures/items/empty_armor_slot_shield"
       },
       "end_crystal" : {
          "textures" : "textures/items/end_crystal"
