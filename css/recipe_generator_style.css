@@ -127,6 +127,7 @@ input[type=text]:focus {
 }
 .item-slot {
   image-rendering: pixelated;
+  background-image: none;
   background-repeat: no-repeat;
   background-size: cover;
   aspect-ratio: 1;
