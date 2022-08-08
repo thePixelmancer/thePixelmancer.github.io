@@ -126,6 +126,9 @@ input[type=text]:focus {
   grid-template-columns: auto auto auto;
 }
 .item-slot {
+  image-rendering: pixelated;
+  background-repeat: no-repeat;
+  background-size: cover;
   aspect-ratio: 1;
   border: 1px var(--text) solid;
   box-shadow: 5px 6px rgba(0, 0, 0, 0.616);
