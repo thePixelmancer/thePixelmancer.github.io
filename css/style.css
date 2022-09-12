@@ -46,7 +46,7 @@
   #cover {
     perspective: 300px;
     color: white;
-    background-image: url("/images/wallpaper.webp");
+    background-image: url("../images/wallpaper.webp");
     display: flex;
     background-attachment: fixed;
     background-position: center;
@@ -78,7 +78,7 @@
     flex: 1;
   }
   .right-half {
-    background-image: url(/images/knight.jpg);
+    background-image: url("../images/knight.jpg");
     background-repeat: no-repeat;
     background-size: 120%;
     background-position: center;
