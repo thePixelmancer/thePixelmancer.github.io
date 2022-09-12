@@ -1,0 +1,193 @@
+:root {
+    --dark: #1f1c23;
+    --medium: #5a535e;
+    --light: #eaeaea;
+    --highlight: #ff4e65;
+  }
+  body {
+    background-color: var(--dark);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 0px;
+    margin: 0px;
+  }
+  nav {
+    color: var(--light);
+    background-color: var(--dark);
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 2em;
+    height: 80px;
+  }
+  nav div {
+    font-size: x-large;
+    font-weight: bold;
+  }
+  nav div span {
+    font-weight: 300;
+  }
+  nav ul {
+    margin-right: 10em;
+    list-style-type: none;
+  }
+  nav ul li{
+    display: inline-block;
+  }
+  nav a {
+    text-decoration: none;
+    color: white;
+    padding: 10px;
+  }
+  nav a:hover {
+    font-weight: 500;
+  }
+
+  #cover {
+    perspective: 300px;
+    color: white;
+    background-image: url("/images/wallpaper.webp");
+    display: flex;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    background-color: aquamarine;
+    height: 300px;
+  }
+  .section-block {
+    background-color: white;
+    min-height: 300px;
+    padding: 1em 20%;
+  }
+  .section-double {
+    display: flex;
+    flex-flow: row wrap;
+    height: 400px;
+    background-color: var(--light);
+  }
+  .left-half {
+    font-size: larger;
+    text-align: center;
+    margin: auto;
+    font-style: oblique;
+    padding: 1em 5em;
+    flex: 1;
+  }
+  .right-half {
+    background-image: url(/images/knight.jpg);
+    background-repeat: no-repeat;
+    background-size: 120%;
+    background-position: center;
+    flex: 1;
+    padding: 1em 5em;
+  }
+  #section-canvas {
+    color: white;
+    padding: 1em 2em 3em 2em;
+    background-color: var(--medium);
+  }
+  #section-canvas h2{
+    text-align: center;
+  }
+  #canvas {
+    display: block;
+    background-color: white;
+    margin: 0px auto;
+  }
+  #buttons {
+    margin-top: 1em;
+    justify-content: center;
+    display: flex;
+    flex-flow: row;
+  }
+  #buttons input {
+    border: none;
+    border-radius: 3px;
+    width: 5em;
+    height: 3em;
+    margin: 0em 0.5em;
+  }
+  .selection {
+    background-color: var(--light);
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+  }
+  .selection div {
+    display: flex;
+    justify-content: space-between;
+    flex-flow: column nowrap;
+    color: white;
+    text-align: center;
+    background-color: var(--highlight);
+    margin: 2em 2em;
+    padding: 2em 2em;
+    width: 300px;
+    border-radius: 5px;
+  }
+  .selection div:first-child {
+    background-color: var(--medium);
+  }
+  .selection img {
+    width: 70%;
+    margin: 0px auto;
+    margin-bottom: 30px;
+    filter: invert();
+  }
+  .selection a {
+    color: white;
+    background-color: var(--dark);
+    display: block;
+    padding: 8px 10px;
+    border-radius: 4px;
+  }
+  .gallery {
+    display: flex;
+    flex-flow: row wrap;
+    background-color: var(--light);
+    justify-content: center;
+  }
+  .gallery div {
+    padding: 2rem;
+  }
+  .gallery iframe {
+    width: 500px;
+    height: 300px;
+  }
+  footer {
+    color: var(--light);
+    background-color: var(--dark);
+  }
+  footer ul {
+    margin: 0px;
+    height: 80px;
+    align-items: center;
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    list-style-type: none;
+  }
+  footer ul li{
+    line-height: 40px;
+    height: 40px;
+    display: block;
+    padding: 0em 1em;
+    margin: 0px;
+  }
+  footer a {
+    text-decoration: none;
+    color: white;
+    padding: 10px;
+  }
+  footer a:hover {
+    font-weight: 500;
+  }
+  footer p {
+    padding: 10px 0px;
+    text-align: center;
+    margin: 0px;
+  }

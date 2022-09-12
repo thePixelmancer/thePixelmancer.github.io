@@ -87,7 +87,7 @@ function processImages(e){
 
   var variantImageData = [];
   for(let i = 0; i<paletteData.height -1; i++){
-    variantImageData[i] = Uint8ClampedArray.from(textureData.data);
+    variantImageData[i] = Uint8ClampedArray.from(textureData.data); //hell
   }
   //go through texture pixels
   for(let i = 0; i<textureData.data.length/4; i++){
