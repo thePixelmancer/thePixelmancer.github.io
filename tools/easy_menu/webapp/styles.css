@@ -1,8 +1,8 @@
 @font-face {
   font-family: "minecraft";
-  src: url(../../../tools/easy_menu/webapp/fonts/minecraft.ttf);
+  src: url(../../easy_menu/webapp/fonts/minecraft.ttf);
 }
-
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 :root {
   --background-color: #000;
   --primary-color: #6289a8;
