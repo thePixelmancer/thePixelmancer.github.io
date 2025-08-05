@@ -3,21 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pixelmancer's tools</title>
+    <title>Pixelmancer's Developer Tools</title>
+    <meta name="description" content="Professional development tools for Minecraft creators and developers">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <!-- Parallax layers -->
+    <div class="parallax-layer parallax-sky"></div>
+    <div class="parallax-layer parallax-middle"></div>
+    <div class="parallax-layer parallax-front"></div>
+
     <div class="container">
         <header>
-            <img src="images/avatar.png" alt="Project Logo" class="logo">
-            <h1>Minecraft Tools</h1>
+            <img src="images/avatar.png" alt="Pixelmancer Avatar" class="logo">
+            <h1>Pixelmancer's Tools</h1>
+            <p class="subtitle">Professional utilities for Minecraft development</p>
         </header>
         <nav>
             <ul>
-                <li><a href="tools/easy_menu/webapp/index.html">Easy Menu Editor</a></li>
-                <li><a href="tools/perlin_fiddle/index.html">Perlin Fiddle</a></li>
+                <li>
+                    <a href="tools/easy_menu/webapp/index.html">
+                        <div>
+                            <div>Easy Menu Editor</div>
+                            <div class="tool-meta">GUI Builder • JavaScript</div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="tools/perlin_fiddle/index.html">
+                        <div>
+                            <div>Perlin Fiddle</div>
+                            <div class="tool-meta">Noise Generator • p5.js</div>
+                        </div>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>
+
+    <script>
+        // Multi-layer parallax effect
+        const skyLayer = document.querySelector('.parallax-sky');
+        const middleLayer = document.querySelector('.parallax-middle');
+        const frontLayer = document.querySelector('.parallax-front');
+
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = (e.clientX / window.innerWidth - 0.5) * 2; // -1 to 1
+            const mouseY = (e.clientY / window.innerHeight - 0.5) * 2; // -1 to 1
+            
+            // Different movement speeds for each layer (depth effect)
+            const skyOffset = 15;    // Slowest (furthest)
+            const middleOffset = 30; // Medium
+            const frontOffset = 45;  // Fastest (closest)
+            
+            // Apply parallax transforms (keeping the center offset)
+            skyLayer.style.transform = `translate(calc(-50% + ${mouseX * skyOffset}px), calc(-50% + ${mouseY * skyOffset}px))`;
+            middleLayer.style.transform = `translate(calc(-50% + ${mouseX * middleOffset}px), calc(-50% + ${mouseY * middleOffset}px))`;
+            frontLayer.style.transform = `translate(calc(-50% + ${mouseX * frontOffset}px), calc(-50% + ${mouseY * frontOffset}px))`;
+        });
+
+        // Reset to center when mouse leaves the window
+        document.addEventListener('mouseleave', () => {
+            skyLayer.style.transform = 'translate(-50%, -50%)';
+            middleLayer.style.transform = 'translate(-50%, -50%)';
+            frontLayer.style.transform = 'translate(-50%, -50%)';
+        });
+    </script>
 </body>
 </html>
