@@ -1,0 +1,22 @@
+{
+  "name": "p5js-project",
+  "version": "1.0.0",
+  "description": "A simple p5.js project",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server -c-1 -o",
+    "dev": "npx live-server --open=index.html"
+  },
+  "keywords": [
+    "p5js",
+    "creative-coding",
+    "javascript",
+    "canvas"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "live-server": "^1.2.2"
+  }
+}

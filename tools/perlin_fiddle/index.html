@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>p5.js Project</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+
+    <!-- CodeMirror for syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/monokai.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/dialog/dialog.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closebrackets.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/matchbrackets.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/selection/active-line.min.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        min-height: 100vh;
+        background-color: #f0f0f0;
+        font-family: Arial, sans-serif;
+        box-sizing: border-box;
+      }
+
+      .container {
+        display: flex;
+        width: 100%;
+        height: 100vh;
+        align-items: stretch;
+      }
+
+      .left-panel {
+        flex: 0 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+      }
+
+      #p5-container {
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      #p5-container canvas {
+        display: block;
+        border-radius: 8px;
+      }
+
+      .controls {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        background-color: #2d2d2d;
+        padding: 20px;
+        color: white;
+        height: 100vh;
+        box-sizing: border-box;
+        min-height: 0;
+      }
+
+      .controls label {
+        font-size: 16px;
+        font-weight: bold;
+        color: #ffffff;
+        margin-bottom: 15px;
+        flex-shrink: 0;
+      }
+
+      .instructions {
+        background-color: #3a3a3a;
+        padding: 15px;
+        border-radius: 6px;
+        border-left: 4px solid #4caf50;
+        font-size: 13px;
+        color: #cccccc;
+        line-height: 1.5;
+      }
+
+      .instructions strong {
+        color: #4caf50;
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      #mathInput {
+        width: 100%;
+        height: 100px;
+        font-family: "Courier New", monospace;
+        font-size: 14px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        resize: vertical;
+        display: none; /* Hide the original textarea */
+      }
+
+      #codeEditor {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .CodeMirror {
+        flex: 1;
+        border: 1px solid #555;
+        border-radius: 4px;
+        font-size: 14px;
+        min-height: 0;
+        height: auto;
+      }
+
+      button {
+        padding: 12px 20px;
+        background: linear-gradient(135deg, #4caf50, #45a049);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        margin-top: 15px;
+        flex-shrink: 0;
+      }
+
+      button:hover {
+        background: linear-gradient(135deg, #45a049, #3d8b40);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      .info {
+        font-size: 13px;
+        color: #cccccc;
+        line-height: 1.5;
+        background-color: #3a3a3a;
+        padding: 15px;
+        border-radius: 6px;
+        border-left: 4px solid #4caf50;
+      }
+
+      .info strong {
+        color: #4caf50;
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      .resolution-control {
+        background-color: #3a3a3a;
+        padding: 10px;
+        border-radius: 6px;
+        border-left: 4px solid #2196f3;
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        gap: 15px;
+      }
+
+      .input-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .resolution-control label {
+        color: #ffffff;
+        margin: 0;
+        font-weight: bold;
+        white-space: nowrap;
+      }
+
+      #resolutionInput, #gridSizeInput, #gridColorInput {
+        background-color: #555;
+        color: white;
+        border: 1px solid #777;
+      }
+
+      #resolutionInput:focus, #gridSizeInput:focus, #gridColorInput:focus {
+        outline: none;
+        border-color: #2196f3;
+      }
+
+      #gridColorInput {
+        background-color: transparent;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="left-panel">
+        <div id="p5-container"></div>
+        <div class="instructions">
+          <strong>Instructions:</strong>
+          • Write full JavaScript code<br />
+          • Set 'result' variable for final output<br />
+          • Variables: x, y, frequency<br />
+          • Functions: noise(), sin(), cos(), abs(), etc.<br />
+          • Return single value (0-1) for grayscale<br />
+          • Return RGB object: {r: 0-1, g: 0-1, b: 0-1}<br />
+          • Optional alpha: {r: 0-1, g: 0-1, b: 0-1, a: 0-255}<br />
+          • Scroll on canvas to change frequency<br />
+          • Press Ctrl+Enter to apply code
+        </div>
+        <div class="resolution-control">
+          <div class="input-group">
+            <label for="resolutionInput">World Size:</label>
+            <input type="number" id="resolutionInput" min="1" max="512" value="512" style="width: 70px; padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
+          </div>
+          <div class="input-group">
+            <label for="gridSizeInput">Grid Size:</label>
+            <input type="number" id="gridSizeInput" min="1" max="128" value="16" style="width: 60px; padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
+          </div>
+          <div class="input-group">
+            <label for="gridColorInput">Grid Color:</label>
+            <input type="color" id="gridColorInput" value="#ffffff" style="width: 50px; height: 32px; padding: 2px; border-radius: 4px; border: 1px solid #ccc; cursor: pointer;">
+          </div>
+        </div>
+      </div>
+      <div class="controls">
+        <label for="mathInput">Custom JavaScript Code:</label>
+        <textarea
+          id="mathInput"
+          
+          placeholder="Write JavaScript code here. Set 'result' variable for the final value.&#10;&#10;Available variables:&#10;- x, y (pixel coordinates)&#10;- frequency&#10;- noise(x, y) function&#10;&#10;Return Options:&#10;1. Single value (0-1) for grayscale&#10;2. RGB object: {r: 0-1, g: 0-1, b: 0-1}&#10;&#10;Example:&#10;let n = noise(x * frequency, y * frequency);&#10;result = {r: n, g: n * 0.5, b: n * 0.2};"
+        >
+let noise1 = noise(x * 0.03, y * 0.03);
+
+result = noise1 > 0.5;</textarea
+        >
+        <div id="codeEditor"></div>
+        <button onclick="updateExpression()">Apply Code</button>
+      </div>
+    </div>
+    <script src="sketch.js"></script>
+
+    <script>
+      // Initialize CodeMirror editor
+      let codeEditor;
+
+      window.addEventListener("load", function () {
+        const textarea = document.getElementById("mathInput");
+        
+        // Load saved code from localStorage, or use default
+        const savedCode = localStorage.getItem('perlinFiddleCode');
+        const defaultCode = `let noise1 = noise(x * 0.03, y * 0.03);
+
+result = noise1 > 0.5;`;
+        
+        const codeToUse = savedCode || defaultCode;
+        textarea.value = codeToUse;
+        
+        codeEditor = CodeMirror(document.getElementById("codeEditor"), {
+          value: codeToUse,
+          mode: "javascript",
+          theme: "monokai",
+          lineNumbers: false,
+          indentUnit: 4,
+          tabSize: 4,
+          indentWithTabs: true,
+          lineWrapping: true,
+          autoCloseBrackets: true,
+          matchBrackets: true,
+          styleActiveLine: true,
+          viewportMargin: Infinity,
+          extraKeys: {
+            "Ctrl-Enter": function (cm) {
+              updateExpression();
+            },
+            "Cmd-Enter": function (cm) {
+              updateExpression();
+            },
+          },
+        });
+
+        // Save code to localStorage whenever it changes
+        codeEditor.on('change', function(cm) {
+          localStorage.setItem('perlinFiddleCode', cm.getValue());
+        });
+
+        // Load saved input values
+        const savedWorldSize = localStorage.getItem('perlinFiddleWorldSize');
+        const savedGridSize = localStorage.getItem('perlinFiddleGridSize');
+        const savedGridColor = localStorage.getItem('perlinFiddleGridColor');
+        
+        if (savedWorldSize) {
+          document.getElementById('resolutionInput').value = savedWorldSize;
+        }
+        if (savedGridSize) {
+          document.getElementById('gridSizeInput').value = savedGridSize;
+        }
+        if (savedGridColor) {
+          document.getElementById('gridColorInput').value = savedGridColor;
+        }
+
+        // Resize CodeMirror when window resizes
+        window.addEventListener("resize", function () {
+          setTimeout(function () {
+            if (codeEditor) {
+              codeEditor.refresh();
+            }
+          }, 100);
+        });
+
+        // Add event listener for resolution input
+        const resolutionInput = document.getElementById('resolutionInput');
+        if (resolutionInput) {
+          resolutionInput.addEventListener('input', function() {
+            localStorage.setItem('perlinFiddleWorldSize', this.value);
+            if (typeof generateTerrain === 'function') {
+              generateTerrain();
+            }
+          });
+        }
+
+        // Add event listener for grid size input
+        const gridSizeInput = document.getElementById('gridSizeInput');
+        if (gridSizeInput) {
+          gridSizeInput.addEventListener('input', function() {
+            localStorage.setItem('perlinFiddleGridSize', this.value);
+            // Grid changes are handled in the draw loop, no need to regenerate terrain
+          });
+        }
+
+        // Add event listener for grid color input
+        const gridColorInput = document.getElementById('gridColorInput');
+        if (gridColorInput) {
+          gridColorInput.addEventListener('input', function() {
+            localStorage.setItem('perlinFiddleGridColor', this.value);
+            // Grid changes are handled in the draw loop, no need to regenerate terrain
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
