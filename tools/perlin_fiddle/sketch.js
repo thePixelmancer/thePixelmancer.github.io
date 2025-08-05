@@ -1,6 +1,6 @@
 // Simple Perlin Noise Display with Custom JavaScript
-let worldSize = 256; // World size in logical pixels (higher values = more detail)
-let gridSize = 16; // Grid spacing in logical pixels
+let worldSize = 256; // World viewport size - number of world coordinate units to display
+let gridSize = 16; // Grid spacing in world coordinate units
 let gridColor = "#ff0000ff"; // Grid color (default red)
 let zoom = 1; // Visual zoom factor for display
 let panX = 0; // Pan offset X
@@ -21,7 +21,7 @@ function customLoop(i, func) {
 
 
 function setup() {
-  let canvas = createCanvas(600, 600);
+  let canvas = createCanvas(512, 512);
   canvas.parent("p5-container");
 
   // Initialize with default code
@@ -75,27 +75,34 @@ function generateTerrain() {
   // Pre-calculate scaling factors to avoid repeated map() calls
   const pixelWidth = width / worldSize;
   const pixelHeight = height / worldSize;
-  const xScale = (width - 1) / (worldSize - 1);
-  const yScale = (height - 1) / (worldSize - 1);
+  // Use logical pixel indices as world coordinates for alignment with grid
+  const xScale = 1; // Each logical pixel = 1 world coordinate unit
+  const yScale = 1; // Each logical pixel = 1 world coordinate unit
   
   // Pre-calculate pixel boundaries for all logical pixels
-  const pixelBounds = new Array(worldSize);
+  const pixelBoundsX = new Array(worldSize);
+  const pixelBoundsY = new Array(worldSize);
   for (let i = 0; i < worldSize; i++) {
-    pixelBounds[i] = {
+    pixelBoundsX[i] = {
       startX: Math.floor(i * pixelWidth),
       endX: Math.floor((i + 1) * pixelWidth),
-      x: i * xScale // Pre-calculated coordinate for noise
+      x: i // World coordinate matches logical pixel index
+    };
+    pixelBoundsY[i] = {
+      startY: Math.floor(i * pixelHeight),
+      endY: Math.floor((i + 1) * pixelHeight),
+      y: i // World coordinate matches logical pixel index
     };
   }
 
   // Loop through every logical pixel
   for (let logicalX = 0; logicalX < worldSize; logicalX++) {
-    const xBounds = pixelBounds[logicalX];
+    const xBounds = pixelBoundsX[logicalX];
     const x = xBounds.x;
     
     for (let logicalY = 0; logicalY < worldSize; logicalY++) {
-      const yBounds = pixelBounds[logicalY];
-      const y = yBounds.x; // Using same calculation for y coordinate
+      const yBounds = pixelBoundsY[logicalY];
+      const y = yBounds.y; // World coordinate for this pixel
       
       try {
         // Execute custom JavaScript code
@@ -120,8 +127,8 @@ function generateTerrain() {
         // Fill the pixel block with optimized nested loop
         const startX = xBounds.startX;
         const endX = xBounds.endX;
-        const startY = yBounds.startX; // Using startX calculation for Y
-        const endY = yBounds.endX; // Using endX calculation for Y
+        const startY = yBounds.startY; // Correct Y bounds
+        const endY = yBounds.endY; // Correct Y bounds
         
         for (let py = startY; py < endY; py++) {
           let baseIndex = (startX + py * width) * 4;
@@ -137,8 +144,8 @@ function generateTerrain() {
         // If code fails, fill the pixel block with black - optimized version
         const startX = xBounds.startX;
         const endX = xBounds.endX;
-        const startY = yBounds.startX;
-        const endY = yBounds.endX;
+        const startY = yBounds.startY;
+        const endY = yBounds.endY;
 
         for (let py = startY; py < endY; py++) {
           let baseIndex = (startX + py * width) * 4;
@@ -171,7 +178,7 @@ function drawGrid() {
   const gridSizeInput = document.getElementById("gridSizeInput");
   if (gridSizeInput) {
     gridSize = parseInt(gridSizeInput.value) || 16;
-    gridSize = Math.max(1, Math.min(128, gridSize)); // Constrain between 1 and 128
+    gridSize = Math.max(1, Math.min(512, gridSize)); // Constrain between 1 and 512
   }
 
   // Get grid color from input field
@@ -192,24 +199,26 @@ function drawGrid() {
 
   const rgb = hexToRgb(gridColor);
 
-  // Draw a grid every gridSize logical pixels
-  stroke(rgb.r, rgb.g, rgb.b, 255); // Semi-transparent grid color
+  // Draw a grid every gridSize world coordinates
+  stroke(rgb.r, rgb.g, rgb.b, 255);
   strokeWeight(1 / zoom); // Keep stroke at 1 screen pixel regardless of zoom
   
-  // Pre-calculate the pixel size to avoid repeated calculations
+  // Calculate screen pixel position for world coordinates
+  // Since each logical pixel corresponds to one world coordinate,
+  // we need to find which screen pixels correspond to world coordinates
   const pixelWidth = width / worldSize;
   const pixelHeight = height / worldSize;
   
-  // Pre-calculate grid positions for vertical lines
+  // Pre-calculate grid positions for vertical lines (at world coordinate boundaries)
   const verticalLines = [];
-  for (let logicalX = gridSize; logicalX < worldSize; logicalX += gridSize) {
-    verticalLines.push(Math.floor(logicalX * pixelWidth));
+  for (let worldX = gridSize; worldX < worldSize; worldX += gridSize) {
+    verticalLines.push(Math.floor(worldX * pixelWidth));
   }
   
-  // Pre-calculate grid positions for horizontal lines
+  // Pre-calculate grid positions for horizontal lines (at world coordinate boundaries)
   const horizontalLines = [];
-  for (let logicalY = gridSize; logicalY < worldSize; logicalY += gridSize) {
-    horizontalLines.push(Math.floor(logicalY * pixelHeight));
+  for (let worldY = gridSize; worldY < worldSize; worldY += gridSize) {
+    horizontalLines.push(Math.floor(worldY * pixelHeight));
   }
   
   // Draw all vertical lines
