@@ -116,6 +116,55 @@ body {
   background: rgba(88, 166, 255, 0.1);
 }
 
+/* Fullscreen CodeMirror styles */
+.CodeMirror-fullscreen {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  background: var(--bg-primary);
+  border: none;
+  border-radius: 0;
+}
+
+/* Autocomplete styling */
+.CodeMirror-hints {
+  background: var(--bg-tertiary) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 6px !important;
+  box-shadow: 0 8px 24px rgba(1, 4, 9, 0.6) !important;
+}
+
+.CodeMirror-hint {
+  color: var(--text-primary) !important;
+  padding: 6px 12px !important;
+  font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace !important;
+  font-size: 13px !important;
+}
+
+.CodeMirror-hint-active {
+  background: var(--accent-blue) !important;
+  color: white !important;
+}
+
+/* Search dialog styling */
+.CodeMirror-dialog {
+  background: var(--bg-tertiary) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 6px !important;
+  color: var(--text-primary) !important;
+}
+
+.CodeMirror-dialog input {
+  background: var(--bg-primary) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 4px !important;
+  color: var(--text-primary) !important;
+  padding: 4px 8px !important;
+}
+
 button {
   padding: 12px 20px;
   background: linear-gradient(135deg, var(--accent-green), #2ea043);

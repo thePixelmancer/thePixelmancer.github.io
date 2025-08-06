@@ -11,11 +11,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/monokai.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/dialog/dialog.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/foldgutter.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closebrackets.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/matchbrackets.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/selection/active-line.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/javascript-hint.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/foldcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/foldgutter.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/brace-fold.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/comment-fold.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/comment/comment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/search/search.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/search/searchcursor.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/dialog/dialog.min.js"></script>
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
@@ -99,21 +111,88 @@
           value: codeToUse,
           mode: "javascript",
           theme: "monokai",
-          lineNumbers: false,
-          indentUnit: 4,
-          tabSize: 4,
-          indentWithTabs: true,
+          lineNumbers: true,
+          indentUnit: 2,
+          tabSize: 2,
+          indentWithTabs: false,
           lineWrapping: true,
           autoCloseBrackets: true,
           matchBrackets: true,
           styleActiveLine: true,
           viewportMargin: Infinity,
+          foldGutter: true,
+          gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+          hintOptions: {
+            completeSingle: false,
+            hint: function (cm) {
+              // Custom autocomplete for your math functions
+              const cursor = cm.getCursor();
+              const token = cm.getTokenAt(cursor);
+              const start = token.start;
+              const end = cursor.ch;
+              const word = token.string.slice(0, end - start);
+
+              const mathFunctions = [
+                "math.abs()",
+                "math.sin()",
+                "math.cos()",
+                "math.clamp()",
+                "math.ceil()",
+                "math.floor()",
+                "math.trunc()",
+                "math.round()",
+                "math.mod()",
+                "math.pow()",
+                "math.sqrt()",
+                "math.exp()",
+                "math.pi",
+                "math.max()",
+                "math.min()",
+                "math.min_angle()",
+                "math.asin()",
+                "math.acos()",
+                "math.atan()",
+                "math.atan2()",
+                "math.random()",
+                "math.random_integer()",
+                "q.noise()",
+                "math.die_roll()",
+                "math.die_roll_integer()",
+                "math.hermite_blend()",
+                "math.lerp()",
+                "math.lerprotate()",
+                "math.ln()",
+                "return",
+              ];
+
+              const variables = ["x", "y", "v.originx", "v.originz", "v.worldx", "v.worldz"];
+
+              const allCompletions = [...mathFunctions, ...variables];
+
+              return {
+                list: allCompletions,
+                from: CodeMirror.Pos(cursor.line, start),
+                to: CodeMirror.Pos(cursor.line, end),
+              };
+            },
+          },
           extraKeys: {
             "Ctrl-Enter": function (cm) {
               updateExpression();
             },
             "Cmd-Enter": function (cm) {
               updateExpression();
+            },
+            "Ctrl-Space": "autocomplete",
+            "Ctrl-/": "toggleComment",
+            "Cmd-/": "toggleComment",
+            "Ctrl-F": "findPersistent",
+            "Cmd-F": "findPersistent",
+            F11: function (cm) {
+              cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+            },
+            Esc: function (cm) {
+              if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
             },
           },
         });
