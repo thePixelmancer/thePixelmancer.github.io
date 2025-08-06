@@ -35,7 +35,7 @@
         display: flex;
         min-height: 100vh;
         background-color: var(--bg-primary);
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
         color: var(--text-primary);
         box-sizing: border-box;
       }
@@ -110,7 +110,7 @@
       #mathInput {
         width: 100%;
         height: 100px;
-        font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+        font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
         font-size: 14px;
         padding: 10px;
         background-color: var(--bg-tertiary);
@@ -213,7 +213,9 @@
         font-size: 0.875rem;
       }
 
-      #resolutionInput, #gridSizeInput, #gridColorInput {
+      #resolutionInput,
+      #gridSizeInput,
+      #gridColorInput {
         background-color: var(--bg-primary);
         color: var(--text-primary);
         border: 1px solid var(--border-color);
@@ -223,7 +225,9 @@
         transition: border-color 0.2s ease;
       }
 
-      #resolutionInput:focus, #gridSizeInput:focus, #gridColorInput:focus {
+      #resolutionInput:focus,
+      #gridSizeInput:focus,
+      #gridColorInput:focus {
         outline: none;
         border-color: var(--accent-blue);
         box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.1);
@@ -242,17 +246,17 @@
           flex-direction: column;
           height: auto;
         }
-        
+
         .left-panel {
           border-right: none;
           border-bottom: 1px solid var(--border-color);
         }
-        
+
         .controls {
           height: auto;
           min-height: 60vh;
         }
-        
+
         .resolution-control {
           justify-content: center;
         }
@@ -265,28 +269,49 @@
         <div id="p5-container"></div>
         <div class="instructions">
           <strong>Instructions:</strong>
-          • Write full JavaScript code<br />
-          • Set 'result' variable for final output<br />
-          • Variables: x, y, frequency<br />
-          • Functions: noise(), sin(), cos(), abs(), etc.<br />
+          • Write JavaScript code using available functions<br />
+          • Set 'return' for final output<br />
+          • Variables: x, y (world coordinates)<br />
+          • Functions: Javascirpt Math library (similar to molang)<br />
+          • Custom functions: loop(), random(), random_integer(), hermite_blend()<br />
           • Return single value (0-1) for grayscale<br />
           • Return RGB object: {r: 0-1, g: 0-1, b: 0-1}<br />
           • Optional alpha: {r: 0-1, g: 0-1, b: 0-1, a: 0-255}<br />
-          • Scroll on canvas to change frequency<br />
+          • Use mouse wheel to zoom, drag to pan<br />
+          • Adjust World Size for detail level<br />
           • Press Ctrl+Enter to apply code
         </div>
         <div class="resolution-control">
           <div class="input-group">
             <label for="resolutionInput">World Size:</label>
-            <input type="number" id="resolutionInput" min="1" max="512" value="512" style="width: 70px; padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
+            <input
+              type="number"
+              id="resolutionInput"
+              min="1"
+              max="512"
+              value="512"
+              style="width: 70px; padding: 5px; border-radius: 4px; border: 1px solid #ccc"
+            />
           </div>
           <div class="input-group">
             <label for="gridSizeInput">Grid Size:</label>
-            <input type="number" id="gridSizeInput" min="1" max="128" value="16" style="width: 60px; padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
+            <input
+              type="number"
+              id="gridSizeInput"
+              min="1"
+              max="128"
+              value="16"
+              style="width: 60px; padding: 5px; border-radius: 4px; border: 1px solid #ccc"
+            />
           </div>
           <div class="input-group">
             <label for="gridColorInput">Grid Color:</label>
-            <input type="color" id="gridColorInput" value="#ffffff" style="width: 50px; height: 32px; padding: 2px; border-radius: 4px; border: 1px solid #ccc; cursor: pointer;">
+            <input
+              type="color"
+              id="gridColorInput"
+              value="#ffffff"
+              style="width: 50px; height: 32px; padding: 2px; border-radius: 4px; border: 1px solid #ccc; cursor: pointer"
+            />
           </div>
         </div>
       </div>
@@ -294,13 +319,8 @@
         <label for="mathInput">Custom JavaScript Code:</label>
         <textarea
           id="mathInput"
-          
           placeholder="Write JavaScript code here. Set 'result' variable for the final value.&#10;&#10;Available variables:&#10;- x, y (pixel coordinates)&#10;- frequency&#10;- noise(x, y) function&#10;&#10;Return Options:&#10;1. Single value (0-1) for grayscale&#10;2. RGB object: {r: 0-1, g: 0-1, b: 0-1}&#10;&#10;Example:&#10;let n = noise(x * frequency, y * frequency);&#10;result = {r: n, g: n * 0.5, b: n * 0.2};"
-        >
-let noise1 = noise(x * 0.03, y * 0.03);
-
-result = noise1 > 0.5;</textarea
-        >
+        ></textarea>
         <div id="codeEditor"></div>
         <button onclick="updateExpression()">Apply Code</button>
       </div>
@@ -313,16 +333,14 @@ result = noise1 > 0.5;</textarea
 
       window.addEventListener("load", function () {
         const textarea = document.getElementById("mathInput");
-        
-        // Load saved code from localStorage, or use default
-        const savedCode = localStorage.getItem('perlinFiddleCode');
-        const defaultCode = `let noise1 = noise(x * 0.03, y * 0.03);
 
-result = noise1 > 0.5;`;
-        
+        // Load saved code from localStorage, or use default
+        const savedCode = localStorage.getItem("perlinFiddleCode");
+        const defaultCode = "";
+
         const codeToUse = savedCode || defaultCode;
         textarea.value = codeToUse;
-        
+
         codeEditor = CodeMirror(document.getElementById("codeEditor"), {
           value: codeToUse,
           mode: "javascript",
@@ -347,23 +365,23 @@ result = noise1 > 0.5;`;
         });
 
         // Save code to localStorage whenever it changes
-        codeEditor.on('change', function(cm) {
-          localStorage.setItem('perlinFiddleCode', cm.getValue());
+        codeEditor.on("change", function (cm) {
+          localStorage.setItem("perlinFiddleCode", cm.getValue());
         });
 
         // Load saved input values
-        const savedWorldSize = localStorage.getItem('perlinFiddleWorldSize');
-        const savedGridSize = localStorage.getItem('perlinFiddleGridSize');
-        const savedGridColor = localStorage.getItem('perlinFiddleGridColor');
-        
+        const savedWorldSize = localStorage.getItem("perlinFiddleWorldSize");
+        const savedGridSize = localStorage.getItem("perlinFiddleGridSize");
+        const savedGridColor = localStorage.getItem("perlinFiddleGridColor");
+
         if (savedWorldSize) {
-          document.getElementById('resolutionInput').value = savedWorldSize;
+          document.getElementById("resolutionInput").value = savedWorldSize;
         }
         if (savedGridSize) {
-          document.getElementById('gridSizeInput').value = savedGridSize;
+          document.getElementById("gridSizeInput").value = savedGridSize;
         }
         if (savedGridColor) {
-          document.getElementById('gridColorInput').value = savedGridColor;
+          document.getElementById("gridColorInput").value = savedGridColor;
         }
 
         // Resize CodeMirror when window resizes
@@ -376,30 +394,30 @@ result = noise1 > 0.5;`;
         });
 
         // Add event listener for resolution input
-        const resolutionInput = document.getElementById('resolutionInput');
+        const resolutionInput = document.getElementById("resolutionInput");
         if (resolutionInput) {
-          resolutionInput.addEventListener('input', function() {
-            localStorage.setItem('perlinFiddleWorldSize', this.value);
-            if (typeof generateTerrain === 'function') {
+          resolutionInput.addEventListener("input", function () {
+            localStorage.setItem("perlinFiddleWorldSize", this.value);
+            if (typeof generateTerrain === "function") {
               generateTerrain();
             }
           });
         }
 
         // Add event listener for grid size input
-        const gridSizeInput = document.getElementById('gridSizeInput');
+        const gridSizeInput = document.getElementById("gridSizeInput");
         if (gridSizeInput) {
-          gridSizeInput.addEventListener('input', function() {
-            localStorage.setItem('perlinFiddleGridSize', this.value);
+          gridSizeInput.addEventListener("input", function () {
+            localStorage.setItem("perlinFiddleGridSize", this.value);
             // Grid changes are handled in the draw loop, no need to regenerate terrain
           });
         }
 
         // Add event listener for grid color input
-        const gridColorInput = document.getElementById('gridColorInput');
+        const gridColorInput = document.getElementById("gridColorInput");
         if (gridColorInput) {
-          gridColorInput.addEventListener('input', function() {
-            localStorage.setItem('perlinFiddleGridColor', this.value);
+          gridColorInput.addEventListener("input", function () {
+            localStorage.setItem("perlinFiddleGridColor", this.value);
             // Grid changes are handled in the draw loop, no need to regenerate terrain
           });
         }

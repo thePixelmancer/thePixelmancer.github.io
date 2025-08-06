@@ -8,9 +8,7 @@ let panY = 0; // Pan offset Y
 
 // Load saved code from localStorage, or use default
 const savedCode = localStorage.getItem('perlinFiddleCode');
-let customCode = savedCode || `let noise1 = noise(x * 0.03, y * 0.03);
-
-result = noise1 > 0.5;`;
+let customCode = savedCode || '';
 let executeFunction = null;
 
 function customLoop(i, func) {
@@ -18,7 +16,15 @@ function customLoop(i, func) {
     func();
   }
 }
-
+function customRandom(min, max) {
+  return Math.random() * (max - min) + min;
+}
+function customRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+function hermiteBlend(t) {
+  return t * t * (3 - 2 * t);
+}
 
 function setup() {
   let canvas = createCanvas(512, 512);
@@ -178,7 +184,7 @@ function drawGrid() {
   const gridSizeInput = document.getElementById("gridSizeInput");
   if (gridSizeInput) {
     gridSize = parseInt(gridSizeInput.value) || 16;
-    gridSize = Math.max(1, Math.min(512, gridSize)); // Constrain between 1 and 512
+    gridSize = Math.max(1, Math.min(worldSize, gridSize)); // Constrain between 1 and worldSize
   }
 
   // Get grid color from input field
@@ -275,30 +281,19 @@ function updateExecuteFunction() {
       "y",
       `
             // Include common math functions in scope
-            const sin = Math.sin;
-            const cos = Math.cos;
-            const tan = Math.tan;
-            const abs = Math.abs;
-            const sqrt = Math.sqrt;
-            const pow = Math.pow;
-            const min = Math.min;
-            const max = Math.max;
-            const floor = Math.floor;
-            const ceil = Math.ceil;
-            const round = Math.round;
-            const PI = Math.PI;
-            const E = Math.E;
-            const random = Math.random;
             const loop = customLoop; // Use custom loop function
-            
-            // Initialize result variable
-            let result = 0;
+            const random = customRandom;
+            const random_integer = customRandomInt;
+            const hermite_blend = hermiteBlend;
+
+            let variable = {}
+            let v = variable; // Alias for variable - both reference the same object
+
             
             // Execute user's custom code
             ${customCode}
             
-            // Return the result
-            return result;
+            return 0;
         `
     );
   } catch (error) {
@@ -322,10 +317,7 @@ function updateExpression() {
   }
 
   customCode =
-    code ||
-    `let noise1 = noise(x * 0.03, y * 0.03);
-
-result = noise1 > 0.5;`;
+    code || '';
 
   // Save the code to localStorage
   localStorage.setItem('perlinFiddleCode', customCode);
