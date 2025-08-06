@@ -37,6 +37,8 @@ body {
   padding: 20px;
   background-color: var(--bg-secondary);
   border-right: 1px solid var(--border-color);
+  min-height: 0;
+  overflow: hidden;
 }
 
 #p5-container {
@@ -44,11 +46,20 @@ body {
   overflow: hidden;
   box-shadow: var(--shadow);
   border: 1px solid var(--border-color);
+  flex-shrink: 0;
 }
 
 #p5-container canvas {
   display: block;
   border-radius: 12px;
+}
+
+.bottom-panel {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .controls {
@@ -72,13 +83,40 @@ body {
   font-size: 0.875rem;
   color: var(--text-secondary);
   line-height: 1.6;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  max-height: none;
+}
+
+.instructions::-webkit-scrollbar {
+  width: 8px;
+}
+
+.instructions::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+  border-radius: 4px;
+}
+
+.instructions::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+.instructions::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
 }
 
 .instructions strong {
   color: var(--accent-green);
   display: block;
-  margin-bottom: 8px;
+  margin-top: 12px;
+  margin-bottom: 6px;
   font-weight: 600;
+}
+
+.instructions strong:first-child {
+  margin-top: 0;
 }
 
 #mathInput {
@@ -220,6 +258,7 @@ button:active {
   font-size: 0.875rem;
   gap: 20px;
   flex-wrap: wrap;
+  flex-shrink: 0;
 }
 
 .input-group {

@@ -34,53 +34,89 @@
     <div class="container">
       <div class="left-panel">
         <div id="p5-container"></div>
-        <div class="instructions">
-          <strong>Instructions:</strong>
-          • Write JavaScript code using available functions<br />
-          • Set 'return' for final output<br />
-          • Variables: x, y (world coordinates)<br />
-          • Functions: Javascript Math library (similar to molang)<br />
-          • Custom functions: loop(), random(), random_integer(), hermite_blend()<br />
-          • q.noise() returns -1 to 1 (like Minecraft), you must remap to 0-1<br />
-          • Example: let n = (q.noise(x * 0.01, y * 0.01) + 1) / 2;<br />
-          • Return single value (0-1) for grayscale<br />
-          • Return RGB object: {r: 0-1, g: 0-1, b: 0-1}<br />
-          • Optional alpha: {r: 0-1, g: 0-1, b: 0-1, a: 0-255}<br />
-          • Use mouse wheel to zoom, drag to pan<br />
-          • Adjust World Size for detail level<br />
-          • Press Ctrl+Enter to apply code
-        </div>
-        <div class="resolution-control">
-          <div class="input-group">
-            <label for="resolutionInput">World Size:</label>
-            <input
-              type="number"
-              id="resolutionInput"
-              min="1"
-              max="512"
-              value="512"
-              style="width: 70px; padding: 5px; border-radius: 4px; border: 1px solid #ccc"
-            />
+        <div class="bottom-panel">
+          <div class="instructions">
+            <strong>Code Writing:</strong>
+            • Write JavaScript code using available functions<br />
+            • Set 'return' for final output value<br />
+            • Press Ctrl+Enter to apply your code<br />
+            <br />
+            <strong>Available Variables:</strong>
+            • x, y - world coordinates for current pixel<br />
+            • Math library - all JavaScript Math functions<br />
+            • v.originx, v.originz - origin coordinates<br />
+            • v.worldx, v.worldz - world coordinates<br />
+            <br />
+            <strong>Custom Functions:</strong>
+            • q.noise(x, y) - Perlin noise (-1 to 1, remap to 0-1)<br />
+            • loop(), random(), random_integer()<br />
+            • hermite_blend() - smooth interpolation<br />
+            <br />
+            <strong>Molang Functions:</strong>
+            • math.abs() - absolute value<br />
+            • math.sin(), math.cos(), math.tan() - trigonometry<br />
+            • math.asin(), math.acos(), math.atan(), math.atan2() - inverse trig<br />
+            • math.sqrt(), math.pow() - square root, power<br />
+            • math.exp(), math.ln() - exponential, natural log<br />
+            • math.ceil(), math.floor(), math.trunc(), math.round() - rounding<br />
+            • math.min(), math.max() - minimum, maximum<br />
+            • math.clamp() - clamp value between min/max<br />
+            • math.lerp() - linear interpolation<br />
+            • math.lerprotate() - lerp with rotation<br />
+            • math.mod() - modulo operation<br />
+            • math.random() - random 0-1<br />
+            • math.random_integer() - random integer<br />
+            • math.die_roll(), math.die_roll_integer() - dice rolls<br />
+            • math.hermite_blend() - smooth hermite interpolation<br />
+            • math.min_angle() - minimum angle between two angles<br />
+            • math.pi - pi constant<br />
+            <br />
+            <strong>Return Values:</strong>
+            • Single value (0-1) for grayscale<br />
+            • RGB object: {r: 0-1, g: 0-1, b: 0-1}<br />
+            • Optional alpha: {r: 0-1, g: 0-1, b: 0-1, a: 0-255}<br />
+            <br />
+            <strong>Example:</strong>
+            let n = (q.noise(x * 0.01, y * 0.01) + 1) / 2;<br />
+            return {r: n, g: n * 0.5, b: n * 0.2};<br />
+            <br />
+            <strong>Navigation:</strong>
+            • Mouse wheel to zoom in/out<br />
+            • Click and drag to pan around<br />
+            • Adjust World Size for detail level<br />
           </div>
-          <div class="input-group">
-            <label for="gridSizeInput">Grid Size:</label>
-            <input
-              type="number"
-              id="gridSizeInput"
-              min="1"
-              max="128"
-              value="16"
-              style="width: 60px; padding: 5px; border-radius: 4px; border: 1px solid #ccc"
-            />
-          </div>
-          <div class="input-group">
-            <label for="gridColorInput">Grid Color:</label>
-            <input
-              type="color"
-              id="gridColorInput"
-              value="#ffffff"
-              style="width: 50px; height: 32px; padding: 2px; border-radius: 4px; border: 1px solid #ccc; cursor: pointer"
-            />
+          <div class="resolution-control">
+            <div class="input-group">
+              <label for="resolutionInput">World Size:</label>
+              <input
+                type="number"
+                id="resolutionInput"
+                min="1"
+                max="512"
+                value="512"
+                style="width: 70px; padding: 5px; border-radius: 4px; border: 1px solid #ccc"
+              />
+            </div>
+            <div class="input-group">
+              <label for="gridSizeInput">Grid Size:</label>
+              <input
+                type="number"
+                id="gridSizeInput"
+                min="1"
+                max="128"
+                value="16"
+                style="width: 60px; padding: 5px; border-radius: 4px; border: 1px solid #ccc"
+              />
+            </div>
+            <div class="input-group">
+              <label for="gridColorInput">Grid Color:</label>
+              <input
+                type="color"
+                id="gridColorInput"
+                value="#ffffff"
+                style="width: 50px; height: 32px; padding: 2px; border-radius: 4px; border: 1px solid #ccc; cursor: pointer"
+              />
+            </div>
           </div>
         </div>
       </div>
