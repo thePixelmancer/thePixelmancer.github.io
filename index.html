@@ -3,8 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pixelmancer's Developer Tools</title>
-    <meta name="description" content="Professional development tools for Minecraft creators and developers">
+    
+    <!-- Primary Meta Tags -->
+    <title>Pixelmancer's Developer Tools - Minecraft Development Utilities</title>
+    <meta name="title" content="Pixelmancer's Developer Tools - Minecraft Development Utilities">
+    <meta name="description" content="Professional development tools for Minecraft creators and developers. Easy Menu Editor for GUI building and Perlin Fiddle for noise generation. Free web-based tools for game development.">
+    <meta name="keywords" content="Minecraft, developer tools, GUI builder, menu editor, Perlin noise, game development, web tools, JavaScript, p5.js">
+    <meta name="author" content="Pixelmancer">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://thepixelmancer.github.io/">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://thepixelmancer.github.io/">
+    <meta property="og:title" content="Pixelmancer's Developer Tools - Minecraft Development Utilities">
+    <meta property="og:description" content="Professional development tools for Minecraft creators and developers. Easy Menu Editor for GUI building and Perlin Fiddle for noise generation.">
+    <meta property="og:image" content="https://thepixelmancer.github.io/images/avatar.png">
+    <meta property="og:site_name" content="Pixelmancer's Tools">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://thepixelmancer.github.io/">
+    <meta property="twitter:title" content="Pixelmancer's Developer Tools - Minecraft Development Utilities">
+    <meta property="twitter:description" content="Professional development tools for Minecraft creators and developers. Easy Menu Editor for GUI building and Perlin Fiddle for noise generation.">
+    <meta property="twitter:image" content="https://thepixelmancer.github.io/images/avatar.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="images/avatar.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/avatar.png">
+    <link rel="apple-touch-icon" href="images/avatar.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#0d1117">
+    <meta name="msapplication-TileColor" content="#0d1117">
+    
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="css/style.css" as="style">
+    <link rel="preload" href="images/avatar.png" as="image">
+    
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -15,30 +56,37 @@
 
     <div class="container">
         <header>
-            <img src="images/avatar.png" alt="Pixelmancer Avatar" class="logo">
+            <img src="images/avatar.png" alt="Pixelmancer Avatar - Professional Minecraft Developer" class="logo">
             <h1>Pixelmancer's Tools</h1>
             <p class="subtitle">Professional utilities for Minecraft development</p>
         </header>
-        <nav>
-            <ul>
-                <li>
-                    <a href="tools/easy_menu/webapp/index.html">
-                        <div>
-                            <div>Easy Menu Editor</div>
-                            <div class="tool-meta">GUI Builder • JavaScript</div>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="tools/perlin_fiddle/index.html">
-                        <div>
-                            <div>Perlin Fiddle</div>
-                            <div class="tool-meta">Noise Generator • p5.js</div>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+        
+        <main>
+            <nav role="navigation" aria-label="Developer Tools">
+                <ul>
+                    <li>
+                        <a href="tools/easy_menu/webapp/index.html" 
+                           title="Easy Menu Editor - Visual GUI builder for Minecraft menus"
+                           aria-label="Easy Menu Editor - GUI Builder using JavaScript">
+                            <div>
+                                <div>Easy Menu Editor</div>
+                                <div class="tool-meta">GUI Builder • JavaScript</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="tools/perlin_fiddle/index.html"
+                           title="Perlin Fiddle - Interactive noise generation tool for game development"
+                           aria-label="Perlin Fiddle - Noise Generator built with p5.js">
+                            <div>
+                                <div>Perlin Fiddle</div>
+                                <div class="tool-meta">Noise Generator • p5.js</div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </main>
     </div>
 
     <script>
@@ -68,6 +116,52 @@
             middleLayer.style.transform = 'translate(-50%, -50%)';
             frontLayer.style.transform = 'translate(-50%, -50%)';
         });
+    </script>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Pixelmancer's Developer Tools",
+        "description": "Professional development tools for Minecraft creators and developers",
+        "url": "https://thepixelmancer.github.io/",
+        "author": {
+            "@type": "Person",
+            "name": "Pixelmancer",
+            "url": "https://thepixelmancer.github.io/"
+        },
+        "publisher": {
+            "@type": "Person",
+            "name": "Pixelmancer"
+        },
+        "mainEntity": [
+            {
+                "@type": "SoftwareApplication",
+                "name": "Easy Menu Editor",
+                "description": "Visual GUI builder for Minecraft menus using JavaScript",
+                "applicationCategory": "DeveloperApplication",
+                "operatingSystem": "Web Browser",
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "USD"
+                }
+            },
+            {
+                "@type": "SoftwareApplication", 
+                "name": "Perlin Fiddle",
+                "description": "Interactive noise generation tool for game development built with p5.js",
+                "applicationCategory": "DeveloperApplication",
+                "operatingSystem": "Web Browser",
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "USD"
+                }
+            }
+        ]
+    }
     </script>
 </body>
 </html>
