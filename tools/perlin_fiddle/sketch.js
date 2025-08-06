@@ -202,8 +202,11 @@ function drawGrid() {
 
   const rgb = hexToRgb(gridColor);
 
+  // Set difference blend mode for maximum contrast regardless of background
+  blendMode(DIFFERENCE);
+  
   // Draw a grid every gridSize world coordinates
-  stroke(rgb.r, rgb.g, rgb.b, 255);
+  stroke(rgb.r, rgb.g, rgb.b, 100);
   strokeWeight(1 / zoom); // Keep stroke at 1 screen pixel regardless of zoom
 
   // Calculate screen pixel position for world coordinates
@@ -233,6 +236,9 @@ function drawGrid() {
   for (let i = 0; i < horizontalLines.length; i++) {
     line(0, horizontalLines[i], width, horizontalLines[i]);
   }
+  
+  // Reset blend mode to default after drawing grid
+  blendMode(BLEND);
 }
 
 // Navigation helper functions
