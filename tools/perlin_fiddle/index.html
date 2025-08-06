@@ -43,6 +43,7 @@
             • Write JavaScript code using available functions<br />
             • Set 'return' for final output value<br />
             • Press Ctrl+Enter to apply your code<br />
+            • Press Ctrl+Shift+S to share your code<br />
             <br />
             <strong>Available Variables:</strong>
             • x, y - world coordinates for current pixel<br />
@@ -129,7 +130,10 @@
           placeholder="Write JavaScript code here. Set 'result' variable for the final value.&#10;&#10;Available variables:&#10;- x, y (pixel coordinates)&#10;- frequency&#10;- noise(x, y) function&#10;&#10;Return Options:&#10;1. Single value (0-1) for grayscale&#10;2. RGB object: {r: 0-1, g: 0-1, b: 0-1}&#10;&#10;Example:&#10;let n = noise(x * frequency, y * frequency);&#10;result = {r: n, g: n * 0.5, b: n * 0.2};"
         ></textarea>
         <div id="codeEditor"></div>
-        <button onclick="updateExpression()">Apply Code</button>
+        <div class="button-group" style="display: flex; gap: 10px; margin-top: 10px;">
+          <button onclick="updateExpression()">Apply Code</button>
+          <button onclick="shareCode()" style="background: #4CAF50;">Share Code</button>
+        </div>
       </div>
     </div>
     <script src="sketch.js"></script>
@@ -141,12 +145,23 @@
       window.addEventListener("load", function () {
         const textarea = document.getElementById("mathInput");
 
-        // Load saved code from localStorage, or use default
+        // Check for shared code first, then fall back to saved code
+        const sharedCode = loadCodeFromUrl();
         const savedCode = localStorage.getItem("perlinFiddleCode");
         const defaultCode = "";
 
-        const codeToUse = savedCode || defaultCode;
+        const codeToUse = sharedCode || savedCode || defaultCode;
         textarea.value = codeToUse;
+
+        // If we loaded shared code, save it to localStorage and clean URL
+        if (sharedCode) {
+          localStorage.setItem("perlinFiddleCode", sharedCode);
+          // Clean the URL without reloading the page
+          const url = new URL(window.location);
+          url.searchParams.delete('code');
+          window.history.replaceState({}, document.title, url.toString());
+          showNotification('Shared code loaded successfully!');
+        }
 
         codeEditor = CodeMirror(document.getElementById("codeEditor"), {
           value: codeToUse,
@@ -224,6 +239,12 @@
             "Cmd-Enter": function (cm) {
               updateExpression();
             },
+            "Ctrl-Shift-S": function (cm) {
+              shareCode();
+            },
+            "Cmd-Shift-S": function (cm) {
+              shareCode();
+            },
             "Ctrl-Space": "autocomplete",
             "Ctrl-/": "toggleComment",
             "Cmd-/": "toggleComment",
@@ -296,6 +317,83 @@
           });
         }
       });
+
+      // Code sharing functionality
+      function shareCode() {
+        const code = codeEditor.getValue();
+        const encodedCode = btoa(encodeURIComponent(code));
+        const shareUrl = `${window.location.origin}${window.location.pathname}?code=${encodedCode}`;
+        
+        // Copy to clipboard
+        navigator.clipboard.writeText(shareUrl).then(() => {
+          // Show feedback to user
+          showNotification('Share link copied to clipboard!');
+        }).catch(() => {
+          // Fallback for older browsers
+          const textArea = document.createElement('textarea');
+          textArea.value = shareUrl;
+          document.body.appendChild(textArea);
+          textArea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textArea);
+          showNotification('Share link copied to clipboard!');
+        });
+      }
+
+      function loadCodeFromUrl() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const encodedCode = urlParams.get('code');
+        
+        if (encodedCode) {
+          try {
+            const decodedCode = decodeURIComponent(atob(encodedCode));
+            return decodedCode;
+          } catch (error) {
+            console.error('Failed to decode shared code:', error);
+            showNotification('Invalid share link', 'error');
+          }
+        }
+        return null;
+      }
+
+      function showNotification(message, type = 'success') {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
+        notification.style.cssText = `
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          background: ${type === 'error' ? '#ff4444' : '#4CAF50'};
+          color: white;
+          padding: 12px 20px;
+          border-radius: 6px;
+          font-family: monospace;
+          z-index: 10000;
+          animation: slideIn 0.3s ease-out;
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+          notification.style.animation = 'slideOut 0.3s ease-out';
+          setTimeout(() => notification.remove(), 300);
+        }, 3000);
+      }
+
+      // Add CSS for animations
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes slideIn {
+          from { transform: translateX(100%); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOut {
+          from { transform: translateX(0); opacity: 1; }
+          to { transform: translateX(100%); opacity: 0; }
+        }
+      `;
+      document.head.appendChild(style);
     </script>
   </body>
 </html>
