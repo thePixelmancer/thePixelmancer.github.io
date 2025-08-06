@@ -367,7 +367,9 @@ function updateExecuteFunction() {
             };
 
             let query = Object.freeze({
-              noise: noise
+              noise: (x,y) => {
+                return noise(x,y) * 2 - 1 // Scale to [-1, 1]
+              }
             });
             let variable = {
               originx: x,

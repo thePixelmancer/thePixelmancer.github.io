@@ -39,8 +39,10 @@
           • Write JavaScript code using available functions<br />
           • Set 'return' for final output<br />
           • Variables: x, y (world coordinates)<br />
-          • Functions: Javascirpt Math library (similar to molang)<br />
+          • Functions: Javascript Math library (similar to molang)<br />
           • Custom functions: loop(), random(), random_integer(), hermite_blend()<br />
+          • q.noise() returns -1 to 1 (like Minecraft), you must remap to 0-1<br />
+          • Example: let n = (q.noise(x * 0.01, y * 0.01) + 1) / 2;<br />
           • Return single value (0-1) for grayscale<br />
           • Return RGB object: {r: 0-1, g: 0-1, b: 0-1}<br />
           • Optional alpha: {r: 0-1, g: 0-1, b: 0-1, a: 0-255}<br />
