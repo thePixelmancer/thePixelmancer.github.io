@@ -238,34 +238,61 @@ function drawGrid() {
   }
 }
 
+// Navigation helper functions
+function isMouseOverCanvas() {
+  return mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height;
+}
+
+function constrainPan() {
+  const maxPan = (width * (zoom - 1)) / 2;
+  panX = Math.max(-maxPan, Math.min(maxPan, panX));
+  panY = Math.max(-maxPan, Math.min(maxPan, panY));
+}
+
+function screenToWorld(screenX, screenY) {
+  return {
+    x: (screenX - width / 2 - panX) / zoom + width / 2,
+    y: (screenY - height / 2 - panY) / zoom + height / 2
+  };
+}
+
+function worldToScreen(worldX, worldY) {
+  return {
+    x: (worldX - width / 2) * zoom + width / 2 + panX,
+    y: (worldY - height / 2) * zoom + height / 2 + panY
+  };
+}
+
 function mouseWheel(event) {
-  // Only zoom if mouse is over the canvas
-  if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
-    // Visual zoom with mouse wheel - use ternary for efficiency
-    zoom *= (event.delta > 0) ? 0.9 : 1.1;
+  if (!isMouseOverCanvas()) return;
+  
+  // Calculate world position under mouse before zoom
+  const worldPos = screenToWorld(mouseX, mouseY);
+  
+  // Apply zoom
+  zoom *= (event.delta > 0) ? 0.9 : 1.1;
+  zoom = Math.max(1.0, Math.min(20, zoom));
 
-    // Constrain zoom to reasonable bounds (minimum 1x, maximum 20x)
-    zoom = Math.max(1.0, Math.min(20, zoom));
+  // Adjust pan to keep world position under mouse
+  const newScreenPos = worldToScreen(worldPos.x, worldPos.y);
+  panX += mouseX - newScreenPos.x;
+  panY += mouseY - newScreenPos.y;
 
-    return false; // Prevent page scrolling
-  }
+  // Constrain pan to bounds
+  constrainPan();
+
+  return false; // Prevent page scrolling
 }
 
 function mouseDragged() {
-  // Only pan if mouse is over the canvas
-  if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
-    // Pan the view when dragging
-    panX += mouseX - pmouseX;
-    panY += mouseY - pmouseY;
-    
-    // Constrain panning to keep the terrain visible
-    // Calculate the maximum pan distance based on zoom level
-    const maxPan = (width * (zoom - 1)) / 2; // Same calculation for both X and Y
-    
-    // Constrain pan values using Math.max/min for better performance
-    panX = Math.max(-maxPan, Math.min(maxPan, panX));
-    panY = Math.max(-maxPan, Math.min(maxPan, panY));
-  }
+  if (!isMouseOverCanvas()) return;
+  
+  // Pan the view
+  panX += mouseX - pmouseX;
+  panY += mouseY - pmouseY;
+  
+  // Constrain to bounds
+  constrainPan();
 }
 
 function keyPressed() {
