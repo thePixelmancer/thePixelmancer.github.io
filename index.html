@@ -1,167 +1,310 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Primary Meta Tags -->
-    <title>Pixelmancer's Developer Tools - Minecraft Development Utilities</title>
-    <meta name="title" content="Pixelmancer's Developer Tools - Minecraft Development Utilities">
-    <meta name="description" content="Professional development tools for Minecraft creators and developers. Easy Menu Editor for GUI building and Perlin Fiddle for noise generation. Free web-based tools for game development.">
-    <meta name="keywords" content="Minecraft, developer tools, GUI builder, menu editor, Perlin noise, game development, web tools, JavaScript, p5.js">
-    <meta name="author" content="Pixelmancer">
-    <meta name="robots" content="index, follow">
-    
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://thepixelmancer.github.io/">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://thepixelmancer.github.io/">
-    <meta property="og:title" content="Pixelmancer's Developer Tools - Minecraft Development Utilities">
-    <meta property="og:description" content="Professional development tools for Minecraft creators and developers. Easy Menu Editor for GUI building and Perlin Fiddle for noise generation.">
-    <meta property="og:image" content="https://thepixelmancer.github.io/images/avatar.png">
-    <meta property="og:site_name" content="Pixelmancer's Tools">
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://thepixelmancer.github.io/">
-    <meta property="twitter:title" content="Pixelmancer's Developer Tools - Minecraft Development Utilities">
-    <meta property="twitter:description" content="Professional development tools for Minecraft creators and developers. Easy Menu Editor for GUI building and Perlin Fiddle for noise generation.">
-    <meta property="twitter:image" content="https://thepixelmancer.github.io/images/avatar.png">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="32x32" href="images/avatar.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="images/avatar.png">
-    <link rel="apple-touch-icon" href="images/avatar.png">
-    
-    <!-- Theme Color -->
-    <meta name="theme-color" content="#0d1117">
-    <meta name="msapplication-TileColor" content="#0d1117">
-    
-    <!-- Web App Manifest -->
-    <link rel="manifest" href="manifest.json">
-    
-    <!-- Preload critical resources -->
-    <link rel="preload" href="css/style.css" as="style">
-    <link rel="preload" href="images/avatar.png" as="image">
-    
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-    <!-- Parallax layers -->
-    <div class="parallax-layer parallax-sky"></div>
-    <div class="parallax-layer parallax-middle"></div>
-    <div class="parallax-layer parallax-front"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <div class="container">
-        <header>
-            <img src="images/avatar.png" alt="Pixelmancer Avatar - Professional Minecraft Developer" class="logo">
-            <h1>Pixelmancer's Tools</h1>
-            <p class="subtitle">Professional utilities for Minecraft development</p>
-        </header>
-        
-        <main>
-            <nav role="navigation" aria-label="Developer Tools">
-                <ul>
-                    <li>
-                        <a href="tools/easy_menu/webapp/index.html" 
-                           title="Easy Menu Editor - Visual GUI builder for Minecraft menus"
-                           aria-label="Easy Menu Editor - GUI Builder using JavaScript">
-                            <div>
-                                <div>Easy Menu Editor</div>
-                                <div class="tool-meta">GUI Builder • JavaScript</div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="tools/perlin_fiddle/index.html"
-                           title="Perlin Fiddle - Interactive noise generation tool for game development"
-                           aria-label="Perlin Fiddle - Noise Generator built with p5.js">
-                            <div>
-                                <div>Perlin Fiddle</div>
-                                <div class="tool-meta">Noise Generator • p5.js</div>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </main>
+    <!-- Primary Meta Tags -->
+    <title>Angelo's Developer Tools - Minecraft Development Utilities</title>
+    <meta name="title" content="Angelo's Developer Tools - Minecraft Development Utilities" />
+    <meta
+      name="description"
+      content="Professional development tools for Minecraft creators and developers. Easy Menu Editor for GUI building and Perlin Fiddle for noise generation. Free web-based tools for game development."
+    />
+    <meta
+      name="keywords"
+      content="Minecraft, developer tools, GUI builder, menu editor, Perlin noise, game development, web tools, JavaScript, p5.js"
+    />
+    <meta name="author" content="Angelo" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://thepixelmancer.github.io/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://thepixelmancer.github.io/" />
+    <meta property="og:title" content="Angelo's Developer Tools - Minecraft Development Utilities" />
+    <meta
+      property="og:description"
+      content="Professional development tools for Minecraft creators and developers. Easy Menu Editor for GUI building and Perlin Fiddle for noise generation."
+    />
+    <meta property="og:image" content="https://thepixelmancer.github.io/images/avatar.png" />
+    <meta property="og:site_name" content="Angelo's Tools" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://thepixelmancer.github.io/" />
+    <meta property="twitter:title" content="Angelo's Developer Tools - Minecraft Development Utilities" />
+    <meta
+      property="twitter:description"
+      content="Professional development tools for Minecraft creators and developers. Easy Menu Editor for GUI building and Perlin Fiddle for noise generation."
+    />
+    <meta property="twitter:image" content="https://thepixelmancer.github.io/images/avatar.png" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="images/avatar.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="images/avatar.png" />
+    <link rel="apple-touch-icon" href="images/avatar.png" />
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#0d1117" />
+    <meta name="msapplication-TileColor" content="#0d1117" />
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="manifest.json" />
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="images/avatar.png" as="image" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "bg-primary": "#0d1117",
+              "bg-secondary": "#161b22",
+              "border-color": "#30363d",
+              "text-primary": "#f0f6fc",
+              "text-secondary": "#8b949e",
+              "accent-blue": "#58a6ff",
+              "accent-green": "#3fb950",
+              "accent-purple": "#a855f7",
+              "hover-bg": "#21262d",
+            },
+            fontFamily: {
+              system: ["-apple-system", "BlinkMacSystemFont", "Segoe UI", "Noto Sans", "Helvetica", "Arial", "sans-serif"],
+            },
+            boxShadow: {
+              custom: "0 16px 32px rgba(1, 4, 9, 0.5)",
+            },
+          },
+        },
+        plugins: [
+        ]
+      };
+    </script>
+  </head>
+  <body class="font-system bg-bg-primary text-text-primary min-h-screen flex items-center justify-center p-5 relative overflow-hidden">
+    <!-- Background Parallax Layers -->
+    <div
+      class="parallax-layer fixed top-1/2 left-1/2 w-[110%] h-[110%] bg-no-repeat bg-center bg-cover transition-transform duration-100 ease-out transform -translate-x-1/2 -translate-y-1/2 -z-30"
+      style="background-image: url('images/bgz0.png')"
+    ></div>
+    <div
+      class="parallax-layer fixed top-1/2 left-1/2 w-[110%] h-[110%] bg-no-repeat bg-center bg-cover transition-transform duration-100 ease-out transform -translate-x-1/2 -translate-y-1/2 -z-20"
+      style="background-image: url('images/bgz1.png')"
+    ></div>
+    <div
+      class="parallax-layer fixed top-1/2 left-1/2 w-[110%] h-[110%] bg-no-repeat bg-center bg-cover transition-transform duration-100 ease-out transform -translate-x-1/2 -translate-y-1/2 -z-10"
+      style="background-image: url('images/bgz2.png')"
+    ></div>
+
+    <!-- Main Container with Gradient Border -->
+    <div class="bg-gradient-to-r from-accent-blue to-accent-purple p-[1px] rounded-xl max-w-lg w-full">
+      <div class="relative bg-bg-secondary rounded-xl p-12 shadow-custom backdrop-blur-sm bg-opacity-95">
+        <!-- Background Effects -->
+        <div class="absolute inset-0 bg-gradient-to-br from-accent-blue/5 via-accent-purple/5 to-accent-green/5 rounded-xl animate-pulse"></div>
+        <div
+          class="absolute inset-0 rounded-xl bg-gradient-to-r from-accent-blue/20 via-accent-purple/20 to-accent-green/20 opacity-0 hover:opacity-100 transition-opacity duration-500 blur-xl -z-10"
+        ></div>
+
+        <!-- Header Section -->
+        <header class="mb-8 text-center relative z-10">
+        <img
+          src="images/avatar.png"
+          alt="Angelo Avatar - Professional Minecraft Developer"
+          class="w-20 h-20 mb-4 rounded-full border-2 border-border-color object-cover mx-auto"
+        />
+        <h1 class="text-3xl font-semibold text-text-primary mb-2">Angelo's Tools</h1>
+        <p class="text-text-secondary text-sm font-normal">Professional utilities for Minecraft development</p>
+      </header>
+
+      <!-- Navigation Section -->
+      <main>
+        <nav role="navigation" aria-label="Developer Tools">
+          <ul class="list-none flex flex-col gap-3">
+            <!-- Easy Menu Editor -->
+            <li>
+              <a
+                href="tools/easy_menu/webapp/index.html" target="_blank" rel="noopener noreferrer"
+                title="Easy Menu Editor - Visual GUI builder for Minecraft menus"
+                aria-label="Easy Menu Editor - GUI Builder using JavaScript"
+                class="group flex items-center justify-between p-4 px-5 text-text-primary bg-transparent border border-border-color rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-hover-bg hover:border-accent-blue"
+              >
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 bg-accent-blue rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                    <span>Easy Menu Editor</span>
+                  </div>
+                  <div class="text-xs text-text-secondary font-normal">GUI Builder • JavaScript</div>
+                </div>
+                <span
+                  class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-accent-blue"
+                  >→</span
+                >
+              </a>
+            </li>
+
+            <!-- Perlin Fiddle -->
+            <li>
+              <a
+                href="tools/perlin_fiddle/index.html" target="_blank" rel="noopener noreferrer"
+                title="Perlin Fiddle - Interactive noise generation tool for game development"
+                aria-label="Perlin Fiddle - Noise Generator built with p5.js"
+                class="group flex items-center justify-between p-4 px-5 text-text-primary bg-transparent border border-border-color rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-hover-bg hover:border-accent-green"
+              >
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 bg-accent-green rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                    <span>Perlin Fiddle</span>
+                  </div>
+                  <div class="text-xs text-text-secondary font-normal">Noise Generator • p5.js</div>
+                </div>
+                <span
+                  class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-accent-green"
+                  >→</span
+                >
+              </a>
+            </li>
+
+            <!-- Regolith Filters -->
+            <li>
+              <a
+                href="https://github.com/thePixelmancer/regolith-filters" target="_blank" rel="noopener noreferrer"
+                title="Regolith Filters - Collection of Minecraft Bedrock development filters"
+                aria-label="Regolith Filters - Bedrock Development Tools"
+                class="group flex items-center justify-between p-4 px-5 text-text-primary bg-transparent border border-border-color rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-hover-bg hover:border-accent-purple"
+              >
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 bg-accent-purple rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                    <span>Regolith Filters</span>
+                  </div>
+                  <div class="text-xs text-text-secondary font-normal">Development Tools • Bedrock</div>
+                </div>
+                <span
+                  class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-accent-purple"
+                  >→</span
+                >
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </main>
+      </div>
     </div>
 
     <script>
-        // Multi-layer parallax effect
-        const skyLayer = document.querySelector('.parallax-sky');
-        const middleLayer = document.querySelector('.parallax-middle');
-        const frontLayer = document.querySelector('.parallax-front');
+      // Multi-layer parallax effect
+      const parallaxLayers = document.querySelectorAll(".parallax-layer");
+      const [skyLayer, middleLayer, frontLayer] = parallaxLayers;
 
-        document.addEventListener('mousemove', (e) => {
-            const mouseX = (e.clientX / window.innerWidth - 0.5) * 2; // -1 to 1
-            const mouseY = (e.clientY / window.innerHeight - 0.5) * 2; // -1 to 1
-            
-            // Different movement speeds for each layer (depth effect)
-            const skyOffset = 15;    // Slowest (furthest)
-            const middleOffset = 30; // Medium
-            const frontOffset = 45;  // Fastest (closest)
-            
-            // Apply parallax transforms (keeping the center offset)
-            skyLayer.style.transform = `translate(calc(-50% + ${mouseX * skyOffset}px), calc(-50% + ${mouseY * skyOffset}px))`;
-            middleLayer.style.transform = `translate(calc(-50% + ${mouseX * middleOffset}px), calc(-50% + ${mouseY * middleOffset}px))`;
-            frontLayer.style.transform = `translate(calc(-50% + ${mouseX * frontOffset}px), calc(-50% + ${mouseY * frontOffset}px))`;
-        });
+      document.addEventListener("mousemove", (e) => {
+        const mouseX = (e.clientX / window.innerWidth - 0.5) * 2; // -1 to 1
+        const mouseY = (e.clientY / window.innerHeight - 0.5) * 2; // -1 to 1
 
-        // Reset to center when mouse leaves the window
-        document.addEventListener('mouseleave', () => {
-            skyLayer.style.transform = 'translate(-50%, -50%)';
-            middleLayer.style.transform = 'translate(-50%, -50%)';
-            frontLayer.style.transform = 'translate(-50%, -50%)';
+        // Different movement speeds for each layer (depth effect)
+        const skyOffset = 10; // Slowest (furthest)
+        const middleOffset = 20; // Medium
+        const frontOffset = 60; // Fastest (closest)
+
+        // Apply parallax transforms (keeping the center offset)
+        skyLayer.style.transform = `translate(calc(-50% + ${mouseX * skyOffset}px), calc(-50% + ${mouseY * skyOffset}px))`;
+        middleLayer.style.transform = `translate(calc(-50% + ${mouseX * middleOffset}px), calc(-50% + ${mouseY * middleOffset}px))`;
+        frontLayer.style.transform = `translate(calc(-50% + ${mouseX * frontOffset}px), calc(-50% + ${mouseY * frontOffset}px))`;
+      });
+
+      // Reset to center when mouse leaves the window
+      document.addEventListener("mouseleave", () => {
+        parallaxLayers.forEach((layer) => {
+          layer.style.transform = "translate(-50%, -50%)";
         });
+      });
+
+      // Add responsive classes for mobile
+      function updateResponsiveClasses() {
+        const container = document.querySelector(".relative.bg-bg-secondary");
+        if (window.innerWidth <= 600) {
+          container.classList.remove("p-12");
+          container.classList.add("p-8", "px-6", "mx-4");
+
+          const heading = document.querySelector("h1");
+          heading.classList.remove("text-3xl");
+          heading.classList.add("text-2xl");
+
+          const links = document.querySelectorAll("nav a");
+          links.forEach((link) => {
+            link.classList.remove("p-4", "px-5", "text-sm");
+            link.classList.add("p-3.5", "px-4", "text-xs");
+          });
+        } else {
+          container.classList.remove("p-8", "px-6", "mx-4");
+          container.classList.add("p-12");
+
+          const heading = document.querySelector("h1");
+          heading.classList.remove("text-2xl");
+          heading.classList.add("text-3xl");
+
+          const links = document.querySelectorAll("nav a");
+          links.forEach((link) => {
+            link.classList.remove("p-3.5", "px-4", "text-xs");
+            link.classList.add("p-4", "px-5", "text-sm");
+          });
+        }
+      }
+
+      // Run on load and resize
+      updateResponsiveClasses();
+      window.addEventListener("resize", updateResponsiveClasses);
     </script>
 
     <!-- Structured Data -->
     <script type="application/ld+json">
-    {
+      {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        "name": "Pixelmancer's Developer Tools",
+        "name": "Angelo's Developer Tools",
         "description": "Professional development tools for Minecraft creators and developers",
         "url": "https://thepixelmancer.github.io/",
         "author": {
-            "@type": "Person",
-            "name": "Pixelmancer",
-            "url": "https://thepixelmancer.github.io/"
+          "@type": "Person",
+          "name": "Angelo",
+          "url": "https://thepixelmancer.github.io/"
         },
         "publisher": {
-            "@type": "Person",
-            "name": "Pixelmancer"
+          "@type": "Person",
+          "name": "Angelo"
         },
         "mainEntity": [
-            {
-                "@type": "SoftwareApplication",
-                "name": "Easy Menu Editor",
-                "description": "Visual GUI builder for Minecraft menus using JavaScript",
-                "applicationCategory": "DeveloperApplication",
-                "operatingSystem": "Web Browser",
-                "offers": {
-                    "@type": "Offer",
-                    "price": "0",
-                    "priceCurrency": "USD"
-                }
-            },
-            {
-                "@type": "SoftwareApplication", 
-                "name": "Perlin Fiddle",
-                "description": "Interactive noise generation tool for game development built with p5.js",
-                "applicationCategory": "DeveloperApplication",
-                "operatingSystem": "Web Browser",
-                "offers": {
-                    "@type": "Offer",
-                    "price": "0",
-                    "priceCurrency": "USD"
-                }
+          {
+            "@type": "SoftwareApplication",
+            "name": "Easy Menu Editor",
+            "description": "Visual GUI builder for Minecraft menus using JavaScript",
+            "applicationCategory": "DeveloperApplication",
+            "operatingSystem": "Web Browser",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
             }
+          },
+          {
+            "@type": "SoftwareApplication",
+            "name": "Perlin Fiddle",
+            "description": "Interactive noise generation tool for game development built with p5.js",
+            "applicationCategory": "DeveloperApplication",
+            "operatingSystem": "Web Browser",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            }
+          }
         ]
-    }
+      }
     </script>
-</body>
+  </body>
 </html>
