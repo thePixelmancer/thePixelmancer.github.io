@@ -53,11 +53,11 @@ function draw() {
 
   pop();
 
-  // Display zoom info (not affected by transformations) - optimized string formatting
-  fill(255);
-  rect(5, 5, 240, 25);
-  fill(0);
-  text("Zoom: " + zoom.toFixed(2) + "x (scroll to change)", 10, 18);
+  // Display zoom info as a faint number in the corner
+  fill(255, 255, 255, 100); // White with low opacity for faintness
+  textAlign(RIGHT, TOP);
+  text(zoom.toFixed(1) + "x", width - 10, 10);
+  textAlign(LEFT, BASELINE); // Reset text alignment to default
 }
 
 let terrainImage; // Store the generated terrain as an image
