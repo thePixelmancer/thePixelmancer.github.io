@@ -119,6 +119,31 @@ body {
   margin-top: 0;
 }
 
+.credits {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+.credits strong {
+  color: var(--text-secondary) !important;
+  font-weight: 500 !important;
+  margin: 0 !important;
+}
+
+.credits a {
+  color: var(--accent-blue);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.credits a:hover {
+  color: var(--accent-green);
+  text-decoration: underline;
+}
+
 #mathInput {
   width: 100%;
   height: 100px;
