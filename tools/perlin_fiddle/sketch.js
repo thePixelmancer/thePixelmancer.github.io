@@ -132,22 +132,32 @@ function generateTerrain() {
           }
         }
       } catch (error) {
-        // If code fails, fill the pixel block with black - optimized version
-        const startX = xBounds.startX;
-        const endX = xBounds.endX;
-        const startY = yBounds.startY;
-        const endY = yBounds.endY;
-
-        for (let py = startY; py < endY; py++) {
-          let baseIndex = (startX + py * width) * 4;
-          for (let px = startX; px < endX; px++) {
-            pg.pixels[baseIndex] = 0; // Red
-            pg.pixels[baseIndex + 1] = 0; // Green
-            pg.pixels[baseIndex + 2] = 0; // Blue
-            pg.pixels[baseIndex + 3] = 255; // Alpha
-            baseIndex += 4;
+        // Show alert for runtime errors and stop execution
+        console.error("Runtime error in user code:", error);
+        alert("Runtime error in your code: " + error.message);
+        
+        // Fill remaining pixels with black and stop processing
+        for (let remainingX = logicalX; remainingX < worldSize; remainingX++) {
+          const xB = pixelBoundsX[remainingX];
+          for (let remainingY = (remainingX === logicalX ? logicalY : 0); remainingY < worldSize; remainingY++) {
+            const yB = pixelBoundsY[remainingY];
+            
+            for (let py = yB.startY; py < yB.endY; py++) {
+              let baseIndex = (xB.startX + py * width) * 4;
+              for (let px = xB.startX; px < xB.endX; px++) {
+                pg.pixels[baseIndex] = 0; // Red
+                pg.pixels[baseIndex + 1] = 0; // Green
+                pg.pixels[baseIndex + 2] = 0; // Blue
+                pg.pixels[baseIndex + 3] = 255; // Alpha
+                baseIndex += 4;
+              }
+            }
           }
         }
+        
+        pg.updatePixels();
+        terrainImage = pg;
+        return; // Exit early to stop further processing
       }
     }
   }
@@ -350,9 +360,9 @@ function updateExecuteFunction() {
               ln: (value) => Math.log(value)
             };
 
-            let query = {
+            let query = Object.freeze({
               noise: noise
-            };
+            });
             let variable = {
               originx: x,
               originz: y,
@@ -370,6 +380,7 @@ function updateExecuteFunction() {
     );
   } catch (error) {
     console.error("Error in JavaScript code:", error);
+    alert("Error in JavaScript code: " + error.message);
     // Fallback to default noise
     executeFunction = function (x, y) {
       return 0;
