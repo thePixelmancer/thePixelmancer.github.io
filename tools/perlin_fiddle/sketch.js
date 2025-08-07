@@ -14,10 +14,6 @@ let executeFunction = null;
 function setup() {
   let canvas = createCanvas(512, 512);
   canvas.parent("p5-container");
-
-  // Initialize with default code
-  updateExecuteFunction();
-  generateTerrain();
 }
 
 function draw() {
@@ -134,7 +130,7 @@ function generateTerrain() {
       } catch (error) {
         // Show alert for runtime errors and stop execution
         console.error("Runtime error in user code:", error);
-        alert("Runtime error in your code: " + error.message);
+        showNotification("Runtime error in your code: " + error.message, "error");
         
         // Fill remaining pixels with black and stop processing
         for (let remainingX = logicalX; remainingX < worldSize; remainingX++) {
@@ -388,7 +384,7 @@ function updateExecuteFunction() {
     );
   } catch (error) {
     console.error("Error in JavaScript code:", error);
-    alert("Error in JavaScript code: " + error.message);
+    showNotification("Error in JavaScript code: " + error.message);
     // Fallback to default noise
     executeFunction = function (x, y) {
       return 0;
