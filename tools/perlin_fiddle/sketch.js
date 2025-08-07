@@ -131,13 +131,13 @@ function generateTerrain() {
         // Show alert for runtime errors and stop execution
         console.error("Runtime error in user code:", error);
         showNotification("Runtime error in your code: " + error.message, "error");
-        
+
         // Fill remaining pixels with black and stop processing
         for (let remainingX = logicalX; remainingX < worldSize; remainingX++) {
           const xB = pixelBoundsX[remainingX];
-          for (let remainingY = (remainingX === logicalX ? logicalY : 0); remainingY < worldSize; remainingY++) {
+          for (let remainingY = remainingX === logicalX ? logicalY : 0; remainingY < worldSize; remainingY++) {
             const yB = pixelBoundsY[remainingY];
-            
+
             for (let py = yB.startY; py < yB.endY; py++) {
               let baseIndex = (xB.startX + py * width) * 4;
               for (let px = xB.startX; px < xB.endX; px++) {
@@ -150,7 +150,7 @@ function generateTerrain() {
             }
           }
         }
-        
+
         pg.updatePixels();
         terrainImage = pg;
         return; // Exit early to stop further processing
@@ -200,7 +200,7 @@ function drawGrid() {
 
   // Set difference blend mode for maximum contrast regardless of background
   blendMode(DIFFERENCE);
-  
+
   // Draw a grid every gridSize world coordinates
   stroke(rgb.r, rgb.g, rgb.b, 100);
   strokeWeight(1 / zoom); // Keep stroke at 1 screen pixel regardless of zoom
@@ -232,7 +232,7 @@ function drawGrid() {
   for (let i = 0; i < horizontalLines.length; i++) {
     line(0, horizontalLines[i], width, horizontalLines[i]);
   }
-  
+
   // Reset blend mode to default after drawing grid
   blendMode(BLEND);
 }
@@ -297,7 +297,41 @@ function mouseDragged() {
 function keyPressed() {
   // Resolution is now controlled by input field, no keyboard shortcuts
 }
+// Perlin Noise in 2D
+/* ------------------------------------------------------------------------------------ */
 
+function pnoise(x, y) {
+  function hash(x, y) {
+    let n = x + y * 57;
+    n = (n << 13) ^ n;
+    return 1.0 - ((n * (n * n * 60493 + 19990303) + 1376312589) & 0x7fffffff) / 1073741824.0;
+  }
+
+  function fade(t) {
+    return t * t * t * (t * (t * 6 - 15) + 10);
+  }
+
+  function lerp(a, b, t) {
+    return a + t * (b - a);
+  }
+  const xi = Math.floor(x);
+  const yi = Math.floor(y);
+  const xf = x - xi;
+  const yf = y - yi;
+
+  const u = fade(xf);
+  const v = fade(yf);
+
+  const tl = hash(xi, yi);
+  const tr = hash(xi + 1, yi);
+  const bl = hash(xi, yi + 1);
+  const br = hash(xi + 1, yi + 1);
+
+  const top = lerp(tl, tr, u);
+  const bottom = lerp(bl, br, u);
+  return (lerp(top, bottom, v) + 1) / 2; // Normalize to [0, 1]
+}
+/* ------------------------------------------------------------------------------------ */
 // Function to create an execution function from the JavaScript code
 function updateExecuteFunction() {
   try {
@@ -363,9 +397,7 @@ function updateExecuteFunction() {
             };
 
             let query = Object.freeze({
-              noise: (x,y) => {
-                return noise(x,y) * 2 - 1 // Scale to [-1, 1]
-              }
+              noise: pnoise,
             });
             let variable = {
               originx: x,

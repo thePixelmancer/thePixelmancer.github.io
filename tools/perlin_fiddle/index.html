@@ -269,17 +269,6 @@
           }, 100);
         });
 
-        // Add event listener for resolution input
-        const resolutionInput = document.getElementById("resolutionInput");
-        if (resolutionInput) {
-          resolutionInput.addEventListener("input", function () {
-            localStorage.setItem("perlinFiddleWorldSize", this.value);
-            if (typeof generateTerrain === "function") {
-              generateTerrain();
-            }
-          });
-        }
-
         // Add event listener for grid size input
         const gridSizeInput = document.getElementById("gridSizeInput");
         if (gridSizeInput) {
