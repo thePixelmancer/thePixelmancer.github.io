@@ -129,12 +129,53 @@
           placeholder="Write JavaScript code here. Set 'result' variable for the final value.&#10;&#10;Available variables:&#10;- x, y (pixel coordinates)&#10;- frequency&#10;- noise(x, y) function&#10;&#10;Return Options:&#10;1. Single value (0-1) for grayscale&#10;2. RGB object: {r: 0-1, g: 0-1, b: 0-1}&#10;&#10;Example:&#10;let n = noise(x * frequency, y * frequency);&#10;result = {r: n, g: n * 0.5, b: n * 0.2};"
         ></textarea>
         <div id="codeEditor"></div>
-        <div class="button-group" style="display: flex; gap: 10px; margin-top: 10px">
-          <button onclick="updateExpression()">Apply Code</button>
+        <div class="button-group" style="display: flex; gap: 10px; margin-top: 10px; align-items: center">
+          <button class="button" onclick="updateExpression()">Apply Code</button>
+          <select id="exampleSelect" class="button">
+            <option value="">Load Example...</option>
+            <option value="scattered_islands.js">Scattered Islands</option>
+            <option value="terrain.js">Terrain (Color Map)</option>
+            <option value="ridges.js">Ridges</option>
+            <option value="hex_grid.js">Hex Grid</option>
+          </select>
         </div>
       </div>
     </div>
+
     <script src="sketch.js"></script>
+    <script>
+      // Load example code from fiddles folder
+      document.addEventListener("DOMContentLoaded", function () {
+        const exampleSelect = document.getElementById("exampleSelect");
+        if (exampleSelect) {
+          exampleSelect.addEventListener("change", function () {
+            const filename = this.value;
+            if (!filename) return;
+            fetch(`./fiddles/${filename}`)
+              .then((response) => {
+                if (!response.ok) throw new Error("Failed to load example");
+                return response.text();
+              })
+              .then((code) => {
+                if (window.codeEditor) {
+                  codeEditor.setValue(code);
+                } else {
+                  document.getElementById("mathInput").value = code;
+                }
+                localStorage.setItem("perlinFiddleCode", code);
+                updateExpression();
+              })
+              .catch((err) => {
+                showNotification("Could not load example: " + err.message, "error");
+              });
+            // Reset dropdown to placeholder
+            setTimeout(() => {
+              this.value = "";
+            }, 500);
+          });
+        }
+      });
+    </script>
 
     <script>
       // Initialize CodeMirror editor

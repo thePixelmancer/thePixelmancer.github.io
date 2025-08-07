@@ -229,7 +229,31 @@ body {
   padding: 4px 8px !important;
 }
 
-button {
+/* Reset input styling */
+
+select.button {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: linear-gradient(135deg, var(--accent-green), #2ea043);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  line-height: 1.2;
+  box-shadow: 0 4px 12px rgba(63, 185, 80, 0.3);
+  height: auto;
+}
+select.button option {
+  color: var(--text-primary);
+  background-color: var(--bg-tertiary);
+  font-size: 14px;
+}
+.button {
   padding: 12px 20px;
   background: linear-gradient(135deg, var(--accent-green), #2ea043);
   color: white;
@@ -243,15 +267,17 @@ button {
   margin-top: 15px;
   flex-shrink: 0;
   font-family: inherit;
+  height: auto;
+  line-height: 1.2;
 }
 
-button:hover {
+.button:hover {
   background: linear-gradient(135deg, #2ea043, #238636);
   transform: translateY(-1px);
   box-shadow: 0 6px 16px rgba(63, 185, 80, 0.4);
 }
 
-button:active {
+.button:active {
   transform: translateY(0);
 }
 
