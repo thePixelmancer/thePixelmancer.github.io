@@ -132,7 +132,6 @@
         <div id="codeEditor"></div>
         <div class="button-group" style="display: flex; gap: 10px; margin-top: 10px;">
           <button onclick="updateExpression()">Apply Code</button>
-          <button onclick="shareCode()" style="background: #4CAF50;">Share Code</button>
         </div>
       </div>
     </div>
@@ -145,23 +144,11 @@
       window.addEventListener("load", function () {
         const textarea = document.getElementById("mathInput");
 
-        // Check for shared code first, then fall back to saved code
-        const sharedCode = loadCodeFromUrl();
+        // Only use saved code or default code
         const savedCode = localStorage.getItem("perlinFiddleCode");
         const defaultCode = "";
-
-        const codeToUse = sharedCode || savedCode || defaultCode;
+        const codeToUse = savedCode || defaultCode;
         textarea.value = codeToUse;
-
-        // If we loaded shared code, save it to localStorage and clean URL
-        if (sharedCode) {
-          localStorage.setItem("perlinFiddleCode", sharedCode);
-          // Clean the URL without reloading the page
-          const url = new URL(window.location);
-          url.searchParams.delete('code');
-          window.history.replaceState({}, document.title, url.toString());
-          showNotification('Shared code loaded successfully!');
-        }
 
         codeEditor = CodeMirror(document.getElementById("codeEditor"), {
           value: codeToUse,
@@ -239,12 +226,6 @@
             "Cmd-Enter": function (cm) {
               updateExpression();
             },
-            "Ctrl-Shift-S": function (cm) {
-              shareCode();
-            },
-            "Cmd-Shift-S": function (cm) {
-              shareCode();
-            },
             "Ctrl-Space": "autocomplete",
             "Ctrl-/": "toggleComment",
             "Cmd-/": "toggleComment",
@@ -318,43 +299,7 @@
         }
       });
 
-      // Code sharing functionality
-      function shareCode() {
-        const code = codeEditor.getValue();
-        const encodedCode = btoa(encodeURIComponent(code));
-        const shareUrl = `${window.location.origin}${window.location.pathname}?code=${encodedCode}`;
-        
-        // Copy to clipboard
-        navigator.clipboard.writeText(shareUrl).then(() => {
-          // Show feedback to user
-          showNotification('Share link copied to clipboard!');
-        }).catch(() => {
-          // Fallback for older browsers
-          const textArea = document.createElement('textarea');
-          textArea.value = shareUrl;
-          document.body.appendChild(textArea);
-          textArea.select();
-          document.execCommand('copy');
-          document.body.removeChild(textArea);
-          showNotification('Share link copied to clipboard!');
-        });
-      }
 
-      function loadCodeFromUrl() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const encodedCode = urlParams.get('code');
-        
-        if (encodedCode) {
-          try {
-            const decodedCode = decodeURIComponent(atob(encodedCode));
-            return decodedCode;
-          } catch (error) {
-            console.error('Failed to decode shared code:', error);
-            showNotification('Invalid share link', 'error');
-          }
-        }
-        return null;
-      }
 
       function showNotification(message, type = 'success') {
         const notification = document.createElement('div');

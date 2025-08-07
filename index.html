@@ -82,8 +82,7 @@
             },
           },
         },
-        plugins: [
-        ]
+        plugins: [],
       };
     </script>
   </head>
@@ -113,87 +112,93 @@
 
         <!-- Header Section -->
         <header class="mb-8 text-center relative z-10">
-        <img
-          src="images/avatar.png"
-          alt="Angelo Avatar - Professional Minecraft Developer"
-          class="w-20 h-20 mb-4 rounded-full border-2 border-border-color object-cover mx-auto"
-        />
-        <h1 class="text-3xl font-semibold text-text-primary mb-2">Angelo's Tools</h1>
-        <p class="text-text-secondary text-sm font-normal">Professional utilities for Minecraft development</p>
-      </header>
+          <img
+            src="images/avatar.png"
+            alt="Angelo Avatar - Professional Minecraft Developer"
+            class="w-20 h-20 mb-4 rounded-full border-2 border-border-color object-cover mx-auto"
+          />
+          <h1 class="text-3xl font-semibold text-text-primary mb-2">Angelo's Tools</h1>
+          <p class="text-text-secondary text-sm font-normal">Professional utilities for Minecraft development</p>
+        </header>
 
-      <!-- Navigation Section -->
-      <main>
-        <nav role="navigation" aria-label="Developer Tools">
-          <ul class="list-none flex flex-col gap-3">
-            <!-- Easy Menu Editor -->
-            <li>
-              <a
-                href="tools/easy_menu/webapp/index.html" target="_blank" rel="noopener noreferrer"
-                title="Easy Menu Editor - Visual GUI builder for Minecraft menus"
-                aria-label="Easy Menu Editor - GUI Builder using JavaScript"
-                class="group flex items-center justify-between p-4 px-5 text-text-primary bg-transparent border border-border-color rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-hover-bg hover:border-accent-blue"
-              >
-                <div>
-                  <div class="flex items-center gap-2">
-                    <span class="w-2 h-2 bg-accent-blue rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                    <span>Easy Menu Editor</span>
-                  </div>
-                  <div class="text-xs text-text-secondary font-normal">GUI Builder • JavaScript</div>
-                </div>
-                <span
-                  class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-accent-blue"
-                  >→</span
+        <!-- Navigation Section -->
+        <main>
+          <nav role="navigation" aria-label="Developer Tools">
+            <ul class="list-none flex flex-col gap-3">
+              <!-- Easy Menu Editor -->
+              <li>
+                <a
+                  href="tools/easy_menu/webapp/index.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Easy Menu Editor - Visual GUI builder for Minecraft menus"
+                  aria-label="Easy Menu Editor - GUI Builder using JavaScript"
+                  class="group flex items-center justify-between p-4 px-5 text-text-primary bg-transparent border border-border-color rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-hover-bg hover:border-accent-blue"
                 >
-              </a>
-            </li>
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <span class="w-2 h-2 bg-accent-blue rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                      <span>Easy Menu Editor</span>
+                    </div>
+                    <div class="text-xs text-text-secondary font-normal">GUI Builder • JavaScript</div>
+                  </div>
+                  <span
+                    class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-accent-blue"
+                    >→</span
+                  >
+                </a>
+              </li>
 
-            <!-- Perlin Fiddle -->
-            <li>
-              <a
-                href="tools/perlin_fiddle/index.html" target="_blank" rel="noopener noreferrer"
-                title="Perlin Fiddle - Interactive noise generation tool for game development"
-                aria-label="Perlin Fiddle - Noise Generator built with p5.js"
-                class="group flex items-center justify-between p-4 px-5 text-text-primary bg-transparent border border-border-color rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-hover-bg hover:border-accent-green"
-              >
-                <div>
-                  <div class="flex items-center gap-2">
-                    <span class="w-2 h-2 bg-accent-green rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                    <span>Perlin Fiddle</span>
-                  </div>
-                  <div class="text-xs text-text-secondary font-normal">Noise Generator • p5.js</div>
-                </div>
-                <span
-                  class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-accent-green"
-                  >→</span
+              <!-- Perlin Fiddle -->
+              <li>
+                <a
+                  href="tools/perlin_fiddle/index.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Perlin Fiddle - Interactive noise generation tool for game development"
+                  aria-label="Perlin Fiddle - Noise Generator built with p5.js"
+                  class="group flex items-center justify-between p-4 px-5 text-text-primary bg-transparent border border-border-color rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-hover-bg hover:border-accent-green"
                 >
-              </a>
-            </li>
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <span class="w-2 h-2 bg-accent-green rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                      <span>Perlin Fiddle</span>
+                    </div>
+                    <div class="text-xs text-text-secondary font-normal">Noise Generator • p5.js</div>
+                  </div>
+                  <span
+                    class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-accent-green"
+                    >→</span
+                  >
+                </a>
+              </li>
 
-            <!-- Regolith Filters -->
-            <li>
-              <a
-                href="https://github.com/thePixelmancer/regolith-filters" target="_blank" rel="noopener noreferrer"
-                title="Regolith Filters - Collection of Minecraft Bedrock development filters"
-                aria-label="Regolith Filters - Bedrock Development Tools"
-                class="group flex items-center justify-between p-4 px-5 text-text-primary bg-transparent border border-border-color rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-hover-bg hover:border-accent-purple"
-              >
-                <div>
-                  <div class="flex items-center gap-2">
-                    <span class="w-2 h-2 bg-accent-purple rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                    <span>Regolith Filters</span>
-                  </div>
-                  <div class="text-xs text-text-secondary font-normal">Development Tools • Bedrock</div>
-                </div>
-                <span
-                  class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-accent-purple"
-                  >→</span
+              <!-- Regolith Filters -->
+              <li>
+                <a
+                  href="https://github.com/thePixelmancer/regolith-filters"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Regolith Filters - Collection of Minecraft Bedrock development filters"
+                  aria-label="Regolith Filters - Bedrock Development Tools"
+                  class="group flex items-center justify-between p-4 px-5 text-text-primary bg-transparent border border-border-color rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-hover-bg hover:border-accent-purple"
                 >
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </main>
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <span class="w-2 h-2 bg-accent-purple rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                      <span>Regolith Filters</span>
+                    </div>
+                    <div class="text-xs text-text-secondary font-normal">Development Tools • Bedrock</div>
+                  </div>
+                  <span
+                    class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-accent-purple"
+                    >→</span
+                  >
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </main>
       </div>
     </div>
 
