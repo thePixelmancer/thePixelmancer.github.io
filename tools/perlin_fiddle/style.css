@@ -167,6 +167,7 @@ body {
 
 .CodeMirror {
   flex: 1;
+  padding-top: 10px;
   border: 1px solid var(--border-color);
   border-radius: 8px;
   font-size: 14px;
