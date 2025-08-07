@@ -297,41 +297,6 @@ function mouseDragged() {
 function keyPressed() {
   // Resolution is now controlled by input field, no keyboard shortcuts
 }
-// Perlin Noise in 2D
-/* ------------------------------------------------------------------------------------ */
-
-function pnoise(x, y) {
-  function hash(x, y) {
-    let n = x + y * 57;
-    n = (n << 13) ^ n;
-    return 1.0 - ((n * (n * n * 60493 + 19990303) + 1376312589) & 0x7fffffff) / 1073741824.0;
-  }
-
-  function fade(t) {
-    return t * t * t * (t * (t * 6 - 15) + 10);
-  }
-
-  function lerp(a, b, t) {
-    return a + t * (b - a);
-  }
-  const xi = Math.floor(x);
-  const yi = Math.floor(y);
-  const xf = x - xi;
-  const yf = y - yi;
-
-  const u = fade(xf);
-  const v = fade(yf);
-
-  const tl = hash(xi, yi);
-  const tr = hash(xi + 1, yi);
-  const bl = hash(xi, yi + 1);
-  const br = hash(xi + 1, yi + 1);
-
-  const top = lerp(tl, tr, u);
-  const bottom = lerp(bl, br, u);
-  return (lerp(top, bottom, v) + 1) / 2; // Normalize to [0, 1]
-}
-/* ------------------------------------------------------------------------------------ */
 // Function to create an execution function from the JavaScript code
 function updateExecuteFunction() {
   try {
@@ -397,7 +362,7 @@ function updateExecuteFunction() {
             };
 
             let query = Object.freeze({
-              noise: pnoise,
+              noise: (x, y) => {return noise(x, y) * 2 - 1;},
             });
             let variable = {
               originx: x,
