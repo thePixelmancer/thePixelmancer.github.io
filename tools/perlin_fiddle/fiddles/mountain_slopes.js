@@ -19,7 +19,7 @@ v.ztotal_perlin = (v.zperlin_1 + v.zperlin_2) / 1.5;
 v.delta_x = (v.xtotal_perlin - v.total_perlin) / 2;
 v.delta_z = (v.ztotal_perlin - v.total_perlin) / 2;
 
-//
+// calculate overall slope strength and multiply it so its closer to 0-1 range
 v.slope = math.sqrt(v.delta_x * v.delta_x + v.delta_z * v.delta_z) * 55;
 
 v.height = v.total_perlin * 0.5 + 0.5; // normalize 0-1
