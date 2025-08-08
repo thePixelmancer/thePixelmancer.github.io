@@ -28,7 +28,7 @@ v.dot = (-v.delta_x * -1 + -v.delta_z * -1 + 1 * 1) / (v.slope * math.sqrt(3));
 
 // Clamp shade between 0 and 1 and smoothstep for better contrast
 v.shade = math.max(0, math.min(1, v.dot));
-v.shade = v.shade * v.shade * (3 - 2 * v.shade);
+v.shade = math.hermite_blend(v.shade);
 
 // Normalize height to [0..1]
 v.height = v.total_perlin * 0.5 + 0.5;
@@ -50,8 +50,9 @@ v.color =
   : { r: 0.2, g: 0.2, b: 0.2 };  // dark rocks/cliffs
 
 // Apply shading but leave sea and snow bright
-v.color.r *= v.shade / v.height * 0.7;;
-v.color.g *= v.shade / v.height * 0.7;
-v.color.b *= v.shade / v.height * 0.7;
+v.color.r *= v.height < v.seaLevel ? math.random(1,1.1) : v.shade / v.height * 0.7;
+v.color.g *= v.height < v.seaLevel ?  math.random(1,1.1) : v.shade / v.height * 0.7;
+v.color.b *= v.height < v.seaLevel ?  math.random(1,1.1) : v.shade / v.height * 0.7;
+
 
 return v.color;
