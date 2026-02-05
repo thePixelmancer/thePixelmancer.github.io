@@ -1,426 +1,51 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Perlin Fiddle</title>
-    <link rel="icon" type="image/png" href="favicon.png" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
-
-    <!-- CodeMirror for syntax highlighting -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/monokai.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/dialog/dialog.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/foldgutter.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closebrackets.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/matchbrackets.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/selection/active-line.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/javascript-hint.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/foldcode.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/foldgutter.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/brace-fold.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/comment-fold.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/comment/comment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/search/search.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/search/searchcursor.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/dialog/dialog.min.js"></script>
-    <link rel="stylesheet" href="./style.css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Perlin Fiddle — Redirect</title>
+    <link rel="canonical" href="https://thepixelmancer.github.io/perlin-fiddle/" />
+    <link rel="stylesheet" href="../../dist/styles.css" />
   </head>
-  <body>
-    <div class="container">
-      <div class="left-panel">
-        <div id="p5-container"></div>
-        <div class="bottom-panel">
-          <div class="instructions">
-            <div class="credits">
-              <strong>Made by <a href="https://github.com/thePixelmancer" target="_blank" rel="noopener">Angelo (Pixelmancer)</a></strong>
-            </div>
-            <strong>Code Writing:</strong>
-            • Write JavaScript code using available functions<br />
-            • Set 'return' for final output value<br />
-            • Press Ctrl+Enter to apply your code<br />
-            <br />
-            <strong>Available Variables:</strong>
-            • x, y - world coordinates for current pixel<br />
-            • Math library - all JavaScript Math functions<br />
-            • v.originx, v.originz - origin coordinates<br />
-            • v.worldx, v.worldz - world coordinates<br />
-            <br />
-            <strong>Custom Functions:</strong>
-            • q.noise(x, y) - Perlin noise (-1 to 1, remap to 0-1)<br />
-            • loop(), random(), random_integer()<br />
-            • hermite_blend() - smooth interpolation<br />
-            <br />
-            <strong>Molang Functions:</strong>
-            • math.abs() - absolute value<br />
-            • math.sin(), math.cos(), math.tan() - trigonometry<br />
-            • math.asin(), math.acos(), math.atan(), math.atan2() - inverse trig<br />
-            • math.sqrt(), math.pow() - square root, power<br />
-            • math.exp(), math.ln() - exponential, natural log<br />
-            • math.ceil(), math.floor(), math.trunc(), math.round() - rounding<br />
-            • math.min(), math.max() - minimum, maximum<br />
-            • math.clamp() - clamp value between min/max<br />
-            • math.lerp() - linear interpolation<br />
-            • math.lerprotate() - lerp with rotation<br />
-            • math.mod() - modulo operation<br />
-            • math.random() - random 0-1<br />
-            • math.random_integer() - random integer<br />
-            • math.die_roll(), math.die_roll_integer() - dice rolls<br />
-            • math.hermite_blend() - smooth hermite interpolation<br />
-            • math.min_angle() - minimum angle between two angles<br />
-            • math.pi - pi constant<br />
-            <br />
-            <strong>Return Values:</strong>
-            • Single value (0-1) for grayscale<br />
-            • RGB object: {r: 0-1, g: 0-1, b: 0-1}<br />
-            • Optional alpha: {r: 0-1, g: 0-1, b: 0-1, a: 0-255}<br />
-            <br />
-            <strong>Example:</strong>
-            let n = (q.noise(x * 0.01, y * 0.01) + 1) / 2;<br />
-            return {r: n, g: n * 0.5, b: n * 0.2};<br />
-            <br />
-            <strong>Navigation:</strong>
-            • Mouse wheel to zoom in/out<br />
-            • Click and drag to pan around<br />
-            • Adjust World Size for detail level<br />
+  <body class="font-sans bg-gray-900 text-gray-100 min-h-screen flex items-center justify-center p-5 relative overflow-hidden">
+    <div class="bg-gradient-to-r from-blue-400 to-purple-500 p-[1px] rounded-xl max-w-lg w-full">
+      <div class="relative bg-gray-900 rounded-xl p-12 shadow-2xl backdrop-blur-sm bg-opacity-95">
+        <header class="mb-6 text-center">
+          <img
+            src="../../images/avatar.png"
+            alt="Angelo Avatar - Perlin Fiddle"
+            class="w-20 h-20 mb-4 rounded-full border-2 border-gray-700 object-cover mx-auto" />
+          <h1 class="text-2xl font-semibold text-gray-100">Perlin Fiddle</h1>
+          <p class="text-gray-400 text-sm">Interactive noise generation tool — moved</p>
+        </header>
+
+        <main class="relative z-10 text-center">
+          <p class="text-gray-300 mb-6">This tool has moved to its canonical location. Click below if you are not redirected automatically.</p>
+
+          <div class="flex justify-center gap-3">
+            <a
+              href="https://thepixelmancer.github.io/perlin-fiddle/"
+              class="px-4 py-2 bg-green-500 hover:bg-green-600 rounded text-white text-sm font-medium transition-colors">Open Perlin Fiddle</a>
+
+            <a
+              href="../../index.html"
+              class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded text-white text-sm font-medium transition-colors">Back Home</a>
           </div>
-          <div class="resolution-control">
-            <div class="input-group">
-              <label for="resolutionInput">World Size:</label>
-              <input
-                type="number"
-                id="resolutionInput"
-                min="1"
-                max="512"
-                value="512"
-                style="width: 70px; padding: 5px; border-radius: 4px; border: 1px solid #ccc"
-              />
-            </div>
-            <div class="input-group">
-              <label for="gridSizeInput">Grid Size:</label>
-              <input
-                type="number"
-                id="gridSizeInput"
-                min="1"
-                max="128"
-                value="16"
-                style="width: 60px; padding: 5px; border-radius: 4px; border: 1px solid #ccc"
-              />
-            </div>
-            <div class="input-group">
-              <label for="gridColorInput">Grid Color:</label>
-              <input
-                type="color"
-                id="gridColorInput"
-                value="#ffffff"
-                style="width: 50px; height: 32px; padding: 2px; border-radius: 4px; border: 1px solid #ccc; cursor: pointer"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="controls">
-        <textarea
-          id="mathInput"
-          placeholder="Write JavaScript code here. Set 'result' variable for the final value.&#10;&#10;Available variables:&#10;- x, y (pixel coordinates)&#10;- frequency&#10;- noise(x, y) function&#10;&#10;Return Options:&#10;1. Single value (0-1) for grayscale&#10;2. RGB object: {r: 0-1, g: 0-1, b: 0-1}&#10;&#10;Example:&#10;let n = noise(x * frequency, y * frequency);&#10;result = {r: n, g: n * 0.5, b: n * 0.2};"
-        ></textarea>
-        <div id="codeEditor"></div>
-        <div class="button-group" style="display: flex; gap: 10px; margin-top: 10px; align-items: center">
-          <button class="button" onclick="updateExpression()">Apply Code</button>
-          <button class="button" id="copyMolangBtn" type="button">Copy Molang</button>
-          <select id="exampleSelect" class="button">
-            <option value="">Load Example...</option>
-            <option value="scattered_islands.js">Scattered Islands</option>
-            <option value="terrain.js">Terrain</option>
-            <option value="ridges.js">Ridges</option>
-            <option value="hex_grid.js">Hex Grid</option>
-            <option value="mountain_slopes.js">Mountain Slopes</option>
-            <option value="shaded_mountain.js">Shaded Mountain</option>
-          </select>
-        </div>
-        <script>
-          // Copy Molang button logic
-          document.addEventListener("DOMContentLoaded", function () {
-            const copyBtn = document.getElementById("copyMolangBtn");
-            if (copyBtn) {
-              copyBtn.addEventListener("click", function () {
-                let code = "";
-                if (window.codeEditor) {
-                  code = codeEditor.getValue();
-                } else {
-                  code = document.getElementById("mathInput").value;
-                }
-                // Remove all // and /* */ comments and whitespace lines
-                let noBlock = code.replace(/\/\*[\s\S]*?\*\//g, ""); // Remove /* ... */
-                let noLine = noBlock.replace(/\/\/.*$/gm, ""); // Remove // ...
-                let lines = noLine
-                  .split(/\r?\n/)
-                  .map((line) => line.trim())
-                  .filter((line) => line);
-                // Join lines, but keep object literals and ternaries together
-                let joined = lines.join(" ");
-                // Remove semicolons after commas in object literals
-                joined = joined.replace(/,;/g, ",");
-                // Remove multiple spaces
-                joined = joined.replace(/\s+/g, " ");
-                // Add semicolons at the end of statements if missing (but not after { or })
-                joined = joined.replace(/([^;{}])\s*(?=(let|const|var|return|if|for|while|function|$))/g, "$1; ");
-                // Remove semicolons before }
-                joined = joined.replace(/;(\s*})/g, "$1");
-                // Remove semicolons after { or before ,
-                joined = joined.replace(/({|,)\s*;/g, "$1");
-                // Remove semicolons before ?
-                joined = joined.replace(/;\s*\?/g, " ?");
-                // Remove semicolons before :
-                joined = joined.replace(/;\s*:/g, " :");
-                // Remove semicolons before ,
-                joined = joined.replace(/;\s*,/g, ",");
-                // Remove duplicate semicolons
-                joined = joined.replace(/;;+/g, ";");
-                // Copy to clipboard
-                navigator.clipboard.writeText(joined.trim()).then(
-                  () => {
-                    showNotification("Molang copied to clipboard!", "success");
-                  },
-                  () => {
-                    showNotification("Failed to copy Molang.", "error");
-                  }
-                );
-              });
-            }
-          });
-        </script>
+
+          <p class="mt-6 text-xs text-gray-500">Auto-redirecting in <span id="count">5</span>s...</p>
+        </main>
       </div>
     </div>
 
-    <script src="sketch.js"></script>
     <script>
-      // Load example code from fiddles folder
-      document.addEventListener("DOMContentLoaded", function () {
-        const exampleSelect = document.getElementById("exampleSelect");
-        if (exampleSelect) {
-          exampleSelect.addEventListener("change", function () {
-            const filename = this.value;
-            if (!filename) return;
-            fetch(`./fiddles/${filename}`)
-              .then((response) => {
-                if (!response.ok) throw new Error("Failed to load example");
-                return response.text();
-              })
-              .then((code) => {
-                if (window.codeEditor) {
-                  codeEditor.setValue(code);
-                } else {
-                  document.getElementById("mathInput").value = code;
-                }
-                localStorage.setItem("perlinFiddleCode", code);
-                updateExpression();
-              })
-              .catch((err) => {
-                showNotification("Could not load example: " + err.message, "error");
-              });
-            // Reset dropdown to placeholder
-            setTimeout(() => {
-              this.value = "";
-            }, 500);
-          });
-        }
-      });
-    </script>
-
-    <script>
-      // Initialize CodeMirror editor
-      let codeEditor;
-
-      window.addEventListener("load", function () {
-        const textarea = document.getElementById("mathInput");
-
-        // Only use saved code or default code
-        const savedCode = localStorage.getItem("perlinFiddleCode");
-        const defaultCode = "";
-        const codeToUse = savedCode || defaultCode;
-        textarea.value = codeToUse;
-
-        codeEditor = CodeMirror(document.getElementById("codeEditor"), {
-          value: codeToUse,
-          mode: "javascript",
-          theme: "monokai",
-          lineNumbers: true,
-          indentUnit: 2,
-          tabSize: 2,
-          indentWithTabs: false,
-          lineWrapping: true,
-          autoCloseBrackets: false,
-          matchBrackets: true,
-          styleActiveLine: true,
-          viewportMargin: Infinity,
-          foldGutter: true,
-          gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
-          hintOptions: {
-            completeSingle: false,
-            hint: function (cm) {
-              // Custom autocomplete for your math functions
-              const cursor = cm.getCursor();
-              const token = cm.getTokenAt(cursor);
-              const start = token.start;
-              const end = cursor.ch;
-              const word = token.string.slice(0, end - start);
-
-              const mathFunctions = [
-                "math.abs()",
-                "math.sin()",
-                "math.cos()",
-                "math.clamp()",
-                "math.ceil()",
-                "math.floor()",
-                "math.trunc()",
-                "math.round()",
-                "math.mod()",
-                "math.pow()",
-                "math.sqrt()",
-                "math.exp()",
-                "math.pi",
-                "math.max()",
-                "math.min()",
-                "math.min_angle()",
-                "math.asin()",
-                "math.acos()",
-                "math.atan()",
-                "math.atan2()",
-                "math.random()",
-                "math.random_integer()",
-                "q.noise()",
-                "math.die_roll()",
-                "math.die_roll_integer()",
-                "math.hermite_blend()",
-                "math.lerp()",
-                "math.lerprotate()",
-                "math.ln()",
-                "return",
-              ];
-
-              const variables = ["x", "y", "v.originx", "v.originz", "v.worldx", "v.worldz"];
-
-              const allCompletions = [...mathFunctions, ...variables];
-
-              return {
-                list: allCompletions,
-                from: CodeMirror.Pos(cursor.line, start),
-                to: CodeMirror.Pos(cursor.line, end),
-              };
-            },
-          },
-          extraKeys: {
-            "Ctrl-Enter": function (cm) {
-              updateExpression();
-            },
-            "Cmd-Enter": function (cm) {
-              updateExpression();
-            },
-            "Ctrl-Space": "autocomplete",
-            "Ctrl-/": "toggleComment",
-            "Cmd-/": "toggleComment",
-            "Ctrl-F": "findPersistent",
-            "Cmd-F": "findPersistent",
-            F11: function (cm) {
-              cm.setOption("fullScreen", !cm.getOption("fullScreen"));
-            },
-            Esc: function (cm) {
-              if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
-            },
-          },
-        });
-
-        // Save code to localStorage whenever it changes
-        codeEditor.on("change", function (cm) {
-          localStorage.setItem("perlinFiddleCode", cm.getValue());
-        });
-
-        // Load saved input values
-        const savedWorldSize = localStorage.getItem("perlinFiddleWorldSize");
-        const savedGridSize = localStorage.getItem("perlinFiddleGridSize");
-        const savedGridColor = localStorage.getItem("perlinFiddleGridColor");
-
-        if (savedWorldSize) {
-          document.getElementById("resolutionInput").value = savedWorldSize;
-        }
-        if (savedGridSize) {
-          document.getElementById("gridSizeInput").value = savedGridSize;
-        }
-        if (savedGridColor) {
-          document.getElementById("gridColorInput").value = savedGridColor;
-        }
-
-        // Resize CodeMirror when window resizes
-        window.addEventListener("resize", function () {
-          setTimeout(function () {
-            if (codeEditor) {
-              codeEditor.refresh();
-            }
-          }, 100);
-        });
-
-        // Add event listener for grid size input
-        const gridSizeInput = document.getElementById("gridSizeInput");
-        if (gridSizeInput) {
-          gridSizeInput.addEventListener("input", function () {
-            localStorage.setItem("perlinFiddleGridSize", this.value);
-            // Grid changes are handled in the draw loop, no need to regenerate terrain
-          });
-        }
-
-        // Add event listener for grid color input
-        const gridColorInput = document.getElementById("gridColorInput");
-        if (gridColorInput) {
-          gridColorInput.addEventListener("input", function () {
-            localStorage.setItem("perlinFiddleGridColor", this.value);
-            // Grid changes are handled in the draw loop, no need to regenerate terrain
-          });
-        }
-      });
-
-      function showNotification(message, type = "success") {
-        const notification = document.createElement("div");
-        notification.className = `notification ${type}`;
-        notification.textContent = message;
-        notification.style.cssText = `
-          position: fixed;
-          top: 20px;
-          right: 20px;
-          background: ${type === "error" ? "#ff4444" : "#4CAF50"};
-          color: white;
-          padding: 12px 20px;
-          border-radius: 6px;
-          font-family: monospace;
-          z-index: 10000;
-          animation: slideIn 0.3s ease-out;
-        `;
-
-        document.body.appendChild(notification);
-
-        setTimeout(() => {
-          notification.style.animation = "slideOut 0.3s ease-out";
-          setTimeout(() => notification.remove(), 300);
-        }, 3000);
-      }
-
-      // Add CSS for animations
-      const style = document.createElement("style");
-      style.textContent = `
-        @keyframes slideIn {
-          from { transform: translateX(100%); opacity: 0; }
-          to { transform: translateX(0); opacity: 1; }
-        }
-        @keyframes slideOut {
-          from { transform: translateX(0); opacity: 1; }
-          to { transform: translateX(100%); opacity: 0; }
-        }
-      `;
-      document.head.appendChild(style);
+      (function(){
+        var t = 5;
+        var el = document.getElementById('count');
+        var iv = setInterval(function(){
+          t--; if(el) el.textContent = t;
+          if(t<=0){ clearInterval(iv); location.href = 'https://thepixelmancer.github.io/perlin-fiddle/'; }
+        },1000);
+      })();
     </script>
   </body>
 </html>
