@@ -277,6 +277,9 @@
   .h-2 {
     height: calc(var(--spacing) * 2);
   }
+  .h-8 {
+    height: calc(var(--spacing) * 8);
+  }
   .h-20 {
     height: calc(var(--spacing) * 20);
   }
@@ -294,6 +297,9 @@
   }
   .w-2 {
     width: calc(var(--spacing) * 2);
+  }
+  .w-8 {
+    width: calc(var(--spacing) * 8);
   }
   .w-20 {
     width: calc(var(--spacing) * 20);
