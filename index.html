@@ -1,207 +1,856 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
 
-    <title>Angelo's Developer Tools - Minecraft Development Utilities</title>
-    <meta name="title" content="Angelo's Developer Tools - Minecraft Development Utilities" />
+    <title>Angelo - Developer Tools & Portfolio</title>
+    <meta
+      name="title"
+      content="Angelo - Developer Tools & Portfolio" />
     <meta
       name="description"
-      content="Professional development tools for Minecraft creators and developers. Easy Menu Editor for GUI building and Perlin Fiddle for noise generation. Free web-based tools for game development." />
+      content="Professional developer tools and creative portfolio. Minecraft development utilities, VSCode extensions, 3D models, animations, and more." />
     <meta
       name="keywords"
-      content="Minecraft, developer tools, GUI builder, menu editor, Perlin noise, game development, web tools, JavaScript, p5.js" />
-    <meta name="author" content="Angelo" />
-    <meta name="robots" content="index, follow" />
+      content="Angelo, developer tools, portfolio, Minecraft, GUI builder, VSCode extensions, 3D models, animations, Blender, game development, web tools" />
+    <meta
+      name="author"
+      content="Angelo" />
+    <meta
+      name="robots"
+      content="index, follow" />
 
-    <link rel="canonical" href="https://thepixelmancer.github.io/" />
+    <link
+      rel="canonical"
+      href="https://thepixelmancer.github.io/" />
 
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://thepixelmancer.github.io/" />
-    <meta property="og:title" content="Angelo's Developer Tools - Minecraft Development Utilities" />
+    <meta
+      property="og:type"
+      content="website" />
+    <meta
+      property="og:url"
+      content="https://thepixelmancer.github.io/" />
+    <meta
+      property="og:title"
+      content="Angelo - Developer Tools & Portfolio" />
     <meta
       property="og:description"
-      content="Professional development tools for Minecraft creators and developers. Easy Menu Editor for GUI building and Perlin Fiddle for noise generation." />
-    <meta property="og:image" content="https://thepixelmancer.github.io/images/avatar.png" />
-    <meta property="og:site_name" content="Angelo's Tools" />
+      content="Professional developer tools and creative portfolio. Minecraft utilities, VSCode extensions, 3D models, and animations." />
+    <meta
+      property="og:image"
+      content="https://thepixelmancer.github.io/images/avatar.png" />
+    <meta
+      property="og:site_name"
+      content="Angelo's Tools" />
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://thepixelmancer.github.io/" />
-    <meta property="twitter:title" content="Angelo's Developer Tools - Minecraft Development Utilities" />
+    <meta
+      property="twitter:card"
+      content="summary_large_image" />
+    <meta
+      property="twitter:url"
+      content="https://thepixelmancer.github.io/" />
+    <meta
+      property="twitter:title"
+      content="Angelo - Developer Tools & Portfolio" />
     <meta
       property="twitter:description"
-      content="Professional development tools for Minecraft creators and developers. Easy Menu Editor for GUI building and Perlin Fiddle for noise generation." />
-    <meta property="twitter:image" content="https://thepixelmancer.github.io/images/avatar.png" />
+      content="Professional developer tools and creative portfolio. Minecraft utilities, VSCode extensions, 3D models, and animations." />
+    <meta
+      property="twitter:image"
+      content="https://thepixelmancer.github.io/images/avatar.png" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="32x32" href="images/avatar.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="images/avatar.png" />
-    <link rel="apple-touch-icon" href="images/avatar.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/avatar.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/avatar.png" />
+    <link
+      rel="apple-touch-icon"
+      href="images/avatar.png" />
 
     <!-- Theme Color -->
-    <meta name="theme-color" content="#0d1117" />
-    <meta name="msapplication-TileColor" content="#0d1117" />
+    <meta
+      name="theme-color"
+      content="#0d1117" />
+    <meta
+      name="msapplication-TileColor"
+      content="#0d1117" />
 
     <!-- Web App Manifest -->
-    <link rel="manifest" href="manifest.json" />
+    <link
+      rel="manifest"
+      href="manifest.json" />
 
     <!-- Preload critical resources -->
-    <link rel="preload" href="images/avatar.png" as="image" />
+    <link
+      rel="preload"
+      href="images/avatar.png"
+      as="image" />
 
     <!-- Tailwind CSS -->
-    <link rel="stylesheet" href="./dist/styles.css" />
+    <link
+      rel="stylesheet"
+      href="./dist/styles.css" />
+
+    <style>
+      /* Custom scrollbar styling */
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 4px;
+      }
+
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 4px;
+        transition: background 0.2s;
+      }
+
+      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      /* Smooth scrolling */
+      .horizontal-scroll {
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      /* Section card min-width for Trello-like layout */
+      .section-card {
+        min-width: 420px;
+        max-width: 420px;
+      }
+
+      @media (max-width: 768px) {
+        .section-card {
+          min-width: 100%;
+          max-width: 100%;
+        }
+      }
+
+      /* Prevent content shift on scroll */
+      .no-shift {
+        overflow: overlay;
+      }
+    </style>
   </head>
-  <body class="font-sans bg-gray-900 text-gray-100 min-h-screen flex items-center justify-center p-5 relative overflow-hidden">
+  <body class="font-sans bg-gray-900 text-gray-100 overflow-hidden">
     <!-- Background Parallax Layers -->
-    <div class="fixed w-[110%] h-[110%] bg-no-repeat bg-center bg-cover z-[-50]" style="background-image: url('images/bgz0.png')"></div>
-    <div class="fixed w-[115%] h-[115%] bg-no-repeat bg-center bg-cover z-[-50]" style="background-image: url('images/bgz1.png')"></div>
-    <div class="fixed w-[120%] h-[120%] bg-no-repeat bg-center bg-cover z-[-50]" style="background-image: url('images/bgz2.png')"></div>
+    <div
+      class="fixed w-[130%] h-[130%] bg-no-repeat bg-center bg-cover z-[-50] -top-[25%] -left-[25%]"
+      style="background-image: url(&quot;images/bgz0.png&quot;)"></div>
+    <div
+      class="fixed w-[130%] h-[130%] bg-no-repeat bg-center bg-cover z-[-50] -top-[25%] -left-[25%]"
+      style="background-image: url(&quot;images/bgz1.png&quot;)"></div>
+    <div
+      class="fixed w-[130%] h-[130%] bg-no-repeat bg-center bg-cover z-[-50] -top-[25%] -left-[25%]"
+      style="background-image: url(&quot;images/bgz2.png&quot;)"></div>
     <script src="parallax.js"></script>
-    <!-- Main Container with Gradient Border -->
-    <div class="bg-gradient-to-r from-blue-400 to-purple-500 p-[1px] rounded-xl max-w-lg w-full">
-      <div class="relative bg-gray-900 rounded-xl p-12 shadow-2xl backdrop-blur-sm bg-opacity-95">
-        <!-- Background Effects -->
-        <div class="absolute inset-0 bg-gradient-to-br from-blue-400/10 via-purple-500/10 to-green-400/10 rounded-xl animate-pulse"></div>
-        <div
-          class="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-400/20 via-purple-500/20 to-green-400/20 opacity-0 hover:opacity-100 transition-opacity duration-500 blur-xl -z-10"></div>
 
-        <!-- Header Section -->
-        <header class="mb-8 text-center relative z-10">
-          <img
-            src="images/avatar.png"
-            alt="Angelo Avatar - Professional Minecraft Developer"
-            class="w-20 h-20 mb-4 rounded-full border-2 border-gray-700 object-cover mx-auto" />
-          <h1 class="text-3xl font-semibold text-gray-100 mb-2">Angelo's Tools</h1>
-          <p class="text-gray-400 text-sm font-normal">Professional utilities for Minecraft development</p>
-        </header>
+    <!-- Main Container - Horizontal scroll on desktop, vertical on mobile -->
+    <div
+      id="main"
+      class="h-screen flex flex-col md:flex-row md:overflow-x-auto md:overflow-y-hidden overflow-y-auto overflow-x-hidden gap-6 md:gap-8 p-6 md:p-8 horizontal-scroll custom-scrollbar">
+      <!-- About Me Section -->
+      <section class="flex-shrink-0 h-auto md:h-full md:w-xl">
+        <div class="bg-gray-900 rounded-xl shadow-2xl backdrop-blur-sm bg-opacity-95 h-full flex flex-col overflow-hidden">
+          <!-- Header Section - Fixed -->
+          <header class="p-8 pb-6 text-center flex-shrink-0 border-b border-gray-800">
+            <img
+              src="images/avatar.png"
+              alt="Angelo Avatar - Professional Minecraft Developer"
+              class="w-20 h-20 mb-4 rounded-full border-2 border-gray-700 object-cover mx-auto shadow-lg" />
+            <h1 class="text-3xl font-semibold text-gray-100 mb-2">Angelo</h1>
+            <p class="text-gray-400 text-sm font-normal">Developer Tools & Creative Portfolio</p>
+          </header>
 
-        <!-- Navigation Section -->
-        <main>
-          <nav role="navigation" aria-label="Developer Tools">
-            <ul class="list-none flex flex-col gap-3">
-              
-              <!-- Perlin Fiddle -->
-              <li>
-                <a
-                  href="https://thepixelmancer.github.io/perlin-fiddle/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title="Perlin Fiddle - Interactive noise generation tool for game development"
-                  aria-label="Perlin Fiddle - Noise Generator built with p5.js"
-                  class="group flex items-center justify-between p-4 px-5 text-gray-100 bg-transparent border border-gray-700 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-gray-700 hover:border-green-400">
-                  <div>
-                    <div class="flex items-center gap-3">
-                      <img src="images/perlin-fiddle-icon.png" alt="Perlin Fiddle Icon" class="w-8 h-8 rounded object-cover" />
-                      <div>
-                        <div class="flex items-center gap-2">
-                          <span class="w-2 h-2 bg-green-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                          <span>Perlin Fiddle</span>
-                        </div>
-                        <div class="text-xs text-gray-400 font-normal">Noise Generator • p5.js</div>
-                        <div class="text-xs text-gray-500 mt-1">Interactive Perlin noise generation tool for procedural content and game development</div>
+          <!-- Navigation Section - Scrollable -->
+          <div class="flex-1 overflow-y-auto custom-scrollbar p-8 pt-6">
+            <nav
+              role="navigation"
+              aria-label="Developer Tools">
+              <ul class="list-none flex flex-col gap-3">
+                <!-- Regolith Filters -->
+                <li>
+                  <a
+                    href="https://github.com/thePixelmancer/regolith-filters"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Regolith Filters - Collection of Minecraft Bedrock development filters"
+                    aria-label="Regolith Filters - Bedrock Development Tools"
+                    class="group flex items-center justify-between p-4 px-5 text-gray-100 bg-transparent border border-gray-700 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-gray-700 hover:border-purple-400 hover:shadow-lg hover:shadow-purple-400/20">
+                    <div>
+                      <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 bg-purple-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                        <span>Regolith Filters</span>
+                      </div>
+                      <div class="text-xs text-gray-400 font-normal mt-1">Development Tools • Bedrock</div>
+                      <div class="text-xs text-gray-500 mt-1">
+                        Collection of powerful filters and utilities for Minecraft Bedrock Edition development
                       </div>
                     </div>
-                  </div>
-                  <span
-                    class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-green-400"
-                    >→</span
-                  >
-                </a>
-              </li>
+                    <span
+                      class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-purple-400"
+                      >→</span
+                    >
+                  </a>
+                </li>
 
-              <!-- Regolith Filters -->
-              <li>
-                <a
-                  href="https://github.com/thePixelmancer/regolith-filters"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title="Regolith Filters - Collection of Minecraft Bedrock development filters"
-                  aria-label="Regolith Filters - Bedrock Development Tools"
-                  class="group flex items-center justify-between p-4 px-5 text-gray-100 bg-transparent border border-gray-700 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-gray-700 hover:border-purple-400">
-                  <div>
-                    <div class="flex items-center gap-2">
-                      <span class="w-2 h-2 bg-purple-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                      <span>Regolith Filters</span>
-                    </div>
-                    <div class="text-xs text-gray-400 font-normal">Development Tools • Bedrock</div>
-                    <div class="text-xs text-gray-500 mt-1">Collection of powerful filters and utilities for Minecraft Bedrock Edition development</div>
-                  </div>
-                  <span
-                    class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-purple-400"
-                    >→</span
-                  >
-                </a>
-              </li>
+                <!-- Web Tools Divider -->
+                <li class="pt-2 mt-2 border-t border-gray-700">
+                  <div class="text-xs text-gray-500 font-semibold uppercase tracking-wider px-1 mb-3">Web Tools</div>
+                </li>
 
-              <!-- VSCode Extensions Divider -->
-              <li class="pt-2 mt-2 border-t border-gray-700">
-                <div class="text-xs text-gray-500 font-semibold uppercase tracking-wider px-1 mb-3">VSCode Extensions</div>
-              </li>
-
-              <!-- Controller View -->
-              <li>
-                <a
-                  href="https://marketplace.visualstudio.com/items?itemName=pixelmancer.controller-view"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title="Controller View - VSCode extension for controller development"
-                  aria-label="Controller View - VSCode Extension"
-                  class="group flex items-center justify-between p-4 px-5 text-gray-100 bg-transparent border border-gray-700 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-gray-700 hover:border-orange-400">
-                  <div>
-                    <div class="flex items-center gap-3">
-                      <img src="images/controller-view-icon.png" alt="Controller View Icon" class="w-8 h-8 rounded object-cover" />
-                      <div>
-                        <div class="flex items-center gap-2">
-                          <span class="w-2 h-2 bg-orange-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                          <span>Controller View</span>
+                <!-- Perlin Fiddle -->
+                <li>
+                  <a
+                    href="https://thepixelmancer.github.io/perlin-fiddle/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Perlin Fiddle - Interactive noise generation tool for game development"
+                    aria-label="Perlin Fiddle - Noise Generator built with p5.js"
+                    class="group flex items-center justify-between p-4 px-5 text-gray-100 bg-transparent border border-gray-700 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-gray-700 hover:border-green-400 hover:shadow-lg hover:shadow-green-400/20">
+                    <div>
+                      <div class="flex items-center gap-3">
+                        <img
+                          src="images/perlin-fiddle-icon.png"
+                          alt="Perlin Fiddle Icon"
+                          class="w-8 h-8 rounded object-cover" />
+                        <div>
+                          <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 bg-green-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                            <span>Perlin Fiddle</span>
+                          </div>
+                          <div class="text-xs text-gray-400 font-normal">Noise Generator • p5.js</div>
                         </div>
-                        <div class="text-xs text-gray-400 font-normal">VSCode Extension • Controller</div>
-                        <div class="text-xs text-gray-500 mt-1">Enhanced controller development tools with advanced debugging and visualization features</div>
+                      </div>
+                      <div class="text-xs text-gray-500 mt-2">
+                        Interactive Perlin noise generation tool for procedural content and game development
                       </div>
                     </div>
-                  </div>
-                  <span
-                    class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-orange-400"
-                    >→</span
-                  >
-                </a>
-              </li>
+                    <span
+                      class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-green-400"
+                      >→</span
+                    >
+                  </a>
+                </li>
 
-              <!-- Modular MC Syntax -->
-              <li>
-                <a
-                  href="https://marketplace.visualstudio.com/items?itemName=pixelmancer.modular-mc-syntax"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title="Modular MC Syntax - VSCode extension for Minecraft syntax highlighting"
-                  aria-label="Modular MC Syntax - VSCode Extension"
-                  class="group flex items-center justify-between p-4 px-5 text-gray-100 bg-transparent border border-gray-700 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-gray-700 hover:border-cyan-400">
-                  <div>
-                    <div class="flex items-center gap-3">
-                      <img src="images/modular-mc-syntax-icon.png" alt="Modular MC Syntax Icon" class="w-8 h-8 rounded object-cover" />
-                      <div>
-                        <div class="flex items-center gap-2">
-                          <span class="w-2 h-2 bg-cyan-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                          <span>Modular MC Syntax</span>
+                <!-- VSCode Extensions Divider -->
+                <li class="pt-2 mt-2 border-t border-gray-700">
+                  <div class="text-xs text-gray-500 font-semibold uppercase tracking-wider px-1 mb-3">VSCode Extensions</div>
+                </li>
+
+                <!-- Controller View -->
+                <li>
+                  <a
+                    href="https://marketplace.visualstudio.com/items?itemName=pixelmancer.controller-view"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Controller View - VSCode extension for controller development"
+                    aria-label="Controller View - VSCode Extension"
+                    class="group flex items-center justify-between p-4 px-5 text-gray-100 bg-transparent border border-gray-700 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-gray-700 hover:border-orange-400 hover:shadow-lg hover:shadow-orange-400/20">
+                    <div>
+                      <div class="flex items-center gap-3">
+                        <img
+                          src="images/controller-view-icon.png"
+                          alt="Controller View Icon"
+                          class="w-8 h-8 rounded object-cover" />
+                        <div>
+                          <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 bg-orange-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                            <span>Controller View</span>
+                          </div>
+                          <div class="text-xs text-gray-400 font-normal">VSCode Extension • Controller</div>
                         </div>
-                        <div class="text-xs text-gray-400 font-normal">VSCode Extension • Syntax</div>
-                        <div class="text-xs text-gray-500 mt-1">Comprehensive syntax highlighting and language support for Minecraft development</div>
+                      </div>
+                      <div class="text-xs text-gray-500 mt-2">
+                        Enhanced controller development tools with advanced debugging and visualization features
                       </div>
                     </div>
-                  </div>
-                  <span
-                    class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-cyan-400"
-                    >→</span
-                  >
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </main>
-      </div>
+                    <span
+                      class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-orange-400"
+                      >→</span
+                    >
+                  </a>
+                </li>
+
+                <!-- Modular MC Syntax -->
+                <li>
+                  <a
+                    href="https://marketplace.visualstudio.com/items?itemName=pixelmancer.modular-mc-syntax"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Modular MC Syntax - VSCode extension for Minecraft syntax highlighting"
+                    aria-label="Modular MC Syntax - VSCode Extension"
+                    class="group flex items-center justify-between p-4 px-5 text-gray-100 bg-transparent border border-gray-700 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-gray-700 hover:border-cyan-400 hover:shadow-lg hover:shadow-cyan-400/20">
+                    <div>
+                      <div class="flex items-center gap-3">
+                        <img
+                          src="images/modular-mc-syntax-icon.png"
+                          alt="Modular MC Syntax Icon"
+                          class="w-8 h-8 rounded object-cover" />
+                        <div>
+                          <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 bg-cyan-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                            <span>Modular MC Syntax</span>
+                          </div>
+                          <div class="text-xs text-gray-400 font-normal">VSCode Extension • Syntax</div>
+                        </div>
+                      </div>
+                      <div class="text-xs text-gray-500 mt-2">Comprehensive syntax highlighting and language support for Minecraft development</div>
+                    </div>
+                    <span
+                      class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-cyan-400"
+                      >→</span
+                    >
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tools Section -->
+      <section class="flex-shrink-0 h-auto md:h-full md:w-xl">
+        <div class="bg-gray-900 rounded-xl shadow-2xl backdrop-blur-sm bg-opacity-95 h-full flex flex-col overflow-hidden">
+          <!-- Header Section - Fixed -->
+          <header class="p-8 pb-6 text-center flex-shrink-0 border-b border-gray-800">
+            <h2 class="text-3xl font-semibold text-gray-100 mb-2">Portfolio</h2>
+            <p class="text-gray-400 text-sm font-normal">Creative works & projects</p>
+          </header>
+
+          <!-- Portfolio Section - Scrollable -->
+          <div class="flex-1 overflow-y-auto custom-scrollbar p-8 pt-6">
+            <nav
+              role="navigation"
+              aria-label="Portfolio Projects">
+              <ul class="list-none flex flex-col gap-3">
+                <!-- 3D Models & Animations -->
+                <li>
+                  <a
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="3D Models and Animations - Collection of 3D artwork"
+                    aria-label="3D Models and Animations Portfolio"
+                    class="group flex items-center justify-between p-4 px-5 text-gray-100 bg-transparent border border-gray-700 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-gray-700 hover:border-pink-400 hover:shadow-lg hover:shadow-pink-400/20">
+                    <div>
+                      <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded bg-pink-400/20 flex items-center justify-center">
+                          <span class="text-pink-400 text-xs font-bold">3D</span>
+                        </div>
+                        <div>
+                          <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 bg-pink-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                            <span>3D Models & Animations</span>
+                          </div>
+                          <div class="text-xs text-gray-400 font-normal">Art • Blender</div>
+                        </div>
+                      </div>
+                      <div class="text-xs text-gray-500 mt-2">Collection of 3D models and animations created using Blender and other tools</div>
+                    </div>
+                    <span
+                      class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-pink-400"
+                      >→</span
+                    >
+                  </a>
+                </li>
+
+                <!-- Game Development -->
+                <li>
+                  <a
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Game Development Projects"
+                    aria-label="Game Development Portfolio"
+                    class="group flex items-center justify-between p-4 px-5 text-gray-100 bg-transparent border border-gray-700 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-gray-700 hover:border-yellow-400 hover:shadow-lg hover:shadow-yellow-400/20">
+                    <div>
+                      <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded bg-yellow-400/20 flex items-center justify-center">
+                          <span class="text-yellow-400 text-xs font-bold">DEV</span>
+                        </div>
+                        <div>
+                          <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 bg-yellow-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                            <span>Game Development</span>
+                          </div>
+                          <div class="text-xs text-gray-400 font-normal">Projects • Unity</div>
+                        </div>
+                      </div>
+                      <div class="text-xs text-gray-500 mt-2">Indie game projects and experimental gameplay mechanics</div>
+                    </div>
+                    <span
+                      class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-yellow-400"
+                      >→</span
+                    >
+                  </a>
+                </li>
+
+                <!-- Web Design -->
+                <li>
+                  <a
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Web Design Projects"
+                    aria-label="Web Design Portfolio"
+                    class="group flex items-center justify-between p-4 px-5 text-gray-100 bg-transparent border border-gray-700 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-gray-700 hover:border-blue-400 hover:shadow-lg hover:shadow-blue-400/20">
+                    <div>
+                      <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded bg-blue-400/20 flex items-center justify-center">
+                          <span class="text-blue-400 text-xs font-bold">WEB</span>
+                        </div>
+                        <div>
+                          <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 bg-blue-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                            <span>Web Design</span>
+                          </div>
+                          <div class="text-xs text-gray-400 font-normal">UI/UX • Frontend</div>
+                        </div>
+                      </div>
+                      <div class="text-xs text-gray-500 mt-2">Modern web interfaces and interactive user experiences</div>
+                    </div>
+                    <span
+                      class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-blue-400"
+                      >→</span
+                    >
+                  </a>
+                </li>
+
+                <!-- About Me -->
+                <li>
+                  <a
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="About Me - Personal information and background"
+                    aria-label="About Me"
+                    class="group flex items-center justify-between p-4 px-5 text-gray-100 bg-transparent border border-gray-700 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-gray-700 hover:border-indigo-400 hover:shadow-lg hover:shadow-indigo-400/20">
+                    <div>
+                      <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded bg-indigo-400/20 flex items-center justify-center">
+                          <span class="text-indigo-400 text-xs font-bold">ME</span>
+                        </div>
+                        <div>
+                          <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 bg-indigo-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                            <span>About Me</span>
+                          </div>
+                          <div class="text-xs text-gray-400 font-normal">Personal • Background</div>
+                        </div>
+                      </div>
+                      <div class="text-xs text-gray-500 mt-2">Learn more about my background, skills, and journey as a developer</div>
+                    </div>
+                    <span
+                      class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-indigo-400"
+                      >→</span
+                    >
+                  </a>
+                </li>
+
+                <!-- Marketplace Content -->
+                <li>
+                  <a
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Marketplace Content - Published assets and products"
+                    aria-label="Marketplace Content"
+                    class="group flex items-center justify-between p-4 px-5 text-gray-100 bg-transparent border border-gray-700 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-gray-700 hover:border-teal-400 hover:shadow-lg hover:shadow-teal-400/20">
+                    <div>
+                      <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded bg-teal-400/20 flex items-center justify-center">
+                          <span class="text-teal-400 text-xs font-bold">MC</span>
+                        </div>
+                        <div>
+                          <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 bg-teal-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                            <span>Marketplace Content</span>
+                          </div>
+                          <div class="text-xs text-gray-400 font-normal">Products • Assets</div>
+                        </div>
+                      </div>
+                      <div class="text-xs text-gray-500 mt-2">Published assets, plugins, and digital products available on various marketplaces</div>
+                    </div>
+                    <span
+                      class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-teal-400"
+                      >→</span
+                    >
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </section>
+      <!-- Art Section -->
+      <section class="flex-shrink-0 h-auto md:h-full md:w-xl">
+        <div class="bg-gray-900 rounded-xl shadow-2xl backdrop-blur-sm bg-opacity-95 h-full flex flex-col overflow-hidden">
+          <!-- Header Section - Fixed -->
+          <header class="p-8 pb-6 text-center flex-shrink-0 border-b border-gray-800">
+            <h2 class="text-3xl font-semibold text-gray-100 mb-2">Portfolio</h2>
+            <p class="text-gray-400 text-sm font-normal">Creative works & projects</p>
+          </header>
+
+          <!-- Portfolio Section - Scrollable -->
+          <div class="flex-1 overflow-y-auto custom-scrollbar p-8 pt-6">
+            <nav
+              role="navigation"
+              aria-label="Portfolio Projects">
+              <ul class="list-none flex flex-col gap-3">
+                <!-- 3D Models & Animations -->
+                <li>
+                  <a
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="3D Models and Animations - Collection of 3D artwork"
+                    aria-label="3D Models and Animations Portfolio"
+                    class="group flex items-center justify-between p-4 px-5 text-gray-100 bg-transparent border border-gray-700 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-gray-700 hover:border-pink-400 hover:shadow-lg hover:shadow-pink-400/20">
+                    <div>
+                      <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded bg-pink-400/20 flex items-center justify-center">
+                          <span class="text-pink-400 text-xs font-bold">3D</span>
+                        </div>
+                        <div>
+                          <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 bg-pink-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                            <span>3D Models & Animations</span>
+                          </div>
+                          <div class="text-xs text-gray-400 font-normal">Art • Blender</div>
+                        </div>
+                      </div>
+                      <div class="text-xs text-gray-500 mt-2">Collection of 3D models and animations created using Blender and other tools</div>
+                    </div>
+                    <span
+                      class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-pink-400"
+                      >→</span
+                    >
+                  </a>
+                </li>
+
+                <!-- Game Development -->
+                <li>
+                  <a
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Game Development Projects"
+                    aria-label="Game Development Portfolio"
+                    class="group flex items-center justify-between p-4 px-5 text-gray-100 bg-transparent border border-gray-700 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-gray-700 hover:border-yellow-400 hover:shadow-lg hover:shadow-yellow-400/20">
+                    <div>
+                      <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded bg-yellow-400/20 flex items-center justify-center">
+                          <span class="text-yellow-400 text-xs font-bold">DEV</span>
+                        </div>
+                        <div>
+                          <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 bg-yellow-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                            <span>Game Development</span>
+                          </div>
+                          <div class="text-xs text-gray-400 font-normal">Projects • Unity</div>
+                        </div>
+                      </div>
+                      <div class="text-xs text-gray-500 mt-2">Indie game projects and experimental gameplay mechanics</div>
+                    </div>
+                    <span
+                      class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-yellow-400"
+                      >→</span
+                    >
+                  </a>
+                </li>
+
+                <!-- Web Design -->
+                <li>
+                  <a
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Web Design Projects"
+                    aria-label="Web Design Portfolio"
+                    class="group flex items-center justify-between p-4 px-5 text-gray-100 bg-transparent border border-gray-700 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-gray-700 hover:border-blue-400 hover:shadow-lg hover:shadow-blue-400/20">
+                    <div>
+                      <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded bg-blue-400/20 flex items-center justify-center">
+                          <span class="text-blue-400 text-xs font-bold">WEB</span>
+                        </div>
+                        <div>
+                          <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 bg-blue-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                            <span>Web Design</span>
+                          </div>
+                          <div class="text-xs text-gray-400 font-normal">UI/UX • Frontend</div>
+                        </div>
+                      </div>
+                      <div class="text-xs text-gray-500 mt-2">Modern web interfaces and interactive user experiences</div>
+                    </div>
+                    <span
+                      class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-blue-400"
+                      >→</span
+                    >
+                  </a>
+                </li>
+
+                <!-- About Me -->
+                <li>
+                  <a
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="About Me - Personal information and background"
+                    aria-label="About Me"
+                    class="group flex items-center justify-between p-4 px-5 text-gray-100 bg-transparent border border-gray-700 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-gray-700 hover:border-indigo-400 hover:shadow-lg hover:shadow-indigo-400/20">
+                    <div>
+                      <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded bg-indigo-400/20 flex items-center justify-center">
+                          <span class="text-indigo-400 text-xs font-bold">ME</span>
+                        </div>
+                        <div>
+                          <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 bg-indigo-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                            <span>About Me</span>
+                          </div>
+                          <div class="text-xs text-gray-400 font-normal">Personal • Background</div>
+                        </div>
+                      </div>
+                      <div class="text-xs text-gray-500 mt-2">Learn more about my background, skills, and journey as a developer</div>
+                    </div>
+                    <span
+                      class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-indigo-400"
+                      >→</span
+                    >
+                  </a>
+                </li>
+
+                <!-- Marketplace Content -->
+                <li>
+                  <a
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Marketplace Content - Published assets and products"
+                    aria-label="Marketplace Content"
+                    class="group flex items-center justify-between p-4 px-5 text-gray-100 bg-transparent border border-gray-700 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-gray-700 hover:border-teal-400 hover:shadow-lg hover:shadow-teal-400/20">
+                    <div>
+                      <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded bg-teal-400/20 flex items-center justify-center">
+                          <span class="text-teal-400 text-xs font-bold">MC</span>
+                        </div>
+                        <div>
+                          <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 bg-teal-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                            <span>Marketplace Content</span>
+                          </div>
+                          <div class="text-xs text-gray-400 font-normal">Products • Assets</div>
+                        </div>
+                      </div>
+                      <div class="text-xs text-gray-500 mt-2">Published assets, plugins, and digital products available on various marketplaces</div>
+                    </div>
+                    <span
+                      class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-teal-400"
+                      >→</span
+                    >
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </section>
+      <!-- Minecraft Projects Section -->
+      <section class="flex-shrink-0 h-auto md:h-full md:w-xl">
+        <div class="bg-gray-900 rounded-xl shadow-2xl backdrop-blur-sm bg-opacity-95 h-full flex flex-col overflow-hidden">
+          <!-- Header Section - Fixed -->
+          <header class="p-8 pb-6 text-center flex-shrink-0 border-b border-gray-800">
+            <h2 class="text-3xl font-semibold text-gray-100 mb-2">Portfolio</h2>
+            <p class="text-gray-400 text-sm font-normal">Creative works & projects</p>
+          </header>
+
+          <!-- Portfolio Section - Scrollable -->
+          <div class="flex-1 overflow-y-auto custom-scrollbar p-8 pt-6">
+            <nav
+              role="navigation"
+              aria-label="Portfolio Projects">
+              <ul class="list-none flex flex-col gap-3">
+                <!-- 3D Models & Animations -->
+                <li>
+                  <a
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="3D Models and Animations - Collection of 3D artwork"
+                    aria-label="3D Models and Animations Portfolio"
+                    class="group flex items-center justify-between p-4 px-5 text-gray-100 bg-transparent border border-gray-700 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-gray-700 hover:border-pink-400 hover:shadow-lg hover:shadow-pink-400/20">
+                    <div>
+                      <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded bg-pink-400/20 flex items-center justify-center">
+                          <span class="text-pink-400 text-xs font-bold">3D</span>
+                        </div>
+                        <div>
+                          <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 bg-pink-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                            <span>3D Models & Animations</span>
+                          </div>
+                          <div class="text-xs text-gray-400 font-normal">Art • Blender</div>
+                        </div>
+                      </div>
+                      <div class="text-xs text-gray-500 mt-2">Collection of 3D models and animations created using Blender and other tools</div>
+                    </div>
+                    <span
+                      class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-pink-400"
+                      >→</span
+                    >
+                  </a>
+                </li>
+
+                <!-- Game Development -->
+                <li>
+                  <a
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Game Development Projects"
+                    aria-label="Game Development Portfolio"
+                    class="group flex items-center justify-between p-4 px-5 text-gray-100 bg-transparent border border-gray-700 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-gray-700 hover:border-yellow-400 hover:shadow-lg hover:shadow-yellow-400/20">
+                    <div>
+                      <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded bg-yellow-400/20 flex items-center justify-center">
+                          <span class="text-yellow-400 text-xs font-bold">DEV</span>
+                        </div>
+                        <div>
+                          <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 bg-yellow-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                            <span>Game Development</span>
+                          </div>
+                          <div class="text-xs text-gray-400 font-normal">Projects • Unity</div>
+                        </div>
+                      </div>
+                      <div class="text-xs text-gray-500 mt-2">Indie game projects and experimental gameplay mechanics</div>
+                    </div>
+                    <span
+                      class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-yellow-400"
+                      >→</span
+                    >
+                  </a>
+                </li>
+
+                <!-- Web Design -->
+                <li>
+                  <a
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Web Design Projects"
+                    aria-label="Web Design Portfolio"
+                    class="group flex items-center justify-between p-4 px-5 text-gray-100 bg-transparent border border-gray-700 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-gray-700 hover:border-blue-400 hover:shadow-lg hover:shadow-blue-400/20">
+                    <div>
+                      <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded bg-blue-400/20 flex items-center justify-center">
+                          <span class="text-blue-400 text-xs font-bold">WEB</span>
+                        </div>
+                        <div>
+                          <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 bg-blue-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                            <span>Web Design</span>
+                          </div>
+                          <div class="text-xs text-gray-400 font-normal">UI/UX • Frontend</div>
+                        </div>
+                      </div>
+                      <div class="text-xs text-gray-500 mt-2">Modern web interfaces and interactive user experiences</div>
+                    </div>
+                    <span
+                      class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-blue-400"
+                      >→</span
+                    >
+                  </a>
+                </li>
+
+                <!-- About Me -->
+                <li>
+                  <a
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="About Me - Personal information and background"
+                    aria-label="About Me"
+                    class="group flex items-center justify-between p-4 px-5 text-gray-100 bg-transparent border border-gray-700 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-gray-700 hover:border-indigo-400 hover:shadow-lg hover:shadow-indigo-400/20">
+                    <div>
+                      <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded bg-indigo-400/20 flex items-center justify-center">
+                          <span class="text-indigo-400 text-xs font-bold">ME</span>
+                        </div>
+                        <div>
+                          <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 bg-indigo-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                            <span>About Me</span>
+                          </div>
+                          <div class="text-xs text-gray-400 font-normal">Personal • Background</div>
+                        </div>
+                      </div>
+                      <div class="text-xs text-gray-500 mt-2">Learn more about my background, skills, and journey as a developer</div>
+                    </div>
+                    <span
+                      class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-indigo-400"
+                      >→</span
+                    >
+                  </a>
+                </li>
+
+                <!-- Marketplace Content -->
+                <li>
+                  <a
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Marketplace Content - Published assets and products"
+                    aria-label="Marketplace Content"
+                    class="group flex items-center justify-between p-4 px-5 text-gray-100 bg-transparent border border-gray-700 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-gray-700 hover:border-teal-400 hover:shadow-lg hover:shadow-teal-400/20">
+                    <div>
+                      <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded bg-teal-400/20 flex items-center justify-center">
+                          <span class="text-teal-400 text-xs font-bold">MC</span>
+                        </div>
+                        <div>
+                          <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 bg-teal-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                            <span>Marketplace Content</span>
+                          </div>
+                          <div class="text-xs text-gray-400 font-normal">Products • Assets</div>
+                        </div>
+                      </div>
+                      <div class="text-xs text-gray-500 mt-2">Published assets, plugins, and digital products available on various marketplaces</div>
+                    </div>
+                    <span
+                      class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-teal-400"
+                      >→</span
+                    >
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </section>
+      <!-- You can easily add more sections here -->
+      <!-- Each section will scroll horizontally on desktop and stack on mobile -->
     </div>
   </body>
 </html>
