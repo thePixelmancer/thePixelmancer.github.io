@@ -2,12 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Angelo - Developer Tools & Portfolio</title>
 
-    <link rel="stylesheet" href="dist/styles.css">
+    <link rel="stylesheet" href="dist/styles.css" />
 
     <style>
       /* Custom scrollbar styling */
@@ -163,9 +161,7 @@
           </header>
 
           <div class="flex-1 overflow-y-auto custom-scrollbar p-8 pt-6">
-            <nav
-              role="navigation"
-              aria-label="Developer Tools">
+            <nav role="navigation" aria-label="Developer Tools">
               <ul class="list-none flex flex-col gap-3">
                 <li>
                   <a
@@ -202,10 +198,7 @@
                     class="group flex items-center justify-between p-4 px-5 text-gray-100 bg-transparent border border-gray-700 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-gray-700 hover:border-green-400 hover:shadow-lg hover:shadow-green-400/20">
                     <div>
                       <div class="flex items-center gap-3">
-                        <img
-                          src="images/perlin-fiddle-icon.png"
-                          alt="Perlin Fiddle Icon"
-                          class="w-8 h-8 rounded object-cover" />
+                        <img src="images/perlin-fiddle-icon.png" alt="Perlin Fiddle Icon" class="w-8 h-8 rounded object-cover" />
                         <div>
                           <div class="flex items-center gap-2">
                             <span class="w-2 h-2 bg-green-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
@@ -237,10 +230,7 @@
                     class="group flex items-center justify-between p-4 px-5 text-gray-100 bg-transparent border border-gray-700 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-gray-700 hover:border-orange-400 hover:shadow-lg hover:shadow-orange-400/20">
                     <div>
                       <div class="flex items-center gap-3">
-                        <img
-                          src="images/controller-view-icon.png"
-                          alt="Controller View Icon"
-                          class="w-8 h-8 rounded object-cover" />
+                        <img src="images/controller-view-icon.png" alt="Controller View Icon" class="w-8 h-8 rounded object-cover" />
                         <div>
                           <div class="flex items-center gap-2">
                             <span class="w-2 h-2 bg-orange-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
@@ -268,10 +258,7 @@
                     class="group flex items-center justify-between p-4 px-5 text-gray-100 bg-transparent border border-gray-700 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-gray-700 hover:border-cyan-400 hover:shadow-lg hover:shadow-cyan-400/20">
                     <div>
                       <div class="flex items-center gap-3">
-                        <img
-                          src="images/modular-mc-syntax-icon.png"
-                          alt="Modular MC Syntax Icon"
-                          class="w-8 h-8 rounded object-cover" />
+                        <img src="images/modular-mc-syntax-icon.png" alt="Modular MC Syntax Icon" class="w-8 h-8 rounded object-cover" />
                         <div>
                           <div class="flex items-center gap-2">
                             <span class="w-2 h-2 bg-cyan-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
@@ -339,7 +326,6 @@
           </div>
         </div>
       </section>
-
       <!-- Creative Portfolio Section -->
       <section class="flex-shrink-0 h-auto md:h-full md:w-xl">
         <div class="bg-gray-900/95 rounded-xl shadow-2xl backdrop-blur-sm h-full flex flex-col overflow-hidden">
@@ -349,181 +335,103 @@
           </header>
 
           <div class="flex-1 overflow-y-auto custom-scrollbar p-8 pt-6">
-            <nav
-              role="navigation"
-              aria-label="Creative Portfolio">
-              <ul class="list-none flex flex-col gap-3">
-                <li>
-                  <a
-                    href="#"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="group flex items-center justify-between p-4 px-5 text-gray-100 bg-transparent border border-gray-700 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-gray-700 hover:border-pink-400 hover:shadow-lg hover:shadow-pink-400/20">
-                    <div>
-                      <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded bg-pink-400/20 flex items-center justify-center">
-                          <span class="text-pink-400 text-xs font-bold">3D</span>
-                        </div>
-                        <div>
-                          <div class="flex items-center gap-2">
-                            <span class="w-2 h-2 bg-pink-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                            <span>3D Models & Animations</span>
-                          </div>
-                          <div class="text-xs text-gray-400 font-normal">Art • Blender</div>
-                        </div>
-                      </div>
-                      <div class="text-xs text-gray-500 mt-2">Collection of 3D models, character rigs, and animations created using Blender</div>
-                    </div>
-                    <span
-                      class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-pink-400"
-                      >→</span
-                    >
-                  </a>
-                </li>
+            <div class="flex flex-col gap-6">
+              <!-- Portfolio Item 1 -->
+              <a
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group block overflow-hidden rounded-lg border border-gray-700 bg-gray-800/50 transition-all duration-200 hover:border-pink-400 hover:shadow-lg hover:shadow-pink-400/20">
+                <div class="aspect-video w-full overflow-hidden bg-gray-800">
+                  <img
+                    src="images/portfolio/3d-models.jpg"
+                    alt="3D Models & Animations"
+                    class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                </div>
+                <div class="p-4">
+                  <h3 class="text-base font-semibold text-gray-100 mb-1 flex items-center gap-2">
+                    <span class="w-2 h-2 bg-pink-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                    3D Models & Animations
+                  </h3>
+                  <p class="text-xs text-gray-400 mb-2">Art • Blender</p>
+                  <p class="text-sm text-gray-300 leading-relaxed">
+                    Collection of 3D models, character rigs, and animations created using Blender for various projects and game assets.
+                  </p>
+                </div>
+              </a>
 
-                <li>
-                  <a
-                    href="#"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="group flex items-center justify-between p-4 px-5 text-gray-100 bg-transparent border border-gray-700 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-gray-700 hover:border-violet-400 hover:shadow-lg hover:shadow-violet-400/20">
-                    <div>
-                      <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded bg-violet-400/20 flex items-center justify-center">
-                          <span class="text-violet-400 text-xs font-bold">MG</span>
-                        </div>
-                        <div>
-                          <div class="flex items-center gap-2">
-                            <span class="w-2 h-2 bg-violet-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                            <span>Motion Graphics</span>
-                          </div>
-                          <div class="text-xs text-gray-400 font-normal">Animation • After Effects</div>
-                        </div>
-                      </div>
-                      <div class="text-xs text-gray-500 mt-2">Dynamic motion graphics and visual effects for videos and presentations</div>
-                    </div>
-                    <span
-                      class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-violet-400"
-                      >→</span
-                    >
-                  </a>
-                </li>
+              <!-- Portfolio Item 2 -->
+              <a
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group block overflow-hidden rounded-lg border border-gray-700 bg-gray-800/50 transition-all duration-200 hover:border-violet-400 hover:shadow-lg hover:shadow-violet-400/20">
+                <div class="aspect-video w-full overflow-hidden bg-gray-800">
+                  <img
+                    src="images/portfolio/motion-graphics.jpg"
+                    alt="Motion Graphics"
+                    class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                </div>
+                <div class="p-4">
+                  <h3 class="text-base font-semibold text-gray-100 mb-1 flex items-center gap-2">
+                    <span class="w-2 h-2 bg-violet-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                    Motion Graphics
+                  </h3>
+                  <p class="text-xs text-gray-400 mb-2">Animation • After Effects</p>
+                  <p class="text-sm text-gray-300 leading-relaxed">
+                    Dynamic motion graphics and visual effects for promotional videos, presentations, and digital content.
+                  </p>
+                </div>
+              </a>
 
-                <li>
-                  <a
-                    href="#"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="group flex items-center justify-between p-4 px-5 text-gray-100 bg-transparent border border-gray-700 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-gray-700 hover:border-blue-400 hover:shadow-lg hover:shadow-blue-400/20">
-                    <div>
-                      <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded bg-blue-400/20 flex items-center justify-center">
-                          <span class="text-blue-400 text-xs font-bold">WEB</span>
-                        </div>
-                        <div>
-                          <div class="flex items-center gap-2">
-                            <span class="w-2 h-2 bg-blue-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                            <span>Web Design</span>
-                          </div>
-                          <div class="text-xs text-gray-400 font-normal">UI/UX • Frontend</div>
-                        </div>
-                      </div>
-                      <div class="text-xs text-gray-500 mt-2">Modern web interfaces with focus on user experience and responsive design</div>
-                    </div>
-                    <span
-                      class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-blue-400"
-                      >→</span
-                    >
-                  </a>
-                </li>
+              <!-- Portfolio Item 3 -->
+              <a
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group block overflow-hidden rounded-lg border border-gray-700 bg-gray-800/50 transition-all duration-200 hover:border-blue-400 hover:shadow-lg hover:shadow-blue-400/20">
+                <div class="aspect-video w-full overflow-hidden bg-gray-800">
+                  <img
+                    src="images/portfolio/web-design.jpg"
+                    alt="Web Design"
+                    class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                </div>
+                <div class="p-4">
+                  <h3 class="text-base font-semibold text-gray-100 mb-1 flex items-center gap-2">
+                    <span class="w-2 h-2 bg-blue-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                    Web Design & Development
+                  </h3>
+                  <p class="text-xs text-gray-400 mb-2">UI/UX • Frontend</p>
+                  <p class="text-sm text-gray-300 leading-relaxed">
+                    Modern, responsive web interfaces with focus on user experience and clean, maintainable code.
+                  </p>
+                </div>
+              </a>
 
-                <li>
-                  <a
-                    href="#"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="group flex items-center justify-between p-4 px-5 text-gray-100 bg-transparent border border-gray-700 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-gray-700 hover:border-fuchsia-400 hover:shadow-lg hover:shadow-fuchsia-400/20">
-                    <div>
-                      <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded bg-fuchsia-400/20 flex items-center justify-center">
-                          <span class="text-fuchsia-400 text-xs font-bold">GD</span>
-                        </div>
-                        <div>
-                          <div class="flex items-center gap-2">
-                            <span
-                              class="w-2 h-2 bg-fuchsia-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                            <span>Graphic Design</span>
-                          </div>
-                          <div class="text-xs text-gray-400 font-normal">Branding • Illustrations</div>
-                        </div>
-                      </div>
-                      <div class="text-xs text-gray-500 mt-2">Logos, branding materials, and digital illustrations for various projects</div>
-                    </div>
-                    <span
-                      class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-fuchsia-400"
-                      >→</span
-                    >
-                  </a>
-                </li>
-
-                <li>
-                  <a
-                    href="#"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="group flex items-center justify-between p-4 px-5 text-gray-100 bg-transparent border border-gray-700 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-gray-700 hover:border-yellow-400 hover:shadow-lg hover:shadow-yellow-400/20">
-                    <div>
-                      <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded bg-yellow-400/20 flex items-center justify-center">
-                          <span class="text-yellow-400 text-xs font-bold">GA</span>
-                        </div>
-                        <div>
-                          <div class="flex items-center gap-2">
-                            <span class="w-2 h-2 bg-yellow-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                            <span>Game Assets</span>
-                          </div>
-                          <div class="text-xs text-gray-400 font-normal">Characters • Environments</div>
-                        </div>
-                      </div>
-                      <div class="text-xs text-gray-500 mt-2">Custom game assets including characters, props, and environment pieces</div>
-                    </div>
-                    <span
-                      class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-yellow-400"
-                      >→</span
-                    >
-                  </a>
-                </li>
-
-                <li>
-                  <a
-                    href="#"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="group flex items-center justify-between p-4 px-5 text-gray-100 bg-transparent border border-gray-700 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out relative hover:bg-gray-700 hover:border-emerald-400 hover:shadow-lg hover:shadow-emerald-400/20">
-                    <div>
-                      <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded bg-emerald-400/20 flex items-center justify-center">
-                          <span class="text-emerald-400 text-xs font-bold">PX</span>
-                        </div>
-                        <div>
-                          <div class="flex items-center gap-2">
-                            <span
-                              class="w-2 h-2 bg-emerald-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                            <span>Pixel Art</span>
-                          </div>
-                          <div class="text-xs text-gray-400 font-normal">Retro • Sprites</div>
-                        </div>
-                      </div>
-                      <div class="text-xs text-gray-500 mt-2">Retro-style pixel art sprites, tilesets, and animations for games</div>
-                    </div>
-                    <span
-                      class="opacity-60 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-1 group-hover:text-emerald-400"
-                      >→</span
-                    >
-                  </a>
-                </li>
-              </ul>
-            </nav>
+              <!-- Portfolio Item 4 -->
+              <a
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group block overflow-hidden rounded-lg border border-gray-700 bg-gray-800/50 transition-all duration-200 hover:border-emerald-400 hover:shadow-lg hover:shadow-emerald-400/20">
+                <div class="aspect-video w-full overflow-hidden bg-gray-800">
+                  <img
+                    src="images/portfolio/pixel-art.jpg"
+                    alt="Pixel Art"
+                    class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                </div>
+                <div class="p-4">
+                  <h3 class="text-base font-semibold text-gray-100 mb-1 flex items-center gap-2">
+                    <span class="w-2 h-2 bg-emerald-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                    Pixel Art & Sprites
+                  </h3>
+                  <p class="text-xs text-gray-400 mb-2">Retro • Game Assets</p>
+                  <p class="text-sm text-gray-300 leading-relaxed">
+                    Retro-style pixel art sprites, tilesets, and animations for indie games and nostalgic projects.
+                  </p>
+                </div>
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -537,9 +445,7 @@
           </header>
 
           <div class="flex-1 overflow-y-auto custom-scrollbar p-8 pt-6">
-            <nav
-              role="navigation"
-              aria-label="Minecraft Projects">
+            <nav role="navigation" aria-label="Minecraft Projects">
               <ul class="list-none flex flex-col gap-3">
                 <li>
                   <a
