@@ -1,0 +1,46 @@
+[
+  {
+    "title": "Medieval Castle",
+    "alt": "Massive medieval castle with detailed interiors",
+    "description": "A large-scale medieval castle project featuring intricate interior designs, custom terrain work, and authentic architectural details. Includes multiple towers, a grand hall, living quarters, and defensive structures.",
+    "image": "./images/placeholder.png",
+    "type": "3D Model",
+    "project": "Personal Portfolio",
+    "status": "completed",
+    "date": "March 2024",
+    "link": "#"
+  },
+  {
+    "title": "Boss AI System",
+    "alt": "Advanced boss behavior system for Minecraft Bedrock",
+    "description": "Complex artificial intelligence system for boss mobs featuring multiple attack patterns, phase transitions, environmental interactions, and dynamic difficulty scaling. Includes custom animations and particle effects.",
+    "image": "./images/placeholder.png",
+    "type": "Behavior Pack",
+    "project": "Tsunami Studios",
+    "status": "in_progress",
+    "date": "",
+    "link": "#"
+  },
+  {
+    "title": "Particle Effects Library",
+    "alt": "Comprehensive particle effects collection",
+    "description": "Extensive library of custom particle effects including magic spells, environmental effects, combat visuals, and atmospheric elements. Optimized for performance and compatibility across different devices.",
+    "image": "./images/placeholder.png",
+    "type": "Resource Pack",
+    "project": "Community Tools",
+    "status": "completed",
+    "date": "December 2023",
+    "link": "#"
+  },
+  {
+    "title": "Skyblock World Generator",
+    "alt": "Procedural skyblock island generation system",
+    "description": "Advanced world generation system that creates unique skyblock islands with custom biomes, structures, and resources. Includes configurable difficulty settings and progression mechanics.",
+    "image": "./images/placeholder.png",
+    "type": "World Generator",
+    "project": "Community Tools",
+    "status": "completed",
+    "date": "January 2024",
+    "link": "#"
+  }
+]

@@ -1,7 +1,165 @@
 @import "tailwindcss";
 
-.parallax-layer {
-  will-change: transform;
-  pointer-events: none;
-  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+/* ─── Theme tokens ─────────────────────────────────────────────────────────── */
+
+@theme {
+  --color-dark-900: rgb(17, 24, 40);
+  --color-dark-800: rgb(31, 41, 55);
+  --color-dark-700: rgb(55, 65, 81);
+
+  --font-basic: "Press Start 2P", cursive;
+  --font-title: "Silkscreen", monospace;
+  --shadow-sharp: 4px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+/* ─── Layout ───────────────────────────────────────────────────────────────── */
+
+@layer components {
+  body {
+    @apply font-basic text-sm text-gray-300;
+    background:
+      repeating-linear-gradient(0deg, transparent 0px, transparent 2px, rgba(0, 0, 0, 0.1) 2px, rgba(0, 0, 0, 0.1) 4px), var(--color-dark-800);
+  }
+
+  /* Replaces the utility soup on <main> */
+  .page-layout {
+    @apply min-h-screen md:h-screen
+           flex flex-col md:flex-row
+           md:overflow-x-auto md:overflow-y-hidden
+           overflow-y-auto overflow-x-hidden
+           gap-6 md:gap-8 p-6 md:p-10;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .main-section {
+    @apply md:h-full md:min-w-xl md:w-xl lg:w-3/12 flex flex-col md:overflow-hidden;
+  }
+
+  .main-section header {
+    @apply border-b-6 p-4 border-dark-700 bg-dark-800 text-amber-300  text-2xl;
+  }
+
+  /* ─── Cards & items ────────────────────────────────────────────────────────── */
+
+  .card {
+    @apply p-4 border-3 border-dark-700 hover:-translate-y-0.5 hover:-translate-x-0.5 hover:shadow-sharp 
+           transition-all duration-100 ease-in-out;
+    background:
+      repeating-linear-gradient(0deg, transparent 0px, transparent 2px, rgba(0, 0, 0, 0.1) 2px, rgba(0, 0, 0, 0.1) 4px), var(--color-dark-800);
+  }
+
+  .circle {
+    @apply w-3 h-3 rounded-xs;
+  }
+
+  .marker {
+    @apply p-2 font-title uppercase border text-xs;
+  }
+
+  /* ─── Buttons ──────────────────────────────────────────────────────────────── */
+
+  .button {
+    @apply w-full my-2 px-4 py-4 text-lg uppercase 
+           bg-green-700 hover:bg-green-900
+           border-b-6 border-green-800
+           shadow-sharp active:translate-y-0.5 active:shadow-none active:border-b-transparent
+           transition-all duration-50 ease-in-out;
+  }
+
+  .button-purple {
+    @apply w-full my-2 px-4 py-4 text-lg uppercase 
+           bg-gradient-to-r from-purple-600 to-fuchsia-500
+           hover:from-purple-700 hover:to-fuchsia-600
+           border-b-6 border-purple-800
+           shadow-2xl active:translate-y-0.5 active:shadow-none active:border-b-transparent
+           transition-all duration-50 ease-in-out;
+  }
+
+  /* ─── Scrollable areas ─────────────────────────────────────────────────────── */
+
+  .section-content {
+    @apply overflow-y-auto p-6 flex flex-col gap-4;
+  }
+}
+
+/* Shared scrollbar style — applied to .section-content, .page-layout, and .modal-body */
+.section-content,
+.page-layout,
+.modal-body {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) rgba(255, 255, 255, 0.05);
+}
+
+.section-content::-webkit-scrollbar,
+.page-layout::-webkit-scrollbar,
+.modal-body::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.section-content::-webkit-scrollbar-track,
+.page-layout::-webkit-scrollbar-track,
+.modal-body::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.section-content::-webkit-scrollbar-thumb,
+.page-layout::-webkit-scrollbar-thumb,
+.modal-body::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  transition: background 0.2s;
+}
+
+.section-content::-webkit-scrollbar-thumb:hover,
+.page-layout::-webkit-scrollbar-thumb:hover,
+.modal-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ─── Dynamic forge hover classes ─────────────────────────────────────────── */
+/* Explicit strings so Tailwind's scanner picks them up at build time.         */
+
+.group-hover\:bg-blue-400 {
+  &:is(:where(.group):hover *) {
+    @media (hover: hover) {
+      background-color: var(--color-blue-400);
+    }
+  }
+}
+.group-hover\:bg-purple-400 {
+  &:is(:where(.group):hover *) {
+    @media (hover: hover) {
+      background-color: var(--color-purple-400);
+    }
+  }
+}
+.group-hover\:bg-yellow-400 {
+  &:is(:where(.group):hover *) {
+    @media (hover: hover) {
+      background-color: var(--color-yellow-400);
+    }
+  }
+}
+
+.group-hover\:text-blue-400 {
+  &:is(:where(.group):hover *) {
+    @media (hover: hover) {
+      color: var(--color-blue-400);
+    }
+  }
+}
+.group-hover\:text-purple-400 {
+  &:is(:where(.group):hover *) {
+    @media (hover: hover) {
+      color: var(--color-purple-400);
+    }
+  }
+}
+.group-hover\:text-yellow-400 {
+  &:is(:where(.group):hover *) {
+    @media (hover: hover) {
+      color: var(--color-yellow-400);
+    }
+  }
 }

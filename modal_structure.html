@@ -1,31 +1,45 @@
-
-    <!-- Modal Structure -->
-    <div id="portfolioModal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 hidden p-4">
-      <div class="bg-gray-800 rounded-lg shadow-xl w-full max-w-3xl max-h-[90vh] overflow-hidden flex flex-col">
-        <!-- Modal Header -->
-        <div class="flex justify-between items-center p-4 border-b border-gray-700">
-          <h3 id="modalTitle" class="text-lg font-semibold text-gray-100"></h3>
-          <button id="closeModal" class="text-gray-400 hover:text-gray-100 transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-        <!-- Modal Body (iframe container) -->
-        <div class="relative flex-1 bg-black">
-          <iframe
-            id="sketchfabIframe"
-            src=""
-            frameborder="0"
-            allow="autoplay; fullscreen; xr-spatial-tracking"
-            xr-spatial-tracking
-            execution-while-out-of-viewport
-            execution-while-not-rendered
-            web-share
-            allowfullscreen
-            mozallowfullscreen="true"
-            webkitallowfullscreen="true"
-            class="w-full h-full absolute inset-0"></iframe>
-        </div>
-      </div>
+<!-- Modal Structure -->
+<div
+  id="portfolioModal"
+  class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 hidden p-4">
+  <div class="bg-gray-800 rounded-lg shadow-xl w-full max-w-3xl max-h-[90vh] overflow-hidden flex flex-col">
+    <!-- Modal Header -->
+    <div class="flex justify-between items-center p-4 border-b border-gray-700">
+      <h3
+        id="modalTitle"
+        class="text-lg font-semibold text-gray-100"></h3>
+      <button
+        id="closeModal"
+        class="text-gray-400 hover:text-gray-100 transition-colors">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
     </div>
+    <!-- Modal Body (iframe container) -->
+    <div class="relative flex-1 bg-black">
+      <iframe
+        id="sketchfabIframe"
+        src=""
+        frameborder="0"
+        allow="autoplay; fullscreen; xr-spatial-tracking"
+        xr-spatial-tracking
+        execution-while-out-of-viewport
+        execution-while-not-rendered
+        web-share
+        allowfullscreen
+        mozallowfullscreen="true"
+        webkitallowfullscreen="true"
+        class="w-full h-full absolute inset-0"></iframe>
+    </div>
+  </div>
+</div>
