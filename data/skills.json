@@ -1,4 +1,155 @@
 {
-  "development": ["Behaviors", "Scripting API", "World Generation", "Molang", "Asset Implementation", "Attachables"],
-  "art": ["Pixel Art", "3D Modeling", "Texturing", "Particle Effects", "Animations", "Texturing"]
+  "development": {
+    "label": "Development",
+    "color": "blue",
+    "icon": "⚙",
+    "description": "Scripting • Behaviors • World Gen • UI Systems",
+    "categories": [
+      {
+        "id": "animations",
+        "label": "Animations",
+        "spells": [
+          {
+            "title": "Advanced Math Animations",
+            "description": "Driving smooth, complex motion entirely through mathematical expressions — no keyframes needed.",
+            "icon": "images/spells/math-anim.png"
+          },
+          {
+            "title": "Physics-Based Animations",
+            "description": "Simulating real-world physics like gravity, spring, and inertia directly inside animation controllers.",
+            "icon": "images/spells/physics-anim.png"
+          },
+          {
+            "title": "Animation Controllers",
+            "description": "Building robust state machines that manage transitions between complex animation states.",
+            "icon": "images/spells/anim-controller.png"
+          },
+          {
+            "title": "Molang Expressions",
+            "description": "Harnessing Bedrock's query language to create data-driven, dynamic animation logic.",
+            "icon": "images/spells/molang.png"
+          }
+        ]
+      },
+      {
+        "id": "entity-behaviors",
+        "label": "Entity Behaviors",
+        "spells": [
+          {
+            "title": "Advanced Boss Behaviors",
+            "description": "Multi-phase boss AI with dynamic attack patterns, phase transitions, and environmental awareness.",
+            "icon": "images/spells/boss.png"
+          },
+          {
+            "title": "Flying Entities",
+            "description": "Custom aerial movement systems with pathfinding, hover logic, and smooth directional control.",
+            "icon": "images/spells/flying.png"
+          },
+          {
+            "title": "Scripting API",
+            "description": "Extending Bedrock's capabilities with GameTest and Script API to build systems impossible in JSON alone.",
+            "icon": "images/spells/scripting.png"
+          }
+        ]
+      },
+      {
+        "id": "world-building",
+        "label": "World Building",
+        "spells": [
+          {
+            "title": "Biome Generation",
+            "description": "Crafting custom biomes with unique surface rules, climate settings, and mob spawning.",
+            "icon": "images/spells/biome.png"
+          },
+          {
+            "title": "Features & Feature Rules",
+            "description": "Procedurally placing structures, ore veins, and decorators using Bedrock's feature rule system.",
+            "icon": "images/spells/features.png"
+          },
+          {
+            "title": "Custom Blocks",
+            "description": "Building fully custom blocks with unique geometry, states, events, and crafting recipes.",
+            "icon": "images/spells/blocks.png"
+          }
+        ]
+      },
+      {
+        "id": "ui-systems",
+        "label": "UI & Systems",
+        "spells": [
+          {
+            "title": "Server UI Menus",
+            "description": "Dynamic server-side form systems with branching logic, player data, and real-time state.",
+            "icon": "images/spells/server-ui.png"
+          },
+          {
+            "title": "Weapon Attachables",
+            "description": "Custom weapon models with first-person animations, enchant glints, and attachment geometry.",
+            "icon": "images/spells/attachables.png"
+          }
+        ]
+      }
+    ]
+  },
+  "art": {
+    "label": "Art & Design",
+    "color": "fuchsia",
+    "icon": "✦",
+    "description": "Pixel Art • 3D • Texturing • VFX • Animations",
+    "categories": [
+      {
+        "id": "2d-art",
+        "label": "2D Art",
+        "spells": [
+          {
+            "title": "Sprite Animations",
+            "description": "Frame-by-frame sprite sheets with precise timing and expressive character motion.",
+            "icon": "images/spells/sprite.png"
+          },
+          {
+            "title": "Persona Content",
+            "description": "Marketplace-grade persona pieces following Mojang's style guide and technical constraints.",
+            "icon": "images/spells/persona.png"
+          },
+          {
+            "title": "Texture Variants",
+            "description": "Creating cohesive variant sets — damage states, seasonal skins, color palettes — from a single base.",
+            "icon": "images/spells/variants.png"
+          },
+          {
+            "title": "PBR Textures",
+            "description": "Physically-based rendering maps (normal, heightmap, metalness) for Bedrock's deferred pipeline.",
+            "icon": "images/spells/pbr.png"
+          }
+        ]
+      },
+      {
+        "id": "3d-art",
+        "label": "3D & Models",
+        "spells": [
+          {
+            "title": "Vanilla Art Direction",
+            "description": "Designing assets that feel authentically Minecraft — respecting the visual language without being generic.",
+            "icon": "images/spells/vanilla.png"
+          },
+          {
+            "title": "Asset Implementation",
+            "description": "Taking a 3D model from Blender or Blockbench all the way to a working, optimized in-game asset.",
+            "icon": "images/spells/asset-impl.png"
+          }
+        ]
+      },
+      {
+        "id": "vfx",
+        "label": "VFX",
+        "spells": [
+          {
+            "title": "Particle Effects",
+            "description": "Expressive particle systems for combat hits, ambient atmosphere, magic, and environmental storytelling.",
+            "icon": "images/spells/particles.png"
+          }
+        ]
+      }
+    ]
+  }
 }
