@@ -1,12 +1,4 @@
 {
-  "development": [
-    "Boss AI & Behaviors",
-    "Math-Based Animations",
-    "Particle Systems",
-    "Custom Items & Abilities",
-    "Entity Components",
-    "Molang Expressions",
-    "Performance Optimization"
-  ],
-  "art": ["3D Modeling", "Texturing", "Pixel Art", "Animation", "UI/UX Design", "Particle Effects", "Custom Models", "Asset Optimization"]
+  "development": ["Behaviors", "Scripting API", "World Generation", "Molang", "Asset Implementation", "Attachables"],
+  "art": ["Pixel Art", "3D Modeling", "Texturing", "Particle Effects", "Animations", "Texturing"]
 }

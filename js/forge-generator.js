@@ -17,30 +17,36 @@ function renderForgeItems(forgeItems) {
 }
 
 function createForgeItemHTML(item) {
+  // Check if item is a divider (empty string)
+  if (item === "divider") {
+    return `<hr class="divider" />`;
+  }
+
   // Extract dynamic class generation into constants
   const colorClass = item.colorClass || "";
   const circleHoverClass = colorClass ? `group-hover:bg-${colorClass.replace("text-", "")}` : "";
   const titleHoverClass = colorClass ? `group-hover:${colorClass}` : "";
   const markerBadge = item.markerText ? `<span class="marker ${colorClass}">${item.markerText}</span>` : "<span></span>";
   const imageElement =
-    item.image ? `<img src="${item.image}" alt="" class="w-20 h-20 bg-gray-800 border-3 border-dark-700 flex-shrink-0 object-cover" />` : "";
-  const footerElement = item.footer ? `<div class="flex items-center gap-2 text-sm mt-3">${item.footer}</div>` : "";
+    item.image ?
+      `<img src="${item.image}" alt="" class="size-30 bg-gray-800 border-3 border-dark-700 flex-shrink-0 object-cover image-rendering-pixelated" />`
+    : "";
+  const footerElement = item.footer ? `<div class="flex mt-2 justify-end text-gray-400 text-xs">${item.footer}</div>` : "";
 
   // Build the card based on whether image is provided (horizontal layout)
   return `
       <article class="card group">
-        <a href="${item.href}" class="block">
-          <div class="mb-3">
-            <div class="flex justify-between items-start">
+        <a href="${item.href}">
+       
+            <div class="flex justify-between items-start mb-3">
               ${markerBadge}
               <span class="circle bg-dark-700 ${circleHoverClass}" aria-hidden="true"></span>
             </div>
-          </div>
           <div class="flex gap-4">  
             ${imageElement}
-            <div class="forge-content">
-              <h3 class="text-xl mb-1 ${titleHoverClass} transition-colors">${item.title}</h3>
-              <p class="text-base">${item.description}</p>
+            <div class="flex flex-col gap-1">
+              <h3 class="text-md font-bold ${titleHoverClass} transition-colors">${item.title}</h3>
+              <p class="text-sm text-gray-500">${item.description}</p>
               ${footerElement}
             </div>
           </div>

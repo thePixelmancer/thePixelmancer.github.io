@@ -18,35 +18,52 @@
   body {
     @apply font-basic text-sm text-gray-300;
     background:
-      repeating-linear-gradient(0deg, transparent 0px, transparent 2px, rgba(0, 0, 0, 0.1) 2px, rgba(0, 0, 0, 0.1) 4px), var(--color-dark-800);
+      repeating-linear-gradient(0deg, transparent 0px, transparent 2px, rgba(0, 0, 0, 0.15) 2px, rgba(0, 0, 0, 0.15) 4px), var(--color-dark-800);
+    position: relative;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.1) 2px, rgba(0, 0, 0, 0.05) 4px);
+    pointer-events: none;
+    z-index: 999;
   }
 
   /* Replaces the utility soup on <main> */
   .page-layout {
-    @apply min-h-screen md:h-screen
-           flex flex-col md:flex-row
-           md:overflow-x-auto md:overflow-y-hidden
-           overflow-y-auto overflow-x-hidden
-           gap-6 md:gap-8 p-6 md:p-10;
-    scroll-behavior: smooth;
+    @apply min-h-screen md:h-screen flex flex-col md:flex-row md:overflow-x-auto md:overflow-y-hidden overflow-y-auto overflow-x-hidden gap-6 md:gap-8 md:p-10 scroll-smooth;
     -webkit-overflow-scrolling: touch;
+    position: relative;
+    z-index: 2;
   }
 
   .main-section {
-    @apply md:h-full md:min-w-xl md:w-xl lg:w-3/12 flex flex-col md:overflow-hidden;
+    @apply md:h-full md:min-w-xl md:w-xl lg:w-3/12 flex flex-col;
   }
 
   .main-section header {
-    @apply border-b-6 p-4 border-dark-700 bg-dark-800 text-amber-300  text-2xl;
+    @apply border-b-6 px-6 py-4 border-dark-700 bg-dark-800 mx-2;
   }
+  /* ─── Scrollable areas ─────────────────────────────────────────────────────── */
 
+  .section-content {
+    @apply overflow-y-auto flex flex-col gap-4 py-6 px-2;
+    mask-image: linear-gradient(to bottom, black 95%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 95%, transparent 100%);
+  }
   /* ─── Cards & items ────────────────────────────────────────────────────────── */
-
+  .divider {
+    @apply border-dark-700 border-dashed border-t-4;
+  }
   .card {
-    @apply p-4 border-3 border-dark-700 hover:-translate-y-0.5 hover:-translate-x-0.5 hover:shadow-sharp 
+    @apply p-4 border-3 border-dark-700 hover:-translate-y-0.5 hover:-translate-x-0.5 hover:shadow-sharp
            transition-all duration-100 ease-in-out;
-    background:
-      repeating-linear-gradient(0deg, transparent 0px, transparent 2px, rgba(0, 0, 0, 0.1) 2px, rgba(0, 0, 0, 0.1) 4px), var(--color-dark-800);
+    background: var(--color-dark-800);
   }
 
   .circle {
@@ -74,12 +91,6 @@
            border-b-6 border-purple-800
            shadow-2xl active:translate-y-0.5 active:shadow-none active:border-b-transparent
            transition-all duration-50 ease-in-out;
-  }
-
-  /* ─── Scrollable areas ─────────────────────────────────────────────────────── */
-
-  .section-content {
-    @apply overflow-y-auto p-6 flex flex-col gap-4;
   }
 }
 

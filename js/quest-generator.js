@@ -24,22 +24,26 @@ function createQuestHTML(quest) {
       `<span class="marker ${statusClass}">✓ Completed</span>`
     : `<span class="marker ${statusClass}">⚡ In Progress</span>`;
   const imageElement =
-    quest.image ? `<img src="${quest.image}" alt="${quest.alt}" class="w-full h-auto max-h-80 bg-gray-800 border-3 border-dark-700 object-cover" />` : "";
+    quest.image ?
+      `
+      <div class="relative overflow-hidden border-3 border-dark-700">
+        <img src="${quest.image}" alt="${quest.alt}" class="w-full h-auto max-h-80 bg-gray-800 object-cover group-hover:scale-105 transition-transform duration-200" />
+      </div>
+    `
+    : "";
 
   return `
-      <article class="card group cursor-pointer flex flex-col" onclick="openQuestModal('${quest.title}', '${quest.alt}', '${quest.image}', '${quest.type}', '${quest.description}', '${quest.project}', '${quest.status}', '${quest.date}', '${quest.link}')">
-        <div class="mb-3">
-          <div class="flex justify-between items-start">
-            ${statusBadge}
-            <span class="text-sm text-gray-400">${quest.type}</span>
-          </div>
+      <article class="card group cursor-pointer flex flex-col gap-4 p-6" onclick="openQuestModal('${quest.title}', '${quest.alt}', '${quest.image}', '${quest.type}', '${quest.description}', '${quest.project}', '${quest.status}', '${quest.date}', '${quest.link}')">
+        <div class="flex justify-between items-center">
+          ${statusBadge}
+          <span class="text-sm text-gray-400">${quest.type}</span>
         </div>
         
         ${imageElement}
         
-        <div class="quest-content flex-1">
-          <h3 class="text-xl mb-1 group-hover:text-amber-400 transition-colors">${quest.title}</h3>
-          <p class="text-sm text-gray-400 mb-2">${quest.alt}</p>
+        <div class="quest-content">
+          <h3 class="text-xl group-hover:text-amber-400 transition-colors">${quest.title}</h3>
+          <p class="text-sm text-gray-400">${quest.alt}</p>
         </div>
       </article>
     `;
