@@ -43,8 +43,7 @@
 
         <div class="section-content">
           <!-- Profile card -->
-          <article>
-            <div class="card flex flex-col items-center justify-center gap-2">
+          <article class="card flex flex-col items-center justify-center gap-2">
               <img
                 src="images/avatar.png"
                 alt="Angelo's avatar"
@@ -73,41 +72,39 @@
                   class="text-center text-sm text-gray-400 mt-1">
                   XP: 0 / 100
                 </p>
-                <p class="text-center text-sm text-gray-400 mt-1">GitHub commits</p>
-              </div>
-            </div>
+            <p class="text-center text-sm text-gray-400 mt-1">GitHub commits</p>
           </article>
 
-          <!-- Stats -->
-          <article>
-            <ul class="card grid grid-cols-2 gap-4 text-xs">
+          <!-- Attributes -->
+          <article class="card">
+            <ul class="grid grid-cols-2 gap-4 text-xs">
               <li>
                 <div class="text-fuchsia-300">Class:</div>
-                <div class="">Bedrock Developer</div>
+                <div>Bedrock Developer</div>
               </li>
               <li>
                 <div class="text-fuchsia-300">Spec:</div>
-                <div class="">Technical Systems</div>
+                <div>Technical Systems</div>
               </li>
               <li>
                 <div class="text-fuchsia-300">Guild:</div>
-                <div class="">Tsunami Studios</div>
+                <div>Tsunami Studios</div>
               </li>
               <li>
                 <div class="text-fuchsia-300">Experience:</div>
-                <div class="">8+ Years</div>
+                <div>8+ Years</div>
               </li>
             </ul>
           </article>
+
           <hr class="divider" />
+
           <!-- Bio -->
-          <article>
-            <div class="card p-6">
+          <article class="card p-6">
               <p>
                 Bedrock developer with 8+ years of turning wild ideas into working add-ons. I specialize in the technical sorcery that makes bosses
                 menacing, particles mesmerizing, and animations actually sync to math (yes, really).
               </p>
-            </div>
           </article>
 
           <!-- CTA buttons -->
@@ -176,7 +173,7 @@
           class="section-content"></div>
       </section>
 
-      <!-- ── Quest Log ──────────────────────────────────────────────────────── -->
+      <!-- ── Journal ────────────────────────────────────────────────────────── -->
       <section
         class="main-section"
         aria-labelledby="projects-heading">
@@ -193,9 +190,122 @@
           id="quests-container"
           class="section-content"></div>
       </section>
+      <!-- ── Contact ─────────────────────────────────────────────────────────── -->
+      <section
+        class="main-section"
+        aria-labelledby="contact-heading">
+        <header>
+          <h2
+            class="text-amber-300 text-2xl"
+            id="contact-heading">
+            Contact
+          </h2>
+          <h3 class="text-gray-400">Get in touch</h3>
+        </header>
+
+        <div class="section-content">
+          <!-- Availability -->
+          <article class="card flex flex-col gap-3">
+              <h3 class="text-xs text-gray-400 uppercase">Availability</h3>
+              <div class="flex items-center gap-2">
+                <span
+                  class="circle bg-green-400"
+                  aria-hidden="true"></span>
+                <span class="text-green-400 text-xs">Available for Work</span>
+              </div>
+              <p class="text-xs leading-relaxed">Currently accepting new projects and collaborations.</p>
+          </article>
+
+          <!-- Contact --> 
+          <article class="card">
+              <p class="text-xs mb-3 tracking-widest uppercase">Send a Message</p>
+              <nav
+                class="flex flex-col gap-2"
+                aria-label="Contact links">
+                <a
+                  href="mailto:hello@pixelmancer.dev"
+                  class="flex items-center gap-3 p-3 bg-dark-900 border-2 border-dark-700 hover:border-green-500">
+                  <span
+                    class="w-10 h-10 flex-shrink-0 border-2 border-green-700 bg-green-950 flex items-center justify-center"
+                    aria-hidden="true">
+                    <svg
+                      viewBox="0 0 16 16"
+                      class="w-5 h-5 text-green-400 fill-current">
+                      <path d="M0 4v8h16V4H0zm14 1L8 9 2 5h12zm-12 6V6.5l6 3.5 6-3.5V11H2z" />
+                    </svg>
+                  </span>
+                  <div class="flex flex-col gap-0.5">
+                    <span class="text-gray-500 text-xs leading-none">Email</span>
+                    <span class="text-gray-100 text-xs leading-none">hello@pixelmancer.dev</span>
+                  </div>
+                </a>
+
+                <a
+                  href="https://github.com/pixelmancer"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-3 p-3 bg-dark-900 border-2 border-dark-700 hover:border-fuchsia-500">
+                  <span
+                    class="w-10 h-10 flex-shrink-0 border-3 border-fuchsia-800 bg-fuchsia-950 flex items-center justify-center"
+                    aria-hidden="true">
+                    <svg
+                      viewBox="0 0 16 16"
+                      class="w-5 h-5 text-fuchsia-400 fill-current">
+                      <path
+                        d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                    </svg>
+                  </span>
+                  <div class="flex flex-col gap-0.5">
+                    <span class="text-gray-500 text-xs leading-none">GitHub</span>
+                    <span class="text-gray-100 text-xs leading-none">@pixelmancer</span>
+                  </div>
+                </a>
+
+                <a
+                  href="#"
+                  class="flex items-center gap-3 p-3 bg-dark-900 border-2 border-dark-700 hover:border-blue-500">
+                  <span
+                    class="w-10 h-10 flex-shrink-0 border-3 border-blue-800 bg-blue-950 flex items-center justify-center"
+                    aria-hidden="true">
+                    <svg
+                      viewBox="0 0 16 16"
+                      class="w-5 h-5 text-blue-400 fill-current">
+                      <path
+                        d="M13.545 2.907a13.2 13.2 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.2 12.2 0 0 0-3.658 0 8 8 0 0 0-.412-.833.05.05 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.04.04 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032q.003.022.021.037a13.3 13.3 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019q.463-.63.818-1.329a.05.05 0 0 0-.01-.059l-.018-.011a9 9 0 0 1-1.248-.595.05.05 0 0 1-.02-.066l.015-.019q.127-.095.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.05.05 0 0 1 .053.007q.121.1.248.195a.05.05 0 0 1-.004.085 8 8 0 0 1-1.249.594.05.05 0 0 0-.03.03.05.05 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.2 13.2 0 0 0 4.001-2.02.05.05 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.03.03 0 0 0-.02-.019m-8.198 7.307c-.789 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612m5.316 0c-.788 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612" />
+                    </svg>
+                  </span>
+                  <div class="flex flex-col gap-0.5">
+                    <span class="text-gray-500 text-xs leading-none">Discord</span>
+                    <span class="text-gray-100 text-xs leading-none">pixelmancer#0000</span>
+                  </div>
+                </a>
+
+                <a
+                  href="https://twitter.com/pixelmancer_dev"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-3 p-3 bg-dark-900 border-2 border-dark-700 hover:border-rose-500">
+                  <span
+                    class="w-10 h-10 flex-shrink-0 border-3 border-rose-800 bg-rose-950 flex items-center justify-center"
+                    aria-hidden="true">
+                    <svg
+                      viewBox="0 0 16 16"
+                      class="w-5 h-5 text-rose-400 fill-current">
+                      <path
+                        d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z" />
+                    </svg>
+                  </span>
+                  <div class="flex flex-col gap-0.5">
+                    <span class="text-gray-500 text-xs leading-none">Twitter</span>
+                    <span class="text-gray-100 text-xs leading-none">@pixelmancer_dev</span>
+                  </div>
+                </a>
+              </nav>
+          </article>
+        </div>
+      </section>
     </main>
 
-    <!-- Scripts -->
     <script src="./js/parallax.js"></script>
     <script src="./js/inventory-generator.js"></script>
     <script src="./js/forge-generator.js"></script>
