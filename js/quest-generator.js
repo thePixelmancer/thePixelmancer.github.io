@@ -24,9 +24,7 @@ function createQuestHTML(quest) {
       `<span class="marker ${statusClass}">✓ Completed</span>`
     : `<span class="marker ${statusClass}">⚡ In Progress</span>`;
   const imageElement =
-    quest.image ?
-      `<img src="${quest.image}" alt="${quest.alt}" class="w-full h-64 bg-gray-800 border-3 border-dark-700 object-cover" />`
-    : "";
+    quest.image ? `<img src="${quest.image}" alt="${quest.alt}" class="w-full h-auto max-h-80 bg-gray-800 border-3 border-dark-700 object-cover" />` : "";
 
   return `
       <article class="card group cursor-pointer flex flex-col" onclick="openQuestModal('${quest.title}', '${quest.alt}', '${quest.image}', '${quest.type}', '${quest.description}', '${quest.project}', '${quest.status}', '${quest.date}', '${quest.link}')">
@@ -69,7 +67,7 @@ function openQuestModal(title, alt, image, type, description, project, status, d
 
   for (const [key, value] of Object.entries(metadata)) {
     const metadataItem = document.createElement("div");
-    metadataItem.className = "card p-0";
+    metadataItem.className = "card p-2 flex justify-between";
     metadataItem.innerHTML = `
       <span class="">${key}:</span>
       <span class="text-fuchsia-300">${value}</span>
@@ -78,9 +76,9 @@ function openQuestModal(title, alt, image, type, description, project, status, d
   }
 
   // Update modal footer link
-  const viewProjectBtn = document.querySelector('.button-purple');
+  const viewProjectBtn = document.querySelector(".button-purple");
   if (viewProjectBtn && link) {
-    viewProjectBtn.onclick = () => window.open(link, '_blank');
+    viewProjectBtn.onclick = () => window.open(link, "_blank");
   }
 
   // Show modal

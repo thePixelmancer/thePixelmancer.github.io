@@ -2,40 +2,33 @@
   {
     "title": "Iron Sword",
     "description": "A sturdy blade, worn but reliable.",
-    "image": "images/placeholder.png",
+    "image": "images/items/python.png",
     "tier": "common",
     "consumable": true
   },
   {
     "title": "Health Potion",
     "description": "Restores 50 HP. Smells faintly of cherries.",
-    "image": "images/placeholder.png",
+    "image": "images/items/guitar.png",
     "tier": "uncommon",
     "consumable": true,
-    "sound": "sounds/drink.mp3"
+    "sound": "sounds/guitar.mp3"
   },
   "",
   "",
   {
     "title": "Regolith Filter",
     "description": "Essential for Bedrock workflow automation.",
-    "image": "images/placeholder.png",
+    "image": "images/items/ts.png",
     "tier": "rare",
     "consumable": false
   },
   {
-    "title": "Elixir of Power",
-    "description": "Doubles attack for 30 seconds. Handle with care.",
-    "image": "images/placeholder.png",
-    "tier": "epic",
-    "consumable": true,
-    "sound": "sounds/power-up.mp3"
-  },
-  {
-    "title": "Aether Shard",
-    "description": "Crystallised void energy. Extremely volatile.",
-    "image": "images/placeholder.png",
+    "title": "Health Potion",
+    "description": "Restores 50 HP. Smells faintly of cherries.",
+    "image": "images/items/rego.png",
     "tier": "legendary",
-    "consumable": false
+    "consumable": true,
+    "sound": "sounds/guitar.mp3"
   }
 ]

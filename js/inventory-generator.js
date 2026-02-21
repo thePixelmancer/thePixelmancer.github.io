@@ -127,13 +127,14 @@ let ghost = null;
 
 function buildGhost() {
   ghost = document.createElement("img");
-  ghost.className =
-    "fixed top-0 left-0 z-[9998] w-12 h-12 object-cover pointer-events-none hidden opacity-90 [image-rendering:pixelated] drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]";
+  ghost.className = "fixed top-0 left-0 z-[9998] w-12 h-12 object-cover pointer-events-none hidden opacity-90 image-rendering-pixelated shadow-sharp";
   document.body.appendChild(ghost);
 }
 
 function showGhost(item, mx, my) {
+  const t = tc(item.tier);
   ghost.src = item.image;
+  ghost.className = `fixed top-0 left-0 z-[9998] w-12 h-12 object-cover pointer-events-none hidden opacity-90 image-rendering-pixelated shadow-sharp border-1 ${t.border}`;
   ghost.classList.remove("hidden");
   placeGhost(mx, my);
 }
