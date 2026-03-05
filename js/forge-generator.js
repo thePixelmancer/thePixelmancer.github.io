@@ -22,11 +22,38 @@ function createForgeItemHTML(item) {
     return `<hr class="divider" />`;
   }
 
-  // Extract dynamic class generation into constants
-  const colorClass = item.colorClass || "";
-  const circleHoverClass = colorClass ? `group-hover:bg-${colorClass.replace("text-", "")}` : "";
-  const titleHoverClass = colorClass ? `group-hover:${colorClass}` : "";
-  const markerBadge = item.markerText ? `<span class="marker ${colorClass}">${item.markerText}</span>` : "<span></span>";
+  // Map colorClass to explicit hover classes
+  const getHoverClasses = (colorClass) => {
+    switch (colorClass) {
+      case "purple":
+        return {
+          circle: "group-hover:bg-purple-400",
+          title: "group-hover:text-purple-400",
+          marker: "text-purple-400"
+        };
+      case "blue":
+        return {
+          circle: "group-hover:bg-blue-400",
+          title: "group-hover:text-blue-400",
+          marker: "text-blue-400"
+        };
+      case "yellow":
+        return {
+          circle: "group-hover:bg-yellow-400",
+          title: "group-hover:text-yellow-400",
+          marker: "text-yellow-400"
+        };
+      default:
+        return {
+          circle: "",
+          title: "",
+          marker: ""
+        };
+    }
+  };
+
+  const hoverClasses = getHoverClasses(item.colorClass);
+  const markerBadge = item.markerText ? `<span class="marker ${hoverClasses.marker}">${item.markerText}</span>` : "<span></span>";
   const imageElement =
     item.image ?
       `<img src="${item.image}" alt="" class="size-30 bg-gray-800 border-3 border-dark-700 flex-shrink-0 object-cover image-rendering-pixelated" />`
@@ -40,12 +67,12 @@ function createForgeItemHTML(item) {
        
             <div class="flex justify-between items-start mb-3">
               ${markerBadge}
-              <span class="circle bg-dark-700 ${circleHoverClass}" aria-hidden="true"></span>
+              <span class="circle bg-dark-700 ${hoverClasses.circle}" aria-hidden="true"></span>
             </div>
           <div class="flex gap-4">  
             ${imageElement}
             <div class="flex flex-col gap-1">
-              <h3 class="text-md font-bold ${titleHoverClass} transition-colors">${item.title}</h3>
+              <h3 class="text-md font-bold ${hoverClasses.title} transition-colors">${item.title}</h3>
               <p class="text-sm text-gray-500">${item.description}</p>
               ${footerElement}
             </div>

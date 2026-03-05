@@ -1,91 +1,101 @@
 {
   "development": {
     "label": "Development",
-    "color": "blue",
-    "icon": "⚙",
-    "description": "Scripting • Behaviors • World Gen • UI Systems",
-    "categories": [
-      {
-        "id": "animations",
-        "label": "Animations",
-        "spells": [
-          {
-            "title": "Advanced Math Animations",
-            "description": "Driving smooth, complex motion entirely through mathematical expressions — no keyframes needed.",
-            "icon": "images/spells/math-anim.png"
-          },
-          {
-            "title": "Physics-Based Animations",
-            "description": "Simulating real-world physics like gravity, spring, and inertia directly inside animation controllers.",
-            "icon": "images/spells/physics-anim.png"
-          },
-          {
-            "title": "Animation Controllers",
-            "description": "Building robust state machines that manage transitions between complex animation states.",
-            "icon": "images/spells/anim-controller.png"
-          },
-          {
-            "title": "Molang Expressions",
-            "description": "Harnessing Bedrock's query language to create data-driven, dynamic animation logic.",
-            "icon": "images/spells/molang.png"
-          }
-        ]
-      },
+    "icon": "⚔",
+    "containerId": "dev-skill-tags",
+    "skills": [
       {
         "id": "entity-behaviors",
         "label": "Entity Behaviors",
         "spells": [
           {
-            "title": "Advanced Boss Behaviors",
-            "description": "Multi-phase boss AI with dynamic attack patterns, phase transitions, and environmental awareness.",
-            "icon": "images/spells/boss.png"
+            "title": "Boss AI Systems",
+            "description": "Design complex boss behaviors with multiple phases, attack patterns, and environmental interactions.",
+            "icon": "images/skills/boss-ai.png"
           },
           {
-            "title": "Flying Entities",
-            "description": "Custom aerial movement systems with pathfinding, hover logic, and smooth directional control.",
-            "icon": "images/spells/flying.png"
+            "title": "Entity Components",
+            "description": "Create modular, reusable entity components for efficient behavior management and data-driven design.",
+            "icon": "images/skills/components.png"
           },
           {
-            "title": "Scripting API",
-            "description": "Extending Bedrock's capabilities with GameTest and Script API to build systems impossible in JSON alone.",
-            "icon": "images/spells/scripting.png"
+            "title": "AI Navigation",
+            "description": "Implement pathfinding, goal-based behaviors, and dynamic decision-making systems for entities.",
+            "icon": "images/skills/navigation.png"
           }
         ]
       },
       {
-        "id": "world-building",
-        "label": "World Building",
+        "id": "scripting-api",
+        "label": "Scripting API",
         "spells": [
           {
-            "title": "Biome Generation",
-            "description": "Crafting custom biomes with unique surface rules, climate settings, and mob spawning.",
-            "icon": "images/spells/biome.png"
+            "title": "GameTest Framework",
+            "description": "Leverage Minecraft's Scripting API to create dynamic gameplay mechanics and server-side logic.",
+            "icon": "images/skills/gametest.png"
           },
           {
-            "title": "Features & Feature Rules",
-            "description": "Procedurally placing structures, ore veins, and decorators using Bedrock's feature rule system.",
-            "icon": "images/spells/features.png"
+            "title": "Event Handling",
+            "description": "Build robust event-driven systems for player actions, world events, and custom triggers.",
+            "icon": "images/skills/events.png"
           },
           {
-            "title": "Custom Blocks",
-            "description": "Building fully custom blocks with unique geometry, states, events, and crafting recipes.",
-            "icon": "images/spells/blocks.png"
+            "title": "Custom Commands",
+            "description": "Develop custom slash commands and admin tools using the Scripting API.",
+            "icon": "images/skills/commands.png"
           }
         ]
       },
       {
-        "id": "ui-systems",
-        "label": "UI & Systems",
+        "id": "items",
+        "label": "Items",
         "spells": [
           {
-            "title": "Server UI Menus",
-            "description": "Dynamic server-side form systems with branching logic, player data, and real-time state.",
-            "icon": "images/spells/server-ui.png"
+            "title": "Custom Item System",
+            "description": "Design items with unique properties, custom durability, and special abilities.",
+            "icon": "images/skills/items.png"
           },
           {
-            "title": "Weapon Attachables",
-            "description": "Custom weapon models with first-person animations, enchant glints, and attachment geometry.",
-            "icon": "images/spells/attachables.png"
+            "title": "Item Components",
+            "description": "Implement modular item components for enchantments, durability, and dynamic behaviors.",
+            "icon": "images/skills/item-components.png"
+          }
+        ]
+      },
+      {
+        "id": "blocks",
+        "label": "Blocks",
+        "spells": [
+          {
+            "title": "Custom Block States",
+            "description": "Create blocks with multiple states, rotations, and interactive properties.",
+            "icon": "images/skills/blocks.png"
+          },
+          {
+            "title": "Block Events",
+            "description": "Implement on_interact, on_place, and on_destroy events for dynamic block behavior.",
+            "icon": "images/skills/block-events.png"
+          }
+        ]
+      },
+      {
+        "id": "automation",
+        "label": "Automation",
+        "spells": [
+          {
+            "title": "Regolith Workflow",
+            "description": "Build efficient development pipelines with Regolith filters for automated asset processing.",
+            "icon": "images/skills/regolith.png"
+          },
+          {
+            "title": "Build Systems",
+            "description": "Create automated build scripts, deployment pipelines, and version management systems.",
+            "icon": "images/skills/build.png"
+          },
+          {
+            "title": "Testing Automation",
+            "description": "Implement automated testing frameworks for behavior validation and regression testing.",
+            "icon": "images/skills/testing.png"
           }
         ]
       }
@@ -93,60 +103,111 @@
   },
   "art": {
     "label": "Art & Design",
-    "color": "fuchsia",
     "icon": "✦",
-    "description": "Pixel Art • 3D • Texturing • VFX • Animations",
-    "categories": [
+    "containerId": "art-skill-tags",
+    "skills": [
       {
-        "id": "2d-art",
-        "label": "2D Art",
+        "id": "texturing",
+        "label": "Texturing",
         "spells": [
           {
-            "title": "Sprite Animations",
-            "description": "Frame-by-frame sprite sheets with precise timing and expressive character motion.",
-            "icon": "images/spells/sprite.png"
+            "title": "Pixel Art Mastery",
+            "description": "Create crisp, consistent pixel art textures with proper color palettes and anti-aliasing techniques.",
+            "icon": "images/skills/pixel.png"
           },
           {
-            "title": "Persona Content",
-            "description": "Marketplace-grade persona pieces following Mojang's style guide and technical constraints.",
-            "icon": "images/spells/persona.png"
+            "title": "Texture Atlasing",
+            "description": "Optimize texture usage by combining multiple textures into efficient atlases for better performance.",
+            "icon": "images/skills/atlas.png"
           },
           {
-            "title": "Texture Variants",
-            "description": "Creating cohesive variant sets — damage states, seasonal skins, color palettes — from a single base.",
-            "icon": "images/spells/variants.png"
-          },
-          {
-            "title": "PBR Textures",
-            "description": "Physically-based rendering maps (normal, heightmap, metalness) for Bedrock's deferred pipeline.",
-            "icon": "images/spells/pbr.png"
+            "title": "PBR Workflows",
+            "description": "Implement physically-based rendering with roughness, metallic, and normal maps for realistic materials.",
+            "icon": "images/skills/pbr.png"
           }
         ]
       },
       {
-        "id": "3d-art",
-        "label": "3D & Models",
+        "id": "3d-modeling",
+        "label": "3D Modeling",
         "spells": [
           {
-            "title": "Vanilla Art Direction",
-            "description": "Designing assets that feel authentically Minecraft — respecting the visual language without being generic.",
-            "icon": "images/spells/vanilla.png"
+            "title": "Blockbench Workflow",
+            "description": "Efficient entity and block modeling in Blockbench with proper hierarchy, pivots, and UV mapping.",
+            "icon": "images/skills/blockbench.png"
           },
           {
-            "title": "Asset Implementation",
-            "description": "Taking a 3D model from Blender or Blockbench all the way to a working, optimized in-game asset.",
-            "icon": "images/spells/asset-impl.png"
+            "title": "Model Optimization",
+            "description": "Reduce polygon counts and optimize geometry while maintaining visual quality for performance.",
+            "icon": "images/skills/optimize-model.png"
+          },
+          {
+            "title": "Custom Geometry",
+            "description": "Design complex custom models with proper bone structure for entities, items, and blocks.",
+            "icon": "images/skills/geometry.png"
           }
         ]
       },
       {
-        "id": "vfx",
-        "label": "VFX",
+        "id": "animation",
+        "label": "Animation",
         "spells": [
           {
-            "title": "Particle Effects",
-            "description": "Expressive particle systems for combat hits, ambient atmosphere, magic, and environmental storytelling.",
-            "icon": "images/spells/particles.png"
+            "title": "Entity Animation",
+            "description": "Create smooth character animations with proper weight distribution, timing, and motion flow.",
+            "icon": "images/skills/keyframe.png"
+          },
+          {
+            "title": "Math-Based Animation",
+            "description": "Use Molang expressions and mathematical functions for procedural and dynamic animations.",
+            "icon": "images/skills/math-anim.png"
+          },
+          {
+            "title": "Animation Controllers",
+            "description": "Build complex animation state machines with smooth transitions and conditional logic.",
+            "icon": "images/skills/controllers.png"
+          }
+        ]
+      },
+      {
+        "id": "particles",
+        "label": "Particles",
+        "spells": [
+          {
+            "title": "Particle Systems",
+            "description": "Design stunning particle effects with custom behaviors, billboarding, and color gradients.",
+            "icon": "images/skills/particles.png"
+          },
+          {
+            "title": "Performance Optimization",
+            "description": "Implement efficient particle systems with LOD and culling for high particle counts.",
+            "icon": "images/skills/particle-opt.png"
+          },
+          {
+            "title": "Effect Emitters",
+            "description": "Create complex particle emitters with custom spawn rules, motion paths, and lifetime control.",
+            "icon": "images/skills/emitters.png"
+          }
+        ]
+      },
+      {
+        "id": "implementation",
+        "label": "Implementation",
+        "spells": [
+          {
+            "title": "Asset Integration",
+            "description": "Integrate 3D models, textures, and animations into resource packs with proper file structure.",
+            "icon": "images/skills/integration.png"
+          },
+          {
+            "title": "Render Controllers",
+            "description": "Build advanced render controllers for conditional rendering, overlays, and material blending.",
+            "icon": "images/skills/render.png"
+          },
+          {
+            "title": "Visual Polish",
+            "description": "Apply final touches with proper lighting, effects, and visual feedback for polished results.",
+            "icon": "images/skills/polish.png"
           }
         ]
       }

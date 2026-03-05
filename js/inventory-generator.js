@@ -17,7 +17,7 @@ const TIER_CLASSES = {
   legendary: { border: "border-amber-400", glow: "shadow-amber-400/40", bg: "bg-amber-400/10", text: "text-amber-400", particle: "bg-amber-400" },
 };
 const T_DEF = TIER_CLASSES.common;
-const SLOTS = 25;
+const SLOTS = 15;
 const TIP_OFFSET = 18;
 
 function tc(tier) {

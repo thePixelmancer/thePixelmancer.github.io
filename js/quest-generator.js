@@ -26,8 +26,8 @@ function createQuestHTML(quest) {
   const imageElement =
     quest.image ?
       `
-      <div class="relative overflow-hidden border-3 border-dark-700">
-        <img src="${quest.image}" alt="${quest.alt}" class="w-full h-auto max-h-80 bg-gray-800 object-cover group-hover:scale-105 transition-transform duration-200" />
+      <div class="relative overflow-hidden border-3 border-dark-700 aspect-video">
+        <img src="${quest.image}" alt="${quest.alt}" class="w-full h-full bg-gray-800 object-cover group-hover:scale-105 transition-transform duration-200" />
       </div>
     `
     : "";

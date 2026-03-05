@@ -22,7 +22,7 @@ function createModal() {
         </button>
       </header>
 
-      <div class="modal-body flex-1 min-h-0 overflow-y-auto p-6">
+      <div class="modal-body flex-1 min-h-0 overflow-y-auto p-6 scrollbar-thin">
         <img id="modalImage" src="" alt="" class="w-full h-auto object-cover rounded-lg border-3 border-dark-700 mb-6" />
 
         <div class="mb-6">

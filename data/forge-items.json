@@ -1,9 +1,9 @@
 [
   {
     "id": "regolith-filters",
-    "image": "",
+    "image": "images/items/rego.png",
     "markerText": "★ Tool",
-    "colorClass": "text-purple-400",
+    "colorClass": "purple",
     "href": "#",
     "title": "Regolith Filters",
     "description": "Essential tools for Bedrock development workflow automation",
@@ -14,17 +14,17 @@
     "id": "perlin-fiddle",
     "image": "images/perlin-fiddle-icon.png",
     "markerText": "★ Web App",
-    "colorClass": "text-blue-400",
+    "colorClass": "blue",
     "href": "https://example.com",
     "title": "Perlin Fiddle",
-    "description": "Interactive Perlin noise visualization tool. Experiment with noise parameters in real-time for world generation and procedural content.",
+    "description": "World generation visualization tool.",
     "footer": "Premium • Verified"
   },
   {
     "id": "simple-card",
     "image": "",
     "markerText": "★ Library",
-    "colorClass": "text-purple-400",
+    "colorClass": "purple",
     "href": "#",
     "title": "Simple Card",
     "description": "Just a basic card with no footer."
@@ -33,7 +33,7 @@
     "id": "unmarked-item",
     "image": "",
     "markerText": "",
-    "colorClass": "text-yellow-400",
+    "colorClass": "yellow",
     "href": "#",
     "title": "Unmarked Item",
     "description": "This card has no marker badge, just a custom circle and additional content.",
