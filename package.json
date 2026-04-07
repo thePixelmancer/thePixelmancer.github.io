@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "tailwind:build": "tailwindcss -i src/styles.css -o dist/styles.css",
-    "tailwind:watch": "tailwindcss -i src/styles.css -o dist/styles.css --watch"
+    "build": "tailwindcss -i src/styles.css -o dist/styles.css",
+    "watch": "tailwindcss -i src/styles.css -o dist/styles.css --watch"
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.1.11",

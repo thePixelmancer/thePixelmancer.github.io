@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Angelo - Tools forged and maintained" />
+    <title>Forge — Angelo</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="dist/styles.css" />
+  </head>
+
+  <body class="bg-dark-900">
+
+    <div class="page-header page-header--orange">
+      <a href="index.html" class="page-back-btn">← MENU</a>
+      <h1 class="page-title">Forge</h1>
+      <p class="page-subtitle">Tools forged and maintained by me</p>
+    </div>
+
+    <main class="page-main">
+      <div id="forge-items-container" class="section-content max-w-2xl mx-auto"></div>
+    </main>
+
+    <!-- Ambient glow -->
+    <div class="fixed inset-0 pointer-events-none -z-10"
+         style="background: radial-gradient(ellipse at 50% 110%, rgba(251,146,60,0.05) 0%, transparent 60%)"></div>
+
+    <script src="./js/parallax.js"></script>
+    <script src="./js/forge-generator.js"></script>
+  </body>
+</html>

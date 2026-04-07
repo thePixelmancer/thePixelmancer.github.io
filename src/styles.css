@@ -35,8 +35,9 @@
     z-index: 999;
   }
 
-  /* Replaces the utility soup on <main> */
-  main {
+  /* ─── Panel layout (index.html only) ──────────────────────────────────────── */
+
+  .panel-layout {
     @apply relative z-10 touch-auto min-h-screen md:h-screen flex flex-col md:flex-row md:overflow-x-auto md:overflow-y-hidden overflow-y-auto overflow-x-hidden gap-6 md:gap-6 md:p-10 scroll-smooth;
     -webkit-overflow-scrolling: touch;
   }
@@ -47,6 +48,43 @@
   .main-section header {
     @apply border-b-6 px-6 py-4 border-dark-700 bg-dark-800;
   }
+
+  /* ─── Page layout (section pages) ─────────────────────────────────────────── */
+
+  .page-main {
+    @apply relative z-10 max-w-4xl mx-auto px-4 md:px-8 py-8;
+    animation: pageIn 200ms ease-out;
+  }
+
+  @keyframes pageIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── Sticky back-navigation bar ──────────────────────────────────────────── */
+
+  .page-header {
+    @apply sticky top-0 z-20 flex items-center gap-4 px-6 py-3 bg-dark-900/95 border-b-4 border-dark-700;
+    backdrop-filter: blur(4px);
+  }
+  .page-back-btn {
+    @apply text-[9px] text-gray-500 hover:text-amber-300 tracking-widest transition-colors duration-100 no-underline flex-shrink-0;
+  }
+  .page-title {
+    @apply flex-1 text-center text-xl text-amber-300 font-title;
+  }
+  .page-subtitle {
+    @apply hidden md:block text-xs text-gray-500 flex-shrink-0 tracking-wide;
+  }
+
+  /* Color accent stripe per page */
+  .page-header--amber  { border-bottom-color: rgba(245, 158, 11, 0.4); }
+  .page-header--blue   { border-bottom-color: rgba(96, 165, 250, 0.4); }
+  .page-header--green  { border-bottom-color: rgba(74, 222, 128, 0.4); }
+  .page-header--orange { border-bottom-color: rgba(251, 146, 60, 0.4); }
+  .page-header--purple { border-bottom-color: rgba(192, 132, 252, 0.4); }
+  .page-header--silver { border-bottom-color: rgba(156, 163, 175, 0.3); }
+
   /* ─── Scrollable areas ─────────────────────────────────────────────────────── */
 
   .section-content {
@@ -54,7 +92,9 @@
     mask-image: linear-gradient(to bottom, black 95%, transparent 100%);
     -webkit-mask-image: linear-gradient(to bottom, black 95%, transparent 100%);
   }
+
   /* ─── Cards & items ────────────────────────────────────────────────────────── */
+
   .divider {
     @apply border-dark-700 border-dashed border-t-4;
   }
@@ -73,7 +113,6 @@
   .border-big {
     border-image-slice: 24 24 24 24 fill;
     border-image-width: 4rem;
-
     border-image-outset: 0px;
     border-image-repeat: stretch stretch;
     border-image-source: url("../images/borders/border_big.png");
@@ -87,12 +126,87 @@
     border-image-source: url("../images/borders/border_small.png");
     border-style: solid;
   }
+
+  /* ─── Menu (index page) ────────────────────────────────────────────────────── */
+
+  .menu-grid {
+    @apply grid grid-cols-1 md:grid-cols-3 gap-8 items-center max-w-5xl w-full;
+  }
+  .menu-col { @apply flex flex-col gap-4; }
+
+  .menu-btn {
+    @apply flex items-center bg-dark-900/60 border-2 border-dark-700 p-3 transition-all duration-100 no-underline;
+  }
+  .menu-col-left  .menu-btn:hover { transform: translateX(6px); }
+  .menu-col-right .menu-btn:hover { transform: translateX(-6px); }
+
+  .menu-btn__label { @apply text-[10px] text-gray-300 transition-colors duration-100; }
+  .menu-btn__icon  {
+    @apply w-8 h-8 flex-shrink-0 flex items-center justify-center border-r-2 border-dark-700 mr-4 text-xs;
+  }
+  .menu-btn--right .menu-btn__icon { @apply border-r-0 border-l-2 mr-0 ml-4; }
+
+  /* Color variants */
+  .menu-btn--amber:hover { border-color: rgba(251, 191, 36, 1); }
+  .menu-btn--amber:hover .menu-btn__label { color: rgba(251, 191, 36, 1); }
+  .menu-btn--amber .menu-btn__icon { @apply bg-amber-600/20 border-amber-600 text-amber-500; }
+
+  .menu-btn--blue:hover { border-color: rgba(96, 165, 250, 1); }
+  .menu-btn--blue:hover .menu-btn__label { color: rgba(96, 165, 250, 1); }
+  .menu-btn--blue .menu-btn__icon { @apply bg-blue-600/20 border-blue-600 text-blue-500; }
+
+  .menu-btn--green:hover { border-color: rgba(74, 222, 128, 1); }
+  .menu-btn--green:hover .menu-btn__label { color: rgba(74, 222, 128, 1); }
+  .menu-btn--green .menu-btn__icon { @apply bg-green-600/20 border-green-600 text-green-500; }
+
+  .menu-btn--orange:hover { border-color: rgba(251, 146, 60, 1); }
+  .menu-btn--orange:hover .menu-btn__label { color: rgba(251, 146, 60, 1); }
+  .menu-btn--orange .menu-btn__icon { @apply bg-orange-600/20 border-orange-600 text-orange-500; }
+
+  .menu-btn--purple { @apply bg-purple-900/20 border-purple-500/50; }
+  .menu-btn--purple:hover { border-color: rgba(192, 132, 252, 1); }
+  .menu-btn--purple:hover .menu-btn__label { color: rgba(192, 132, 252, 1); }
+  .menu-btn--purple .menu-btn__icon { @apply bg-purple-600/20 border-purple-600 text-purple-500; }
+
+  .menu-btn--silver:hover { border-color: rgba(156, 163, 175, 1); }
+  .menu-btn--silver:hover .menu-btn__label { color: rgba(209, 213, 219, 1); }
+  .menu-btn--silver .menu-btn__icon { @apply bg-gray-600/20 border-gray-600 text-gray-400; }
+
+  /* Avatar frame */
+  .menu-avatar-wrap  { @apply flex flex-col items-center order-1 md:order-2; }
+  .menu-avatar-frame {
+    @apply relative p-1 border-4 border-amber-400;
+    box-shadow: 0 0 30px rgba(168, 85, 247, 0.35), 0 0 60px rgba(255, 204, 51, 0.1);
+  }
+  .menu-avatar-img {
+    @apply w-40 h-40 md:w-52 md:h-52 object-cover;
+    image-rendering: pixelated;
+  }
+
+  /* Contact strip */
+  .menu-contact {
+    @apply mt-14 flex flex-wrap items-center justify-center gap-3;
+  }
+  .menu-contact__link {
+    @apply flex items-center gap-1.5 text-[9px] text-gray-500 hover:text-gray-200 transition-colors no-underline tracking-wide;
+  }
+  .menu-contact__link--cta { @apply text-amber-400/60 hover:text-amber-300; }
+  .menu-contact__sep { @apply text-dark-700; }
+
   /* ─── Buttons ──────────────────────────────────────────────────────────────── */
 
   .button {
-    @apply w-full my-2 px-4 py-4 text-lg uppercase 
+    @apply w-full my-2 px-4 py-4 text-lg uppercase
            bg-green-700 hover:bg-green-900
            border-b-6 border-green-800
+           shadow-sharp active:translate-y-0.5 active:shadow-none active:border-b-transparent
+           transition-all duration-50 ease-in-out;
+  }
+
+  .button-purple {
+    @apply w-full my-2 px-4 py-4 text-lg uppercase
+           bg-purple-700 hover:bg-purple-900
+           border-b-6 border-purple-800
            shadow-sharp active:translate-y-0.5 active:shadow-none active:border-b-transparent
            transition-all duration-50 ease-in-out;
   }
