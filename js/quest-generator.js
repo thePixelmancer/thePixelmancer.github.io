@@ -36,14 +36,14 @@ function createQuestHTML(quest) {
       <article class="card group cursor-pointer flex flex-col gap-4 p-6" onclick="openQuestModal('${quest.title}', '${quest.alt}', '${quest.image}', '${quest.type}', '${quest.description}', '${quest.project}', '${quest.status}', '${quest.date}', '${quest.link}')">
         <div class="flex justify-between items-center">
           ${statusBadge}
-          <span class="text-sm text-gray-400">${quest.type}</span>
+          <span class="text-[9px] tracking-widest text-gray-500 uppercase">${quest.type}</span>
         </div>
         
         ${imageElement}
         
-        <div class="quest-content">
-          <h3 class="text-xl group-hover:text-amber-400 transition-colors">${quest.title}</h3>
-          <p class="text-sm text-gray-400">${quest.alt}</p>
+        <div class="quest-content flex flex-col gap-1">
+          <h3 class="font-title text-base group-hover:text-amber-400 transition-colors">${quest.title}</h3>
+          <p class="text-xs text-gray-500">${quest.alt}</p>
         </div>
       </article>
     `;

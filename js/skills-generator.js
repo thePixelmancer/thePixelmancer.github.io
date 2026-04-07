@@ -31,12 +31,17 @@ function injectSkillTags(data) {
       return;
     }
 
+    const isArt = pathKey === "art";
+    const hoverClasses = isArt
+      ? "hover:border-fuchsia-400 hover:text-fuchsia-200"
+      : "hover:border-blue-400 hover:text-blue-200";
+
     const tags = path.skills
       .map(
         (skill) => `
         <button
           type="button"
-          class="skill-tag card px-3 py-2 text-xs border-dark-700 text-gray-300 cursor-pointer hover:border-blue-400 hover:text-blue-200 transition-all duration-100"
+          class="skill-tag card px-3 py-2 text-xs border-dark-700 text-gray-300 cursor-pointer ${hoverClasses} transition-all duration-100"
           data-path="${pathKey}"
           data-skill="${skill.id}"
           aria-label="Open ${skill.label} spellbook">
@@ -58,7 +63,9 @@ function buildSpellbookModal() {
   const style = document.createElement("style");
   style.textContent = `
     .scroll-content-scrollbar::-webkit-scrollbar { width: 8px; }
-    .scroll-content-scrollbar::-webkit-scrollbar-thumb { background: rgba(100,70,30,0.3); border-radius: 4px; }
+    .scroll-content-scrollbar::-webkit-scrollbar-track { background: rgb(17,24,40); }
+    .scroll-content-scrollbar::-webkit-scrollbar-thumb { background: rgb(55,65,81); border-radius: 2px; }
+    .scroll-content-scrollbar::-webkit-scrollbar-thumb:hover { background: rgb(75,85,99); }
   `;
   document.head.appendChild(style);
 
@@ -70,33 +77,33 @@ function buildSpellbookModal() {
   modal.setAttribute("aria-labelledby", "spellbookTitle");
 
   modal.innerHTML = `
-    <div class="w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden shadow-2xl text-amber-950">
+    <div class="w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden shadow-2xl text-gray-200">
 
       <!-- Header -->
-      <header class="flex justify-between items-center px-6 py-4 border-b-2 border-amber-900 bg-orange-200 shadow-sharp">
+      <header class="flex justify-between items-center px-6 py-4 border-b-4 border-dark-700 bg-dark-900 shadow-sharp">
         <div class="flex items-center gap-3">
-          <span id="spellbookIcon"class="text-xl text-amber-950"aria-hidden="true">✦</span>
+          <span id="spellbookIcon" class="text-xl text-amber-300" aria-hidden="true">✦</span>
           <div>
-            <h3 id="spellbookTitle"class="font-title text-base text-amber-950"></h3>
-            <p id="spellbookPath"class="text-xs mt-0.5 uppercase text-amber-900"></p>
+            <h3 id="spellbookTitle" class="font-title text-base text-amber-300"></h3>
+            <p id="spellbookPath" class="text-[9px] mt-0.5 uppercase tracking-widest text-gray-500"></p>
           </div>
         </div>
         <button
           type="button"
           onclick="closeSpellbook()"
-          class="font-title text-xs px-3 py-1"
+          class="font-title text-[9px] px-3 py-1 text-gray-400 hover:text-gray-100 transition-colors"
           aria-label="Close spellbook">
           ✕ Close
         </button>
       </header>
 
       <!-- Content -->
-      <div id="spellbookContent"class="scroll-content-scrollbar flex-1 overflow-y-auto px-8 py-6 mx-2 bg-orange-300">
+      <div id="spellbookContent" class="scroll-content-scrollbar flex-1 overflow-y-auto px-8 py-6 bg-dark-800">
         <!-- injected -->
       </div>
 
       <!-- Footer -->
-      <footer class="px-6 py-6 border-t-2 border-amber-900/30 bg-orange-200"></footer>
+      <footer class="px-6 py-4 border-t-4 border-dark-700 bg-dark-900"></footer>
 
     </div>
   `;
@@ -125,7 +132,7 @@ function openSpellbook(pathKey, skillId) {
   if (!path || !skill) return;
 
   const isArt = pathKey === "art";
-  const accentColor = isArt ? "bg-fuchsia-600" : "bg-blue-600";
+  const accentColor = isArt ? "bg-fuchsia-500" : "bg-blue-500";
 
   document.getElementById("spellbookIcon").textContent = path.icon;
   document.getElementById("spellbookTitle").textContent = skill.label;
@@ -135,22 +142,22 @@ function openSpellbook(pathKey, skillId) {
   content.innerHTML = skill.spells
     .map(
       (spell) => `
-    <div class="flex items-start gap-4 py-4 border-b border-amber-900/10 last:border-b-0">
-      <div class="w-12 h-12 flex-shrink-0 border-2 border-amber-900/20 bg-amber-950/5 flex items-center justify-center">
+    <div class="flex items-start gap-4 py-4 border-b border-dark-700 last:border-b-0">
+      <div class="w-12 h-12 flex-shrink-0 border-2 border-dark-700 bg-dark-900 flex items-center justify-center">
         <img
           src="${spell.icon}"
           alt=""
           class="w-full h-full object-cover [image-rendering:pixelated]"
           onerror="this.style.display='none';this.nextElementSibling.classList.remove('hidden')"
         />
-        <span class="hidden text-xl text-amber-900/30">✦</span>
+        <span class="hidden text-xl text-gray-600">✦</span>
       </div>
       <div class="flex flex-col gap-1.5 flex-1">
         <div class="flex items-center gap-2">
           <span class="w-1.5 h-1.5 ${accentColor}"></span>
-          <h4 class="font-title text-xs uppercase text-amber-950">${spell.title}</h4>
+          <h4 class="font-title text-xs uppercase text-gray-100">${spell.title}</h4>
         </div>
-        <p class="text-xs text-amber-900/70">${spell.description}</p>
+        <p class="text-xs text-gray-400 leading-relaxed">${spell.description}</p>
       </div>
     </div>
   `,

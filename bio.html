@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="dist/styles.css" />
   </head>
 
-  <body class="bg-dark-900">
+  <body class="bg-dark-900" style="--page-accent: rgba(245,158,11,0.15)">
 
     <div class="page-header page-header--amber">
       <a href="index.html" class="page-back-btn">← MENU</a>
@@ -27,22 +27,22 @@
         <!-- Profile card -->
         <article class="card-nohover flex flex-col items-center gap-3 p-8 border-big">
           <img src="images/avatar.png" alt="Angelo's avatar" class="w-32 h-32 border-3 border-dark-700 object-cover" />
-          <h2 class="text-3xl font-bold text-gray-200 font-title">Angelo</h2>
-          <h3 id="class-title" class="text-xl font-bold text-fuchsia-300">Pixelmancer</h3>
+          <h2 class="font-title text-2xl text-gray-100">Angelo</h2>
+          <h3 id="class-title" class="text-sm text-fuchsia-300">Pixelmancer</h3>
 
-          <div class="w-full max-w-xs"
+          <div class="xp-bar"
                role="progressbar" aria-label="Experience points" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-            <div class="h-4 bg-dark-700 overflow-hidden border border-dark-600">
-              <div id="xpBar" class="h-full bg-gradient-to-r from-blue-500 to-purple-400 transition-all duration-1000"></div>
+            <div class="xp-bar__track">
+              <div id="xpBar" class="xp-bar__fill"></div>
             </div>
-            <p id="xpText" class="text-center text-sm text-gray-400 mt-1">XP: 0 / 100</p>
+            <p id="xpText" class="xp-bar__label">XP: 0 / 100</p>
           </div>
-          <p class="text-center text-xs text-gray-500 mt-1">GitHub commits this year</p>
+          <p class="text-[8px] text-gray-500">GitHub commits this year</p>
         </article>
 
         <!-- About -->
         <article class="card p-6 flex flex-col gap-3">
-          <h3 class="text-xs text-amber-300 uppercase tracking-widest">About</h3>
+          <h3 class="font-title text-sm text-amber-300">About</h3>
           <p class="text-xs text-gray-300 leading-relaxed">
             I craft digital worlds and tools. Specializing in Minecraft Bedrock development since 2019, blending code with pixel art to create unique gaming experiences.
           </p>
@@ -55,30 +55,30 @@
 
         <!-- Character attributes -->
         <article class="card p-6 flex flex-col gap-3">
-          <h3 class="text-xs text-amber-300 uppercase tracking-widest">Attributes</h3>
-          <dl class="grid grid-cols-2 gap-x-6 gap-y-3">
-            <div class="flex flex-col gap-0.5">
+          <h3 class="font-title text-sm text-amber-300">Attributes</h3>
+          <dl class="grid grid-cols-2 gap-x-6 gap-y-4">
+            <div class="flex flex-col gap-1">
               <dt class="text-[8px] text-gray-500 uppercase tracking-widest">Class</dt>
               <dd class="text-xs text-gray-200">Developer</dd>
             </div>
-            <div class="flex flex-col gap-0.5">
+            <div class="flex flex-col gap-1">
               <dt class="text-[8px] text-gray-500 uppercase tracking-widest">Guild</dt>
               <dd class="text-xs text-gray-200">Independent</dd>
             </div>
-            <div class="flex flex-col gap-0.5">
+            <div class="flex flex-col gap-1">
               <dt class="text-[8px] text-gray-500 uppercase tracking-widest">Base</dt>
               <dd class="text-xs text-gray-200">The Cloud</dd>
             </div>
-            <div class="flex flex-col gap-0.5">
-              <dt class="text-[8px] text-gray-500 uppercase tracking-widest">Years</dt>
-              <dd class="text-xs text-gray-200">6+ Active</dd>
+            <div class="flex flex-col gap-1">
+              <dt class="text-[8px] text-gray-500 uppercase tracking-widest">Years Active</dt>
+              <dd class="text-xs text-gray-200">6+</dd>
             </div>
           </dl>
         </article>
 
         <!-- Availability -->
         <article class="card flex flex-col gap-3 p-6">
-          <h3 class="text-xs text-amber-300 uppercase tracking-widest">Status</h3>
+          <h3 class="font-title text-sm text-amber-300">Status</h3>
           <div class="flex items-center gap-2">
             <span class="relative flex h-2 w-2">
               <span class="animate-ping absolute inline-flex h-full w-full bg-green-400 opacity-75"></span>
@@ -91,46 +91,46 @@
 
         <!-- Contact -->
         <article class="card p-6 flex flex-col gap-3">
-          <h3 class="text-xs text-amber-300 uppercase tracking-widest mb-1">Send a Message</h3>
+          <h3 class="font-title text-sm text-amber-300 mb-1">Send a Message</h3>
           <nav class="flex flex-col gap-2" aria-label="Contact links">
-            <a href="mailto:hello@pixelmancer.dev"
-               class="flex items-center gap-3 p-3 bg-dark-900 border-2 border-dark-700 hover:border-green-500 transition-colors no-underline">
-              <span class="w-10 h-10 flex-shrink-0 border-2 border-green-700 bg-green-950 flex items-center justify-center" aria-hidden="true">
-                <svg viewBox="0 0 16 16" class="w-5 h-5 text-green-400 fill-current">
+
+            <a href="mailto:hello@pixelmancer.dev" class="contact-link hover:border-green-500">
+              <span class="contact-link__icon contact-link__icon--green" aria-hidden="true">
+                <svg viewBox="0 0 16 16" class="w-4 h-4 fill-current">
                   <path d="M0 4v8h16V4H0zm14 1L8 9 2 5h12zm-12 6V6.5l6 3.5 6-3.5V11H2z" />
                 </svg>
               </span>
-              <div class="flex flex-col gap-0.5">
-                <span class="text-gray-500 text-xs leading-none">Email</span>
-                <span class="text-gray-100 text-xs leading-none">hello@pixelmancer.dev</span>
+              <div class="contact-link__label">
+                <span class="contact-link__type">Email</span>
+                <span class="contact-link__value">hello@pixelmancer.dev</span>
               </div>
             </a>
 
             <a href="https://github.com/pixelmancer" target="_blank" rel="noopener noreferrer"
-               class="flex items-center gap-3 p-3 bg-dark-900 border-2 border-dark-700 hover:border-fuchsia-500 transition-colors no-underline">
-              <span class="w-10 h-10 flex-shrink-0 border-2 border-fuchsia-800 bg-fuchsia-950 flex items-center justify-center" aria-hidden="true">
-                <svg viewBox="0 0 16 16" class="w-5 h-5 text-fuchsia-400 fill-current">
+               class="contact-link hover:border-fuchsia-500">
+              <span class="contact-link__icon contact-link__icon--purple" aria-hidden="true">
+                <svg viewBox="0 0 16 16" class="w-4 h-4 fill-current">
                   <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
                 </svg>
               </span>
-              <div class="flex flex-col gap-0.5">
-                <span class="text-gray-500 text-xs leading-none">GitHub</span>
-                <span class="text-gray-100 text-xs leading-none">@pixelmancer</span>
+              <div class="contact-link__label">
+                <span class="contact-link__type">GitHub</span>
+                <span class="contact-link__value">@pixelmancer</span>
               </div>
             </a>
 
-            <a href="#"
-               class="flex items-center gap-3 p-3 bg-dark-900 border-2 border-dark-700 hover:border-blue-500 transition-colors no-underline">
-              <span class="w-10 h-10 flex-shrink-0 border-2 border-blue-800 bg-blue-950 flex items-center justify-center" aria-hidden="true">
-                <svg viewBox="0 0 16 16" class="w-5 h-5 text-blue-400 fill-current">
+            <a href="#" class="contact-link hover:border-blue-500">
+              <span class="contact-link__icon contact-link__icon--blue" aria-hidden="true">
+                <svg viewBox="0 0 16 16" class="w-4 h-4 fill-current">
                   <path d="M13.545 2.907a13.2 13.2 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.2 12.2 0 0 0-3.658 0 8 8 0 0 0-.412-.833.05.05 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.04.04 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032q.003.022.021.037a13.3 13.3 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019q.463-.63.818-1.329a.05.05 0 0 0-.01-.059l-.018-.011a9 9 0 0 1-1.248-.595.05.05 0 0 1-.02-.066l.015-.019q.127-.095.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.05.05 0 0 1 .053.007q.121.1.248.195a.05.05 0 0 1-.004.085 8 8 0 0 1-1.249.594.05.05 0 0 0-.03.03.05.05 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.2 13.2 0 0 0 4.001-2.02.05.05 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.03.03 0 0 0-.02-.019m-8.198 7.307c-.789 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612m5.316 0c-.788 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612" />
                 </svg>
               </span>
-              <div class="flex flex-col gap-0.5">
-                <span class="text-gray-500 text-xs leading-none">Discord</span>
-                <span class="text-gray-100 text-xs leading-none">pixelmancer</span>
+              <div class="contact-link__label">
+                <span class="contact-link__type">Discord</span>
+                <span class="contact-link__value">pixelmancer</span>
               </div>
             </a>
+
           </nav>
         </article>
 

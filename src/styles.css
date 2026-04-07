@@ -92,6 +92,11 @@
     mask-image: linear-gradient(to bottom, black 95%, transparent 100%);
     -webkit-mask-image: linear-gradient(to bottom, black 95%, transparent 100%);
   }
+  /* Use on standalone pages where the fade-out clip is unwanted */
+  .section-content--page {
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
 
   /* ─── Cards & items ────────────────────────────────────────────────────────── */
 
@@ -99,7 +104,11 @@
     @apply border-dark-700 border-dashed border-t-4;
   }
   .card {
-    @apply p-4 bg-dark-800 border-3 border-dark-700 hover:-translate-y-0.5 hover:shadow-sharp transition-all duration-100 ease-in-out;
+    @apply p-4 bg-dark-800 border-3 border-dark-700 hover:-translate-y-0.5 transition-all duration-100 ease-in-out;
+    --page-accent: rgba(255, 255, 255, 0.05);
+  }
+  .card:hover {
+    box-shadow: var(--shadow-sharp), 0 0 14px var(--page-accent, rgba(255,255,255,0.05));
   }
   .card-nohover {
     @apply p-4 bg-dark-800 border-3 border-dark-700 transition-all duration-100 ease-in-out;
@@ -192,6 +201,31 @@
   }
   .menu-contact__link--cta { @apply text-amber-400/60 hover:text-amber-300; }
   .menu-contact__sep { @apply text-dark-700; }
+
+  /* ─── Contact links ───────────────────────────────────────────────────────── */
+
+  .contact-link {
+    @apply flex items-center gap-3 p-2 bg-dark-900 border-2 border-dark-700 transition-colors no-underline;
+  }
+  .contact-link:hover { @apply border-current; }
+  .contact-link__icon {
+    @apply w-8 h-8 flex-shrink-0 flex items-center justify-center border-2;
+  }
+  .contact-link__icon--green  { @apply border-green-700 bg-green-950 text-green-400; }
+  .contact-link__icon--purple { @apply border-fuchsia-800 bg-fuchsia-950 text-fuchsia-400; }
+  .contact-link__icon--blue   { @apply border-blue-800 bg-blue-950 text-blue-400; }
+  .contact-link__label {
+    @apply flex flex-col gap-0.5;
+  }
+  .contact-link__type  { @apply text-[8px] text-gray-500 leading-none; }
+  .contact-link__value { @apply text-[8px] text-gray-200 leading-none; }
+
+  /* ─── XP bar ───────────────────────────────────────────────────────────────── */
+
+  .xp-bar { @apply w-full max-w-xs; }
+  .xp-bar__track { @apply h-4 bg-dark-700 overflow-hidden border border-dark-700; }
+  .xp-bar__fill  { @apply h-full bg-gradient-to-r from-blue-500 to-purple-400 transition-all duration-1000; }
+  .xp-bar__label { @apply text-center text-[9px] text-gray-500 mt-1; }
 
   /* ─── Buttons ──────────────────────────────────────────────────────────────── */
 
