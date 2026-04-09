@@ -1,0 +1,51 @@
+{
+  "stats": {
+    "projects_completed": "50+",
+    "projects_lead": 15
+  },
+  "experience": [
+    {
+      "studio": "Hobby Modding",
+      "color": "gray",
+      "role": "Java Mod Developer",
+      "projects": "Personal Minecraft Java Edition mods",
+      "period": "2016 - 2018"
+    },
+    {
+      "studio": "Independent",
+      "color": "gray",
+      "role": "Independent Contractor",
+      "projects": "Client projects and freelance work",
+      "period": "2018 - 2019"
+    },
+    {
+      "studio": "Shapescape",
+      "color": "fuchsia",
+      "role": "Asset Creator & Art Director",
+      "projects": "Weapons Expansion series, Survival+",
+      "period": "Apr 2019"
+    },
+    {
+      "studio": "Independent",
+      "color": "gray",
+      "role": "Independent Contractor",
+      "projects": "Tooling, open source, Regolith filters",
+      "period": "2020"
+    },  {
+      "studio": "Simply Brilliant",
+      "color": "amber",
+      "role": "Developer",
+      "projects": "Unannounced projects",
+      "period": "2026 - Present",
+      "concurrent": true
+    },
+    {
+      "studio": "Tsunami Studios",
+      "color": "blue",
+      "role": "Developer & Artist / Project Lead",
+      "projects": "Dragons, Be a Mob, Mutants, Into The Wild, Backrooms",
+      "period": "2021 - Present",
+      "concurrent": true
+    }
+  ]
+}

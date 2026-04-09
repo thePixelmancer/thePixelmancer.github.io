@@ -52,7 +52,7 @@
   /* ─── Page layout (section pages) ─────────────────────────────────────────── */
 
   .page-main {
-    @apply relative z-10 max-w-4xl mx-auto px-4 md:px-8 py-8;
+    @apply relative z-10 max-w-7xl mx-auto px-4 md:px-8 py-8;
     animation: pageIn 200ms ease-out;
   }
 
@@ -64,26 +64,59 @@
   /* ─── Sticky back-navigation bar ──────────────────────────────────────────── */
 
   .page-header {
-    @apply sticky top-0 z-20 flex items-center gap-4 px-6 py-3 bg-dark-900/95 border-b-4 border-dark-700;
+    @apply sticky top-0 z-20 flex items-center px-6 py-4 bg-dark-900/95 border-b-4 border-dark-700;
     backdrop-filter: blur(4px);
   }
   .page-back-btn {
-    @apply text-[9px] text-gray-500 hover:text-amber-300 tracking-widest transition-colors duration-100 no-underline flex-shrink-0;
+    @apply text-[9px] text-gray-600 hover:text-gray-300 tracking-widest transition-colors duration-100 no-underline flex-shrink-0 w-16;
+  }
+  .page-back-spacer {
+    @apply flex-shrink-0 w-16;
   }
   .page-title {
-    @apply flex-1 text-center text-xl text-amber-300 font-title;
+    @apply text-2xl font-title text-amber-300 text-center;
+    text-shadow: 0 0 18px rgba(245, 158, 11, 0.45);
+  }
+  .page-title-line {
+    @apply h-px w-8;
+    background: rgba(156, 163, 175, 0.2);
   }
   .page-subtitle {
-    @apply hidden md:block text-xs text-gray-500 flex-shrink-0 tracking-wide;
+    @apply text-[8px] tracking-[0.25em] text-gray-500 uppercase text-center;
   }
 
   /* Color accent stripe per page */
   .page-header--amber  { border-bottom-color: rgba(245, 158, 11, 0.4); }
+  .page-header--amber  .page-title { color: rgb(252, 211, 77); text-shadow: 0 0 18px rgba(245, 158, 11, 0.5); }
+  .page-header--amber  .page-title-line { background: rgba(245, 158, 11, 0.3); }
+
   .page-header--blue   { border-bottom-color: rgba(96, 165, 250, 0.4); }
+  .page-header--blue   .page-title { color: rgb(147, 197, 253); text-shadow: 0 0 18px rgba(96, 165, 250, 0.5); }
+  .page-header--blue   .page-title-line { background: rgba(96, 165, 250, 0.3); }
+
   .page-header--green  { border-bottom-color: rgba(74, 222, 128, 0.4); }
+  .page-header--green  .page-title { color: rgb(134, 239, 172); text-shadow: 0 0 18px rgba(74, 222, 128, 0.5); }
+  .page-header--green  .page-title-line { background: rgba(74, 222, 128, 0.3); }
+
   .page-header--orange { border-bottom-color: rgba(251, 146, 60, 0.4); }
+  .page-header--orange .page-title { color: rgb(253, 186, 116); text-shadow: 0 0 18px rgba(251, 146, 60, 0.5); }
+  .page-header--orange .page-title-line { background: rgba(251, 146, 60, 0.3); }
+
   .page-header--purple { border-bottom-color: rgba(192, 132, 252, 0.4); }
+  .page-header--purple .page-title { color: rgb(216, 180, 254); text-shadow: 0 0 18px rgba(192, 132, 252, 0.5); }
+  .page-header--purple .page-title-line { background: rgba(192, 132, 252, 0.3); }
+
   .page-header--silver { border-bottom-color: rgba(156, 163, 175, 0.3); }
+  .page-header--silver .page-title { color: rgb(209, 213, 219); text-shadow: 0 0 18px rgba(156, 163, 175, 0.4); }
+  .page-header--silver .page-title-line { background: rgba(156, 163, 175, 0.3); }
+
+  /* ─── Ambient glow — shared across all section pages ──────────────────────── */
+  /* Uses --page-accent set per-page on <body style=""> */
+
+  .ambient-glow {
+    @apply fixed inset-0 pointer-events-none -z-10;
+    background: radial-gradient(ellipse at 50% 110%, var(--page-accent, rgba(255,255,255,0.03)) 0%, transparent 60%);
+  }
 
   /* ─── Scrollable areas ─────────────────────────────────────────────────────── */
 
@@ -149,10 +182,11 @@
   .menu-col-left  .menu-btn:hover { transform: translateX(6px); }
   .menu-col-right .menu-btn:hover { transform: translateX(-6px); }
 
-  .menu-btn__label { @apply text-[10px] text-gray-300 transition-colors duration-100; }
+  .menu-btn__label { @apply text-xs text-gray-300 transition-colors duration-100; }
   .menu-btn__icon  {
     @apply w-8 h-8 flex-shrink-0 flex items-center justify-center border-r-2 border-dark-700 mr-4 text-xs;
   }
+  .menu-btn--right { @apply justify-between; }
   .menu-btn--right .menu-btn__icon { @apply border-r-0 border-l-2 mr-0 ml-4; }
 
   /* Color variants */
@@ -197,7 +231,7 @@
     @apply mt-14 flex flex-wrap items-center justify-center gap-3;
   }
   .menu-contact__link {
-    @apply flex items-center gap-1.5 text-[9px] text-gray-500 hover:text-gray-200 transition-colors no-underline tracking-wide;
+    @apply flex items-center gap-1.5 text-xs text-gray-500 hover:text-gray-200 transition-colors no-underline tracking-wide;
   }
   .menu-contact__link--cta { @apply text-amber-400/60 hover:text-amber-300; }
   .menu-contact__sep { @apply text-dark-700; }
@@ -217,30 +251,40 @@
   .contact-link__label {
     @apply flex flex-col gap-0.5;
   }
-  .contact-link__type  { @apply text-[8px] text-gray-500 leading-none; }
-  .contact-link__value { @apply text-[8px] text-gray-200 leading-none; }
+  .contact-link__type  { @apply text-xs text-gray-500 leading-none; }
+  .contact-link__value { @apply text-xs text-gray-200 leading-none; }
 
   /* ─── XP bar ───────────────────────────────────────────────────────────────── */
 
   .xp-bar { @apply w-full max-w-xs; }
   .xp-bar__track { @apply h-4 bg-dark-700 overflow-hidden border border-dark-700; }
-  .xp-bar__fill  { @apply h-full bg-gradient-to-r from-blue-500 to-purple-400 transition-all duration-1000; }
-  .xp-bar__label { @apply text-center text-[9px] text-gray-500 mt-1; }
+  .xp-bar__fill  { @apply h-full bg-gradient-to-r from-green-500 to-emerald-400 transition-all duration-1000; }
+  .xp-bar__label { @apply text-center text-xs text-gray-500 mt-1; }
+
+  /* ─── Journal filter buttons ───────────────────────────────────────────────── */
+
+  .journal-filter {
+    @apply text-xs px-3 py-1 border-2 border-dark-700 text-gray-500
+           hover:border-gray-400 hover:text-gray-200 transition-colors cursor-pointer bg-transparent;
+  }
+  .journal-filter.active {
+    @apply border-purple-500 text-purple-300;
+  }
 
   /* ─── Buttons ──────────────────────────────────────────────────────────────── */
 
   .button {
-    @apply w-full my-2 px-4 py-4 text-lg uppercase
+    @apply w-full my-2 px-4 py-3 text-sm uppercase
            bg-green-700 hover:bg-green-900
-           border-b-6 border-green-800
+           border-b-4 border-green-800
            shadow-sharp active:translate-y-0.5 active:shadow-none active:border-b-transparent
            transition-all duration-50 ease-in-out;
   }
 
   .button-purple {
-    @apply w-full my-2 px-4 py-4 text-lg uppercase
+    @apply w-full my-2 px-4 py-3 text-sm uppercase
            bg-purple-700 hover:bg-purple-900
-           border-b-6 border-purple-800
+           border-b-4 border-purple-800
            shadow-sharp active:translate-y-0.5 active:shadow-none active:border-b-transparent
            transition-all duration-50 ease-in-out;
   }

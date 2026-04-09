@@ -11,31 +11,31 @@ function createModal() {
   modal.innerHTML = `
     <div class="bg-dark-800 shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col">
 
-      <header class="flex-shrink-0 flex justify-between items-center p-4 border-4 border-dark-700 bg-dark-900">
-        <h3 id="modalTitle" class="text-xl font-semibold text-gray-100">Project Details</h3>
+      <header class="flex-shrink-0 flex justify-between items-center px-5 py-4 border-b-4 border-dark-700 bg-dark-900">
+        <h3 id="modalTitle" class="font-title text-base text-gray-100">Project Details</h3>
         <button
           type="button"
           onclick="closeModal()"
-          class="text-gray-400 hover:text-gray-100 transition-colors text-2xl leading-none"
+          class="font-title text-xs px-3 py-1 text-gray-400 hover:text-gray-100 transition-colors"
           aria-label="Close modal">
-          ✕
+          ✕ Close
         </button>
       </header>
 
-      <div class="modal-body flex-1 min-h-0 overflow-y-auto p-6 scrollbar-thin">
-        <img id="modalImage" src="" alt="" class="w-full h-auto object-cover rounded-lg border-3 border-dark-700 mb-6" />
+      <div class="modal-body flex-1 min-h-0 overflow-y-auto p-6">
+        <img id="modalImage" src="" alt="" class="w-full h-auto object-cover border-3 border-dark-700 mb-5" />
 
-        <div class="mb-6">
-          <h4 id="modalProjectTitle" class="text-2xl font-bold mb-2"></h4>
-          <p id="modalProjectDescription" class="text-base mb-4"></p>
+        <div class="mb-5 flex flex-col gap-2">
+          <h4 id="modalProjectTitle" class="font-title text-base text-gray-100"></h4>
+          <p id="modalProjectDescription" class="text-sm text-gray-400 leading-relaxed"></p>
         </div>
 
         <dl id="modalMetadata" class="grid grid-cols-2 gap-3"></dl>
       </div>
 
-      <footer class="flex-shrink-0 flex justify-end gap-4 p-4 bg-dark-900 border-4 border-dark-700">
-        <button type="button" class="button-purple w-auto m-0">View Project</button>
-        <button type="button" class="button w-auto m-0" onclick="closeModal()">Close</button>
+      <footer class="flex-shrink-0 flex justify-end gap-3 px-5 py-4 bg-dark-900 border-t-4 border-dark-700">
+        <button type="button" class="button-purple w-auto m-0 px-5">View Project</button>
+        <button type="button" class="button w-auto m-0 px-5" onclick="closeModal()">Close</button>
       </footer>
 
     </div>
@@ -83,8 +83,8 @@ function openModal(cardElement) {
     const item = document.createElement("div");
     item.className = "card p-3 flex flex-col";
     item.innerHTML = `
-      <span class="text-gray-400 text-sm">${key}:</span>
-      <span class="text-fuchsia-300">${value}</span>
+      <span class="text-xs text-gray-500">${key}:</span>
+      <span class="text-xs text-fuchsia-300">${value}</span>
     `;
     metadataContainer.appendChild(item);
   }

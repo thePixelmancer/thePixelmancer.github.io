@@ -13,23 +13,29 @@
     <link rel="stylesheet" href="dist/styles.css" />
   </head>
 
-  <body class="bg-dark-900 overflow-hidden" style="--page-accent: rgba(74,222,128,0.12)">
+  <body class="bg-dark-900 flex flex-col min-h-screen" style="--page-accent: rgba(74,222,128,0.12)">
 
     <div class="page-header page-header--green">
       <a href="index.html" class="page-back-btn">← MENU</a>
-      <h1 class="page-title">Inventory</h1>
-      <p class="page-subtitle">Curiosities collected</p>
+      <div class="flex-1 flex flex-col items-center gap-1">
+        <h1 class="page-title">Inventory</h1>
+        <div class="flex items-center gap-3">
+          <div class="page-title-line"></div>
+          <p class="page-subtitle">Curiosities collected</p>
+          <div class="page-title-line"></div>
+        </div>
+      </div>
+      <div class="page-back-spacer" aria-hidden="true"></div>
     </div>
 
-    <main class="page-main">
-      <div id="inventory-container" class="section-content section-content--page max-w-lg mx-auto"></div>
+    <main class="page-main flex-1 flex items-center justify-center">
+      <div id="inventory-container" class="section-content section-content--page max-w-sm w-full"></div>
     </main>
 
-    <!-- Ambient glow -->
-    <div class="fixed inset-0 pointer-events-none -z-10"
-         style="background: radial-gradient(ellipse at 50% 110%, rgba(74,222,128,0.05) 0%, transparent 60%)"></div>
+    <div class="ambient-glow"></div>
 
     <script src="./js/parallax.js"></script>
+    <script src="./js/particles.js"></script>
     <script src="./js/inventory-generator.js"></script>
   </body>
 </html>

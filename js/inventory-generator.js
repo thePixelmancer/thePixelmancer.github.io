@@ -17,7 +17,7 @@ const TIER_CLASSES = {
   legendary: { border: "border-amber-400", glow: "shadow-amber-400/40", bg: "bg-amber-400/10", text: "text-amber-400", particle: "bg-amber-400" },
 };
 const T_DEF = TIER_CLASSES.common;
-const SLOTS = 15;
+const SLOTS = 25;
 const TIP_OFFSET = 18;
 
 function tc(tier) {
@@ -96,9 +96,9 @@ function showTooltip(item, mx, my) {
       class="w-full aspect-square object-cover block border-2 ${t.border} bg-dark-800 image-rendering-pixelated"
       onerror="this.style.display='none'"/>
     <span class="text-sm leading-relaxed text-gray-100">${item.title}</span>
-    <span class="text-lg font-title uppercase tracking-widest ${t.text}">${item.tier ?? "common"}</span>
-    ${item.description ? `<span class="text-gray-400 text-xs">${item.description}</span>` : ""}
-    ${item.consumable ? `<span class="text-sm text-yellow-300 font-title">▶ Right-click to use</span>` : ""}
+    <span class="text-sm font-title uppercase tracking-widest ${t.text}">${item.tier ?? "common"}</span>
+    ${item.description ? `<span class="text-xs text-gray-400">${item.description}</span>` : ""}
+    ${item.consumable ? `<span class="text-xs text-yellow-300 font-title">▶ Right-click to use</span>` : ""}
   `;
 
   placeTooltip(mx, my);
@@ -265,6 +265,7 @@ async function consumeItem(i) {
   if (!item) return;
 
   playSound(item.sound);
+  showConsumeToast(item.title);
 
   const flash = document.createElement("div");
   flash.className = "absolute inset-0 z-10 pointer-events-none bg-white/90 transition-opacity duration-300";
@@ -278,6 +279,21 @@ async function consumeItem(i) {
     items[i] = null;
     paintSlot(i);
   }, 360);
+}
+
+function showConsumeToast(title) {
+  const toast = document.createElement("div");
+  toast.style.cssText =
+    "position:fixed;top:80px;left:50%;transform:translateX(-50%);z-index:20000;" +
+    "background:var(--color-dark-900,#0d0d0d);border:2px solid #f59e0b;" +
+    "padding:8px 16px;white-space:nowrap;transition:opacity 0.4s ease;";
+  toast.className = "font-basic text-amber-300";
+  toast.style.fontSize = "9px";
+  toast.textContent = `Used: ${title}`;
+  document.body.appendChild(toast);
+
+  setTimeout(() => { toast.style.opacity = "0"; }, 1100);
+  setTimeout(() => { toast.remove(); }, 1500);
 }
 
 function spawnParticles(el, t) {
@@ -340,7 +356,7 @@ async function initInventory() {
   buildTooltip();
   buildGhost();
 
-  container.innerHTML = `<div class="p-6 text-center text-gray-500 font-basic text-lg">Loading inventory…</div>`;
+  container.innerHTML = `<div class="p-6 text-center text-gray-500 font-basic text-sm">Loading inventory…</div>`;
 
   try {
     const res = await fetch("./data/inventory.json");
@@ -355,7 +371,7 @@ async function initInventory() {
     buildGrid(container);
   } catch (err) {
     console.error("[Inventory] load failed:", err);
-    container.innerHTML = `<div class="m-4 p-4 text-center text-red-400 border-2 border-red-800 bg-red-950/20 font-basic text-lg">⚠ Inventory failed to load</div>`;
+    container.innerHTML = `<div class="m-4 p-4 text-center text-red-400 border-2 border-red-800 bg-red-950/20 font-basic text-sm">⚠ Inventory failed to load</div>`;
   }
 }
 

@@ -17,43 +17,45 @@
 
     <div class="page-header page-header--blue">
       <a href="index.html" class="page-back-btn">← MENU</a>
-      <h1 class="page-title">Skills</h1>
-      <p class="page-subtitle">Disciplines mastered</p>
+      <div class="flex-1 flex flex-col items-center gap-1">
+        <h1 class="page-title">Skills</h1>
+        <div class="flex items-center gap-3">
+          <div class="page-title-line"></div>
+          <p class="page-subtitle">Disciplines mastered</p>
+          <div class="page-title-line"></div>
+        </div>
+      </div>
+      <div class="page-back-spacer" aria-hidden="true"></div>
     </div>
 
-    <main class="page-main">
-      <div class="section-content--page max-w-2xl mx-auto flex flex-col gap-4 py-6">
+    <main class="page-main flex items-center min-h-[calc(100vh-60px)]">
+      <div class="flex justify-center w-full">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl">
 
-        <article class="card flex flex-col gap-3 border-small p-6">
-          <div class="flex items-center gap-3">
-            <span class="circle bg-blue-400" aria-hidden="true"></span>
-            <h3 class="font-title text-base text-blue-300">Development</h3>
+          <!-- Development panel -->
+          <div class="card-nohover border-small flex flex-col gap-0 overflow-hidden">
+            <div class="flex items-center justify-center px-6 py-5 border-b-2 border-dark-700">
+              <h2 class="font-title text-base text-blue-300">Development</h2>
+            </div>
+            <div id="dev-skill-list" class="flex flex-col gap-3 p-5"></div>
           </div>
-          <p class="text-xs text-gray-500 leading-relaxed">Technical Skills</p>
-          <div id="dev-skill-tags" class="flex flex-wrap gap-2">
-            <!-- populated by skills-generator.js -->
-          </div>
-        </article>
 
-        <article class="card flex flex-col gap-3 border-small p-6">
-          <div class="flex items-center gap-3">
-            <span class="circle bg-fuchsia-400" aria-hidden="true"></span>
-            <h3 class="font-title text-base text-fuchsia-300">Art &amp; Design</h3>
+          <!-- Art & Design panel -->
+          <div class="card-nohover border-small flex flex-col gap-0 overflow-hidden">
+            <div class="flex items-center justify-center px-6 py-5 border-b-2 border-dark-700">
+              <h2 class="font-title text-base text-fuchsia-300">Art &amp; Design</h2>
+            </div>
+            <div id="art-skill-list" class="flex flex-col gap-3 p-5"></div>
           </div>
-          <p class="text-xs text-gray-500 leading-relaxed">Visuals and Arts</p>
-          <div id="art-skill-tags" class="flex flex-wrap gap-2">
-            <!-- populated by skills-generator.js -->
-          </div>
-        </article>
 
+        </div>
       </div>
     </main>
 
-    <!-- Ambient glow -->
-    <div class="fixed inset-0 pointer-events-none -z-10"
-         style="background: radial-gradient(ellipse at 50% 110%, rgba(96,165,250,0.05) 0%, transparent 60%)"></div>
+    <div class="ambient-glow"></div>
 
     <script src="./js/parallax.js"></script>
+    <script src="./js/particles.js"></script>
     <script src="./js/skills-generator.js"></script>
   </body>
 </html>

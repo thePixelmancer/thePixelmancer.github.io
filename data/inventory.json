@@ -1,32 +1,89 @@
 [
   {
-    "title": "Iron Sword",
-    "description": "A sturdy blade, worn but reliable.",
-    "image": "images/items/python.png",
-    "tier": "common",
-    "consumable": true
-  },
-  {
-    "title": "Health Potion",
-    "description": "Restores 50 HP. Smells faintly of cherries.",
-    "image": "images/items/guitar.png",
-    "tier": "uncommon",
-    "consumable": true,
-    "sound": "sounds/guitar.mp3"
-  },
-  "",
-  "",
-  {
-    "title": "Regolith Filter",
-    "description": "Essential for Bedrock workflow automation.",
+    "title": "TypeScript",
+    "description": "Strongly-typed JavaScript. Makes refactoring at 2am survivable.",
     "image": "images/items/ts.png",
     "tier": "rare",
     "consumable": false
   },
   {
-    "title": "Health Potion",
-    "description": "Restores 50 HP. Smells faintly of cherries.",
+    "title": "Python",
+    "description": "Scripting tool of choice. Glues the whole pipeline together.",
+    "image": "images/items/python.png",
+    "tier": "common",
+    "consumable": false
+  },
+  {
+    "title": "Regolith",
+    "description": "Bedrock workflow automation. Saved hundreds of hours of copy-paste suffering.",
     "image": "images/items/rego.png",
+    "tier": "epic",
+    "consumable": false
+  },
+  {
+    "title": "Health Potion",
+    "description": "Restores 50 HP. Drink after shipping a particularly cursed entity behavior.",
+    "image": "images/items/guitar.png",
+    "tier": "uncommon",
+    "consumable": true,
+    "sound": "sounds/guitar.mp3"
+  },
+  {
+    "title": "Blockbench",
+    "description": "3D modeling for the pixel-art minded. Every boss started here.",
+    "image": "images/items/ts.png",
+    "tier": "rare",
+    "consumable": false
+  },
+  {
+    "title": "Pixel Art Brush",
+    "description": "The tool behind hundreds of textures. Old faithful.",
+    "image": "images/items/python.png",
+    "tier": "uncommon",
+    "consumable": false
+  },
+  {
+    "title": "Dragon Scale",
+    "description": "Shed from the first boss enemy I ever made. Still warm.",
+    "image": "images/items/rego.png",
+    "tier": "epic",
+    "consumable": false
+  },
+  "",
+  {
+    "title": "Bedrock Core",
+    "description": "Deep knowledge of Minecraft Bedrock's entity systems. Hard-won.",
+    "image": "images/items/ts.png",
+    "tier": "legendary",
+    "consumable": false
+  },
+  {
+    "title": "Animation Scroll",
+    "description": "Math-based keyframe animations. Bezier curves and bone transforms in the margins.",
+    "image": "images/items/python.png",
+    "tier": "rare",
+    "consumable": false
+  },
+  "",
+  {
+    "title": "Debug Wand",
+    "description": "Single-use. Clears all console errors instantly. Does not fix the underlying issue.",
+    "image": "images/items/rego.png",
+    "tier": "uncommon",
+    "consumable": true
+  },
+  {
+    "title": "Git Commit Stone",
+    "description": "Inscribed: 'wip'. There are hundreds of these.",
+    "image": "images/items/ts.png",
+    "tier": "common",
+    "consumable": false
+  },
+  "",
+  {
+    "title": "Legendary Potion",
+    "description": "What's in it? Nobody knows. Tastes like shipping on deadline.",
+    "image": "images/items/guitar.png",
     "tier": "legendary",
     "consumable": true,
     "sound": "sounds/guitar.mp3"

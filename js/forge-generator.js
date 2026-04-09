@@ -72,8 +72,8 @@ function createForgeItemHTML(item) {
           <div class="flex gap-4">  
             ${imageElement}
             <div class="flex flex-col gap-1">
-              <h3 class="text-md font-bold ${hoverClasses.title} transition-colors">${item.title}</h3>
-              <p class="text-sm text-gray-500">${item.description}</p>
+              <h3 class="font-title text-base ${hoverClasses.title} transition-colors">${item.title}</h3>
+              <p class="text-sm text-gray-500 leading-relaxed">${item.description}</p>
               ${footerElement}
             </div>
           </div>

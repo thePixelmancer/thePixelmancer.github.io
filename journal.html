@@ -17,20 +17,37 @@
 
     <div class="page-header page-header--purple">
       <a href="index.html" class="page-back-btn">← MENU</a>
-      <h1 class="page-title">Journal</h1>
-      <p class="page-subtitle">Battles won and lessons earned</p>
+      <div class="flex-1 flex flex-col items-center gap-1">
+        <h1 class="page-title">Journal</h1>
+        <div class="flex items-center gap-3">
+          <div class="page-title-line"></div>
+          <p class="page-subtitle">Battles won and lessons earned</p>
+          <div class="page-title-line"></div>
+        </div>
+      </div>
+      <div class="page-back-spacer" aria-hidden="true"></div>
     </div>
 
     <main class="page-main">
-      <div id="quests-container" class="section-content section-content--page max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 py-6"></div>
+      <div class="py-6 flex flex-col gap-6">
+
+        <!-- Filter strip -->
+        <div class="flex flex-wrap gap-2">
+          <button class="journal-filter active" data-filter="all">All</button>
+          <button class="journal-filter" data-filter="lead">Lead</button>
+          <button class="journal-filter" data-filter="dev">Dev</button>
+          <button class="journal-filter" data-filter="artist">Artist</button>
+        </div>
+
+        <div id="quests-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"></div>
+      </div>
     </main>
 
-    <!-- Ambient glow -->
-    <div class="fixed inset-0 pointer-events-none -z-10"
-         style="background: radial-gradient(ellipse at 50% 110%, rgba(192,132,252,0.05) 0%, transparent 60%)"></div>
+    <div class="ambient-glow"></div>
 
     <!-- modal.js must load before quest-generator.js -->
     <script src="./js/parallax.js"></script>
+    <script src="./js/particles.js"></script>
     <script src="./js/modal.js"></script>
     <script src="./js/quest-generator.js"></script>
   </body>
