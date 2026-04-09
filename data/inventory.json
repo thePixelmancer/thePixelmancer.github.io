@@ -37,7 +37,7 @@
   },
   {
     "title": "Pixel Art Brush",
-    "description": "The tool behind hundreds of textures. Old faithful.",
+    "description": "The tool behind hundreds of textures. Every item, mob skin, and UI element started here.",
     "image": "images/items/python.png",
     "tier": "uncommon",
     "consumable": false
@@ -52,7 +52,7 @@
   "",
   {
     "title": "Bedrock Core",
-    "description": "Deep knowledge of Minecraft Bedrock's entity systems. Hard-won.",
+    "description": "Years of fighting the engine, reading changelogs like scripture, and discovering undocumented behavior the hard way.",
     "image": "images/items/ts.png",
     "tier": "legendary",
     "consumable": false

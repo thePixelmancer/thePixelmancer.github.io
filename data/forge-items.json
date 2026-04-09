@@ -2,41 +2,90 @@
   {
     "id": "regolith-filters",
     "image": "images/items/rego.png",
-    "markerText": "★ Tool",
-    "colorClass": "purple",
-    "href": "#",
+    "href": "https://github.com/thePixelmancer/regolith-filters",
     "title": "Regolith Filters",
-    "description": "Essential tools for Bedrock development workflow automation",
-    "footer": "Premium • Verified"
+    "description": "10 Regolith filters for automating Bedrock addon workflows — Aseprite conversion, spawn egg colors, documentation generation, image compositing, localization, and more.",
+    "status": "active",
+    "tags": [
+      { "name": "Tool",       "color": "purple", "primary": true },
+      { "name": "Python",     "color": "blue"   },
+      { "name": "TypeScript", "color": "blue"   },
+      { "name": "Regolith",   "color": "purple" }
+    ],
+    "stats": [
+      { "label": "Filters",    "value": "10"      },
+      { "label": "Stars",      "value": "5"       },
+      { "label": "License",    "value": "MIT"     },
+      { "label": "Visibility", "value": "Public"  }
+    ]
   },
-  "divider",
   {
     "id": "perlin-fiddle",
     "image": "images/perlin-fiddle-icon.png",
-    "markerText": "★ Web App",
-    "colorClass": "blue",
-    "href": "https://example.com",
+    "href": "https://github.com/thePixelmancer/perlin-fiddle",
     "title": "Perlin Fiddle",
-    "description": "World generation visualization tool.",
-    "footer": "Premium • Verified"
+    "description": "Interactive browser tool for visualizing and tuning Perlin noise in real time. v2.0 features sandboxed code execution, seeded noise, shareable links, and a redesigned UI.",
+    "status": "active",
+    "tags": [
+      { "name": "Web App",    "color": "blue",  "primary": true },
+      { "name": "JavaScript", "color": "amber" },
+      { "name": "Canvas",     "color": "blue"  }
+    ],
+    "stats": [
+      { "label": "Version",    "value": "2.0"     },
+      { "label": "Stars",      "value": "3"       },
+      { "label": "License",    "value": "MIT"     },
+      { "label": "Visibility", "value": "Public"  }
+    ]
   },
   {
-    "id": "simple-card",
+    "id": "controller-view",
     "image": "",
-    "markerText": "★ Library",
-    "colorClass": "purple",
-    "href": "#",
-    "title": "Simple Card",
-    "description": "Just a basic card with no footer."
+    "href": "https://github.com/thePixelmancer/controller-view",
+    "title": "Controller View",
+    "description": "VS Code extension that renders Minecraft Bedrock animation controller JSON files as an interactive state machine graph, with real-time updates and side-by-side editing.",
+    "status": "active",
+    "tags": [
+      { "name": "VS Code Ext", "color": "blue",   "primary": true },
+      { "name": "JavaScript",  "color": "amber"  },
+      { "name": "Bedrock",     "color": "green"  }
+    ],
+    "stats": [
+      { "label": "Stars",      "value": "2"       },
+      { "label": "Visibility", "value": "Public"  }
+    ]
   },
   {
-    "id": "unmarked-item",
+    "id": "modular-mc-syntax",
     "image": "",
-    "markerText": "",
-    "colorClass": "yellow",
-    "href": "#",
-    "title": "Unmarked Item",
-    "description": "This card has no marker badge, just a custom circle and additional content.",
-    "footer": "Last updated: Feb 2024"
+    "href": "https://github.com/thePixelmancer/modular-mc-syntax-highlight",
+    "title": "ModularMC Syntax Highlight",
+    "description": "VS Code extension adding syntax highlighting and IntelliSense for ModularMC — TypeScript inside JSON strings, template variable completion, and auto-map path resolution.",
+    "status": "active",
+    "tags": [
+      { "name": "VS Code Ext", "color": "blue",   "primary": true },
+      { "name": "TypeScript",  "color": "blue"   },
+      { "name": "Regolith",    "color": "purple" }
+    ],
+    "stats": [
+      { "label": "Stars",      "value": "2"       },
+      { "label": "Visibility", "value": "Public"  }
+    ]
+  },
+  {
+    "id": "bedrock-kit",
+    "image": "",
+    "href": "https://github.com/thePixelmancer/bedrock-kit",
+    "title": "Bedrock Kit",
+    "description": "Unofficial TypeScript SDK for reading and navigating Bedrock addon files. Bridges behavior and resource packs, supports reverse lookups, PBR textures, and cross-linked asset types.",
+    "status": "wip",
+    "tags": [
+      { "name": "Library",    "color": "purple", "primary": true },
+      { "name": "TypeScript", "color": "blue"   },
+      { "name": "Bedrock",    "color": "green"  }
+    ],
+    "stats": [
+      { "label": "Visibility", "value": "Public"  }
+    ]
   }
 ]

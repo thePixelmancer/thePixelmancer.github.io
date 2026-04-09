@@ -54,15 +54,15 @@ function createCardHTML(item) {
   const c = ACHIEVEMENT_COLORS[item.color] ?? ACHIEVEMENT_COLORS.blue;
   const iconPath = ICONS[item.icon] ?? ICONS.star;
 
-  const borderImageAttr = item.borderImage
-    ? `style="border-image-source:url(images/borders/${item.borderImage})"`
-    : "";
+  const borderStyle = item.borderImage
+    ? `border-image-source: url('images/borders/${item.borderImage}'); border-image-slice: 24 fill; border-image-width: 4rem; border-image-outset: 0px; border-image-repeat: stretch; border-style: solid;`
+    : `border-top: 4px solid ${c.border};`;
 
   return `
     <a href="${item.url}" target="_blank" rel="noopener noreferrer"
        class="card flex flex-col items-center gap-3 p-8 relative overflow-hidden no-underline
-              hover:-translate-y-1 transition-transform duration-150" ${borderImageAttr}
-       style="border-top: 4px solid ${c.border}; box-shadow: var(--shadow-sharp), 0 0 30px ${c.topGlow}">
+              hover:-translate-y-1 transition-transform duration-150"
+       style="${borderStyle} box-shadow: var(--shadow-sharp), 0 0 30px ${c.topGlow}">
 
       <div class="absolute top-0 inset-x-0 h-px pointer-events-none"
            style="background: linear-gradient(90deg, transparent, ${c.via}, transparent)"></div>

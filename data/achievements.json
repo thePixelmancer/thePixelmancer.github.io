@@ -5,7 +5,7 @@
     "role": "Developer & Artist",
     "year": "2022 – 2024",
     "icon": "star",
-    "borderImage": null,
+    "borderImage": "border_water.png",
     "url": "https://www.tsunamistudios.com",
     "current": true
   },
@@ -15,7 +15,7 @@
     "role": "Collaborator",
     "year": "2023",
     "icon": "badge",
-    "borderImage": null,
+    "borderImage": "border_big.png",
     "url": "https://www.simplybrilliant.co",
     "current": true
   },
@@ -45,7 +45,7 @@
     "role": "Developer",
     "year": "2024",
     "icon": "fire",
-    "borderImage": null,
+    "borderImage": "border_small.png",
     "url": "https://www.nitricstudios.com",
     "current": false
   }
