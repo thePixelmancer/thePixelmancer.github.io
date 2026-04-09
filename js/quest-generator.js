@@ -8,9 +8,9 @@
 let allQuests = [];
 
 const ROLE_BADGE = {
-  lead:   { label: "Project Lead", classes: "text-amber-400 border-amber-400/50"  },
-  dev:    { label: "Developer",       classes: "text-blue-400 border-blue-400/50"    },
-  artist: { label: "Artist",          classes: "text-fuchsia-400 border-fuchsia-400/50" },
+  lead:   { label: "Project Lead", classes: "text-amber-800 border-amber-700/60"   },
+  dev:    { label: "Developer",    classes: "text-blue-800 border-blue-700/60"     },
+  artist: { label: "Artist",       classes: "text-fuchsia-800 border-fuchsia-700/60" },
 };
 
 async function loadQuests() {
@@ -53,17 +53,17 @@ function createQuestHTML(quest, index) {
       : `<div class="aspect-video bg-dark-900/60 border-3 border-dark-700"></div>`;
 
     return `
-      <article class="card group cursor-pointer p-6 col-span-1 md:col-span-2 xl:col-span-3"
+      <article class="card-paper group cursor-pointer p-6 col-span-1 md:col-span-2 xl:col-span-3"
                data-quest-index="${index}">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div class="md:col-span-2">${heroImageEl}</div>
           <div class="flex flex-col gap-3 pt-1">
             <div class="flex items-center justify-between gap-3">
               ${roleBadge}
-              <span class="text-xs tracking-widest text-gray-500 uppercase">${quest.type}</span>
+              <span class="text-xs tracking-widest text-stone-500 uppercase">${quest.type}</span>
             </div>
-            <h3 class="font-title text-base group-hover:text-amber-400 transition-colors leading-relaxed">${quest.title}</h3>
-            ${quest.description ? `<p class="text-xs text-gray-500 leading-relaxed">${quest.description}</p>` : ""}
+            <h3 class="font-title text-base text-stone-800 group-hover:text-amber-800 transition-colors leading-relaxed">${quest.title}</h3>
+            ${quest.description ? `<p class="text-xs text-stone-600 leading-relaxed">${quest.description}</p>` : ""}
             <div class="flex flex-col gap-1 mt-1">
               ${[
                 ["Type",    quest.type    || "—"],
@@ -71,9 +71,9 @@ function createQuestHTML(quest, index) {
                 ["Role",    badge.label         ],
                 ["Date",    quest.date    || "Ongoing"],
               ].map(([k, v]) => `
-                <div class="flex items-center justify-between gap-2 border-b border-dark-700 pb-1">
-                  <span class="text-[8px] tracking-widest text-gray-600 uppercase">${k}</span>
-                  <span class="text-xs text-fuchsia-300">${v}</span>
+                <div class="flex items-center justify-between gap-2 border-b border-stone-400/50 pb-1">
+                  <span class="text-[8px] tracking-widest text-stone-500 uppercase">${k}</span>
+                  <span class="text-xs text-stone-700">${v}</span>
                 </div>`).join("")}
             </div>
             ${quest.link && quest.link !== "#"
@@ -96,11 +96,11 @@ function createQuestHTML(quest, index) {
       : "";
 
     return `
-      <article class="card group cursor-pointer flex flex-col gap-3 p-5 col-span-1 xl:col-span-2"
+      <article class="card-paper group cursor-pointer flex flex-col gap-3 p-5 col-span-1 xl:col-span-2"
                data-quest-index="${index}">
         ${featImageEl}
         <div class="flex items-center justify-between gap-3">
-          <h3 class="font-title text-sm group-hover:text-amber-400 transition-colors">${quest.title}</h3>
+          <h3 class="font-title text-sm text-stone-800 group-hover:text-amber-800 transition-colors">${quest.title}</h3>
           ${roleBadge}
         </div>
       </article>`;
@@ -114,16 +114,16 @@ function createQuestHTML(quest, index) {
     : "";
 
   return `
-    <article class="card group cursor-pointer flex flex-col gap-4 p-6"
+    <article class="card-paper group cursor-pointer flex flex-col gap-4 p-6"
              data-quest-index="${index}">
       ${imageEl}
       <div class="flex flex-wrap justify-between items-center gap-2">
         ${roleBadge}
-        <span class="text-xs tracking-widest text-gray-500 uppercase">${quest.type}</span>
+        <span class="text-xs tracking-widest text-stone-500 uppercase">${quest.type}</span>
       </div>
       <div class="flex flex-col gap-1">
-        <h3 class="font-title text-base group-hover:text-amber-400 transition-colors">${quest.title}</h3>
-        <p class="text-sm text-gray-500">${quest.alt}</p>
+        <h3 class="font-title text-base text-stone-800 group-hover:text-amber-800 transition-colors">${quest.title}</h3>
+        <p class="text-sm text-stone-600">${quest.alt}</p>
       </div>
     </article>`;
 }
