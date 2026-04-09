@@ -48,9 +48,7 @@ function renderAllPaths() {
     if (!container) return;
 
     container.innerHTML = path.skills.map((skill) => `
-      <button type="button"
-              class="skill-tag w-full flex items-center gap-4 p-4 bg-dark-900 border-2 border-dark-700
-                     transition-all duration-100 text-left hover:-translate-y-px"
+      <button type="button" class="skill-tag w-full flex items-center gap-4 p-4 bg-dark-900 border-2 border-dark-700 transition-all duration-100 text-left hover:-translate-y-px"
               data-path="${pathKey}"
               data-skill="${skill.id}"
               aria-label="Open ${skill.label} spellbook"

@@ -4,26 +4,17 @@ function createParallaxLayers() {
 
   // Layer 1 - Back
   const layer1 = document.createElement("div");
-  layer1.className = "fixed inset-0 z-0 parallax-layer-1";
-  layer1.style.zIndex = "1";
-  layer1.innerHTML = `
-    <img src="images/bgz0.png" alt="" class="absolute inset-0 w-full h-full object-cover" />
-
-  `;
+  layer1.className = "fixed inset-0 z-[1] origin-center";
+  layer1.innerHTML = `<img src="images/bgz0.png" alt="" class="absolute inset-0 w-full h-full object-cover" />`;
 
   // Layer 2 - Middle
   const layer2 = document.createElement("div");
-  layer2.className = "fixed inset-0 z-0 parallax-layer-2";
-  layer2.style.zIndex = "2";
-  layer2.innerHTML = `
-    <img src="images/bgz1.png" alt="" class="absolute inset-0 w-full h-full object-cover" />
-
-  `;
+  layer2.className = "fixed inset-0 z-[2] origin-center";
+  layer2.innerHTML = `<img src="images/bgz1.png" alt="" class="absolute inset-0 w-full h-full object-cover" />`;
 
   // Layer 3 - Front
   const layer3 = document.createElement("div");
-  layer3.className = "fixed inset-0 z-0 parallax-layer-3";
-  layer3.style.zIndex = "3";
+  layer3.className = "fixed inset-0 z-[3] origin-center";
   layer3.innerHTML = `
     <img src="images/bgz2.png" alt="" class="absolute inset-0 w-full h-full object-cover" />
     <div class="absolute inset-0 bg-dark-900/80"></div>
@@ -46,11 +37,6 @@ const scales = [1.05, 1.1, 1.15]; // scale factors
 document.addEventListener("DOMContentLoaded", () => {
   // Create layers and get references
   const layers = createParallaxLayers();
-
-  // Set transform origin to center for all layers
-  layers.forEach((layer) => {
-    layer.style.transformOrigin = "center center";
-  });
 
   // Set up mouse movement listener
   window.addEventListener("mousemove", (e) => {

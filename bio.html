@@ -15,7 +15,7 @@
 
   <body class="bg-dark-900" style="--page-accent: rgba(245,158,11,0.15)">
 
-    <div class="page-header page-header--amber">
+    <div class="page-header" style="--header-accent-border: rgba(245, 158, 11, 0.4); --header-accent-text: rgb(252, 211, 77); --header-accent-glow: rgba(245, 158, 11, 0.5); --header-accent-line: rgba(245, 158, 11, 0.3);">
       <a href="index.html" class="page-back-btn">← MENU</a>
       <div class="flex-1 flex flex-col items-center gap-1">
         <h1 class="page-title">Bio</h1>
@@ -25,7 +25,7 @@
           <div class="page-title-line"></div>
         </div>
       </div>
-      <div class="page-back-spacer" aria-hidden="true"></div>
+      <div class="flex-shrink-0 w-16" aria-hidden="true"></div>
     </div>
 
     <main class="page-main">
@@ -35,17 +35,17 @@
         <aside class="w-full md:w-2/5 flex flex-col gap-4 flex-shrink-0">
 
           <!-- Profile card -->
-          <article class="card-nohover flex flex-col items-center gap-3 p-6 border-big">
+          <article class="border-big bg-dark-800 transition-all duration-100 ease-in-out flex flex-col items-center gap-3 p-6">
             <img src="images/avatar.png" alt="Angelo's avatar" class="w-28 h-28 border-3 border-dark-700 object-cover" />
             <h2 class="font-title text-xl text-gray-100">Angelo</h2>
             <h3 id="class-title" class="text-base text-fuchsia-300">Pixelmancer</h3>
 
-            <div class="xp-bar"
+            <div class="w-full max-w-xs"
                  role="progressbar" aria-label="HP" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-              <div class="xp-bar__track">
-                <div id="xpBar" class="xp-bar__fill"></div>
+              <div class="h-4 bg-dark-700 overflow-hidden border border-dark-700">
+                <div id="xpBar" class="h-full bg-gradient-to-r from-green-500 to-emerald-400 transition-all duration-1000"></div>
               </div>
-              <p id="xpText" class="xp-bar__label">HP  100 / 100</p>
+              <p id="xpText" class="text-center text-xs text-gray-500 mt-1">HP  100 / 100</p>
             </div>
 
             <div class="flex items-center gap-2 mt-1">
@@ -68,40 +68,40 @@
             <h3 class="font-title text-sm text-amber-300 mb-1">Send a Message</h3>
             <nav class="flex flex-col gap-2" aria-label="Contact links">
 
-              <a href="mailto:hello@pixelmancer.dev" class="contact-link hover:border-green-500">
-                <span class="contact-link__icon contact-link__icon--green" aria-hidden="true">
+              <a href="mailto:hello@pixelmancer.dev" class="flex items-center gap-3 p-2 bg-dark-900 border-2 border-dark-700 transition-colors no-underline hover:border-green-500">
+                <span class="w-8 h-8 flex-shrink-0 flex items-center justify-center border-2 border-green-700 bg-green-950 text-green-400" aria-hidden="true">
                   <svg viewBox="0 0 16 16" class="w-4 h-4 fill-current">
                     <path d="M0 4v8h16V4H0zm14 1L8 9 2 5h12zm-12 6V6.5l6 3.5 6-3.5V11H2z" />
                   </svg>
                 </span>
-                <div class="contact-link__label">
-                  <span class="contact-link__type">Email</span>
-                  <span class="contact-link__value">hello@pixelmancer.dev</span>
+                <div class="flex flex-col gap-0.5">
+                  <span class="text-xs text-gray-500 leading-none">Email</span>
+                  <span class="text-xs text-gray-200 leading-none">hello@pixelmancer.dev</span>
                 </div>
               </a>
 
               <a href="https://github.com/pixelmancer" target="_blank" rel="noopener noreferrer"
-                 class="contact-link hover:border-fuchsia-500">
-                <span class="contact-link__icon contact-link__icon--purple" aria-hidden="true">
+                 class="flex items-center gap-3 p-2 bg-dark-900 border-2 border-dark-700 transition-colors no-underline hover:border-fuchsia-500">
+                <span class="w-8 h-8 flex-shrink-0 flex items-center justify-center border-2 border-fuchsia-800 bg-fuchsia-950 text-fuchsia-400" aria-hidden="true">
                   <svg viewBox="0 0 16 16" class="w-4 h-4 fill-current">
                     <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
                   </svg>
                 </span>
-                <div class="contact-link__label">
-                  <span class="contact-link__type">GitHub</span>
-                  <span class="contact-link__value">@pixelmancer</span>
+                <div class="flex flex-col gap-0.5">
+                  <span class="text-xs text-gray-500 leading-none">GitHub</span>
+                  <span class="text-xs text-gray-200 leading-none">@pixelmancer</span>
                 </div>
               </a>
 
-              <a href="#" class="contact-link hover:border-blue-500">
-                <span class="contact-link__icon contact-link__icon--blue" aria-hidden="true">
+              <a href="#" class="flex items-center gap-3 p-2 bg-dark-900 border-2 border-dark-700 transition-colors no-underline hover:border-blue-500">
+                <span class="w-8 h-8 flex-shrink-0 flex items-center justify-center border-2 border-blue-800 bg-blue-950 text-blue-400" aria-hidden="true">
                   <svg viewBox="0 0 16 16" class="w-4 h-4 fill-current">
                     <path d="M13.545 2.907a13.2 13.2 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.2 12.2 0 0 0-3.658 0 8 8 0 0 0-.412-.833.05.05 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.04.04 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032q.003.022.021.037a13.3 13.3 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019q.463-.63.818-1.329a.05.05 0 0 0-.01-.059l-.018-.011a9 9 0 0 1-1.248-.595.05.05 0 0 1-.02-.066l.015-.019q.127-.095.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.05.05 0 0 1 .053.007q.121.1.248.195a.05.05 0 0 1-.004.085 8 8 0 0 1-1.249.594.05.05 0 0 0-.03.03.05.05 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.2 13.2 0 0 0 4.001-2.02.05.05 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.03.03 0 0 0-.02-.019m-8.198 7.307c-.789 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612m5.316 0c-.788 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612" />
                   </svg>
                 </span>
-                <div class="contact-link__label">
-                  <span class="contact-link__type">Discord</span>
-                  <span class="contact-link__value">pixelmancer</span>
+                <div class="flex flex-col gap-0.5">
+                  <span class="text-xs text-gray-500 leading-none">Discord</span>
+                  <span class="text-xs text-gray-200 leading-none">pixelmancer</span>
                 </div>
               </a>
 

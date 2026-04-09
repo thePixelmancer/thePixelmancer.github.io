@@ -46,7 +46,7 @@ function entryCard(entry) {
   const colorClass = EXPERIENCE_COLORS[entry.color] ?? EXPERIENCE_COLORS.gray;
   return `
     <div class="flex flex-col gap-1">
-      <span class="marker self-start ${colorClass}">${entry.studio}</span>
+      <span class="px-2 py-1 font-title uppercase border text-xs inline-flex items-center self-start bg-white/8 ${colorClass}">${entry.studio}</span>
       <h4 class="font-title text-sm text-gray-100">${entry.role}</h4>
       <p class="text-xs text-gray-500 leading-relaxed">${entry.projects}</p>
       <span class="text-xs text-gray-600">${entry.period}</span>

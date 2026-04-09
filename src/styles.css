@@ -35,20 +35,6 @@
     z-index: 999;
   }
 
-  /* ─── Panel layout (index.html only) ──────────────────────────────────────── */
-
-  .panel-layout {
-    @apply relative z-10 touch-auto min-h-screen md:h-screen flex flex-col md:flex-row md:overflow-x-auto md:overflow-y-hidden overflow-y-auto overflow-x-hidden gap-6 md:gap-6 md:p-10 scroll-smooth;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .main-section {
-    @apply md:h-full md:min-w-md flex flex-1 flex-col px-2;
-  }
-  .main-section header {
-    @apply border-b-6 px-6 py-4 border-dark-700 bg-dark-800;
-  }
-
   /* ─── Page layout (section pages) ─────────────────────────────────────────── */
 
   .page-main {
@@ -57,65 +43,45 @@
   }
 
   @keyframes pageIn {
-    from { opacity: 0; transform: translateY(6px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   /* ─── Sticky back-navigation bar ──────────────────────────────────────────── */
 
   .page-header {
-    @apply sticky top-0 z-20 flex items-center px-6 py-4 bg-dark-900/95 border-b-4 border-dark-700;
+    @apply sticky top-0 z-20 flex items-center px-6 py-4 bg-dark-900/95 border-b-4;
     backdrop-filter: blur(4px);
+    border-bottom-color: var(--header-accent-border, rgba(156, 163, 175, 0.3));
   }
   .page-back-btn {
     @apply text-[9px] text-gray-600 hover:text-gray-300 tracking-widest transition-colors duration-100 no-underline flex-shrink-0 w-16;
   }
-  .page-back-spacer {
-    @apply flex-shrink-0 w-16;
-  }
   .page-title {
-    @apply text-2xl font-title text-amber-300 text-center;
-    text-shadow: 0 0 18px rgba(245, 158, 11, 0.45);
+    @apply text-2xl font-title text-center;
+    color: var(--header-accent-text, rgb(252, 211, 77));
+    text-shadow: 0 0 18px var(--header-accent-glow, rgba(245, 158, 11, 0.5));
   }
   .page-title-line {
     @apply h-px w-8;
-    background: rgba(156, 163, 175, 0.2);
+    background: var(--header-accent-line, rgba(156, 163, 175, 0.2));
   }
   .page-subtitle {
     @apply text-[8px] tracking-[0.25em] text-gray-500 uppercase text-center;
   }
-
-  /* Color accent stripe per page */
-  .page-header--amber  { border-bottom-color: rgba(245, 158, 11, 0.4); }
-  .page-header--amber  .page-title { color: rgb(252, 211, 77); text-shadow: 0 0 18px rgba(245, 158, 11, 0.5); }
-  .page-header--amber  .page-title-line { background: rgba(245, 158, 11, 0.3); }
-
-  .page-header--blue   { border-bottom-color: rgba(96, 165, 250, 0.4); }
-  .page-header--blue   .page-title { color: rgb(147, 197, 253); text-shadow: 0 0 18px rgba(96, 165, 250, 0.5); }
-  .page-header--blue   .page-title-line { background: rgba(96, 165, 250, 0.3); }
-
-  .page-header--green  { border-bottom-color: rgba(74, 222, 128, 0.4); }
-  .page-header--green  .page-title { color: rgb(134, 239, 172); text-shadow: 0 0 18px rgba(74, 222, 128, 0.5); }
-  .page-header--green  .page-title-line { background: rgba(74, 222, 128, 0.3); }
-
-  .page-header--orange { border-bottom-color: rgba(251, 146, 60, 0.4); }
-  .page-header--orange .page-title { color: rgb(253, 186, 116); text-shadow: 0 0 18px rgba(251, 146, 60, 0.5); }
-  .page-header--orange .page-title-line { background: rgba(251, 146, 60, 0.3); }
-
-  .page-header--purple { border-bottom-color: rgba(192, 132, 252, 0.4); }
-  .page-header--purple .page-title { color: rgb(216, 180, 254); text-shadow: 0 0 18px rgba(192, 132, 252, 0.5); }
-  .page-header--purple .page-title-line { background: rgba(192, 132, 252, 0.3); }
-
-  .page-header--silver { border-bottom-color: rgba(156, 163, 175, 0.3); }
-  .page-header--silver .page-title { color: rgb(209, 213, 219); text-shadow: 0 0 18px rgba(156, 163, 175, 0.4); }
-  .page-header--silver .page-title-line { background: rgba(156, 163, 175, 0.3); }
 
   /* ─── Ambient glow — shared across all section pages ──────────────────────── */
   /* Uses --page-accent set per-page on <body style=""> */
 
   .ambient-glow {
     @apply fixed inset-0 pointer-events-none -z-10;
-    background: radial-gradient(ellipse at 50% 110%, var(--page-accent, rgba(255,255,255,0.03)) 0%, transparent 60%);
+    background: radial-gradient(ellipse at 50% 110%, var(--page-accent, rgba(255, 255, 255, 0.03)) 0%, transparent 60%);
   }
 
   /* ─── Scrollable areas ─────────────────────────────────────────────────────── */
@@ -133,24 +99,30 @@
 
   /* ─── Cards & items ────────────────────────────────────────────────────────── */
 
-  .divider {
-    @apply border-dark-700 border-dashed border-t-4;
-  }
   .card {
-    @apply p-4 bg-dark-800 border-3 border-dark-700 hover:-translate-y-0.5 transition-all duration-100 ease-in-out;
+    @apply p-4 bg-dark-800 border-3 transition-all duration-100 ease-in-out;
+    border-color: var(--card-border, rgb(55, 65, 81));
     --page-accent: rgba(255, 255, 255, 0.05);
   }
   .card:hover {
-    box-shadow: var(--shadow-sharp), 0 0 14px var(--page-accent, rgba(255,255,255,0.05));
+    box-shadow:
+      var(--shadow-sharp),
+      0 0 14px var(--page-accent, rgba(255, 255, 255, 0.05));
+    transform: translateY(-0.125rem);
   }
   .card-nohover {
     @apply p-4 bg-dark-800 border-3 border-dark-700 transition-all duration-100 ease-in-out;
   }
-  .circle {
-    @apply w-3 h-3 rounded-xs;
-  }
-  .marker {
-    @apply p-2 font-title uppercase border text-xs;
+  .project-type-label {
+    border: 10px;
+    border-style: solid;
+    border-image-source: url("../images/borders/boder-wax.png");
+    border-image-slice: 24 24 24 24 fill;
+    border-image-width: 20px;
+    border-image-repeat: repeat;
+    color: white;
+    @apply text-xs tracking-widest uppercase font-bold px-2 py-1 rounded inline-flex items-center;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
   }
   .border-big {
     border-image-slice: 24 24 24 24 fill;
@@ -170,111 +142,26 @@
   }
 
   /* ─── Menu (index page) ────────────────────────────────────────────────────── */
-
-  .menu-grid {
-    @apply grid grid-cols-1 md:grid-cols-3 gap-8 items-center max-w-5xl w-full;
-  }
-  .menu-col { @apply flex flex-col gap-4; }
-
-  .menu-btn {
-    @apply flex items-center bg-dark-900/60 border-2 border-dark-700 p-3 transition-all duration-100 no-underline;
-  }
-  .menu-col-left  .menu-btn:hover { transform: translateX(6px); }
-  .menu-col-right .menu-btn:hover { transform: translateX(-6px); }
-
-  .menu-btn__label { @apply text-xs text-gray-300 transition-colors duration-100; }
-  .menu-btn__icon  {
-    @apply w-8 h-8 flex-shrink-0 flex items-center justify-center border-r-2 border-dark-700 mr-4 text-xs;
-  }
-  .menu-btn--right { @apply justify-between; }
-  .menu-btn--right .menu-btn__icon { @apply border-r-0 border-l-2 mr-0 ml-4; }
-
-  /* Color variants */
-  .menu-btn--amber:hover { border-color: rgba(251, 191, 36, 1); }
-  .menu-btn--amber:hover .menu-btn__label { color: rgba(251, 191, 36, 1); }
-  .menu-btn--amber .menu-btn__icon { @apply bg-amber-600/20 border-amber-600 text-amber-500; }
-
-  .menu-btn--blue:hover { border-color: rgba(96, 165, 250, 1); }
-  .menu-btn--blue:hover .menu-btn__label { color: rgba(96, 165, 250, 1); }
-  .menu-btn--blue .menu-btn__icon { @apply bg-blue-600/20 border-blue-600 text-blue-500; }
-
-  .menu-btn--green:hover { border-color: rgba(74, 222, 128, 1); }
-  .menu-btn--green:hover .menu-btn__label { color: rgba(74, 222, 128, 1); }
-  .menu-btn--green .menu-btn__icon { @apply bg-green-600/20 border-green-600 text-green-500; }
-
-  .menu-btn--orange:hover { border-color: rgba(251, 146, 60, 1); }
-  .menu-btn--orange:hover .menu-btn__label { color: rgba(251, 146, 60, 1); }
-  .menu-btn--orange .menu-btn__icon { @apply bg-orange-600/20 border-orange-600 text-orange-500; }
-
-  .menu-btn--purple { @apply bg-purple-900/20 border-purple-500/50; }
-  .menu-btn--purple:hover { border-color: rgba(192, 132, 252, 1); }
-  .menu-btn--purple:hover .menu-btn__label { color: rgba(192, 132, 252, 1); }
-  .menu-btn--purple .menu-btn__icon { @apply bg-purple-600/20 border-purple-600 text-purple-500; }
-
-  .menu-btn--silver:hover { border-color: rgba(156, 163, 175, 1); }
-  .menu-btn--silver:hover .menu-btn__label { color: rgba(209, 213, 219, 1); }
-  .menu-btn--silver .menu-btn__icon { @apply bg-gray-600/20 border-gray-600 text-gray-400; }
-
-  /* Avatar frame */
-  .menu-avatar-wrap  { @apply flex flex-col items-center order-1 md:order-2; }
-  .menu-avatar-frame {
-    @apply relative p-1 border-4 border-amber-400;
-    box-shadow: 0 0 30px rgba(168, 85, 247, 0.35), 0 0 60px rgba(255, 204, 51, 0.1);
-  }
-  .menu-avatar-img {
-    @apply w-40 h-40 md:w-52 md:h-52 object-cover;
-    image-rendering: pixelated;
-  }
-
-  /* Contact strip */
-  .menu-contact {
-    @apply mt-14 flex flex-wrap items-center justify-center gap-3;
-  }
-  .menu-contact__link {
-    @apply flex items-center gap-1.5 text-xs text-gray-500 hover:text-gray-200 transition-colors no-underline tracking-wide;
-  }
-  .menu-contact__link--cta { @apply text-amber-400/60 hover:text-amber-300; }
-  .menu-contact__sep { @apply text-dark-700; }
-
-  /* ─── Contact links ───────────────────────────────────────────────────────── */
-
-  .contact-link {
-    @apply flex items-center gap-3 p-2 bg-dark-900 border-2 border-dark-700 transition-colors no-underline;
-  }
-  .contact-link:hover { @apply border-current; }
-  .contact-link__icon {
-    @apply w-8 h-8 flex-shrink-0 flex items-center justify-center border-2;
-  }
-  .contact-link__icon--green  { @apply border-green-700 bg-green-950 text-green-400; }
-  .contact-link__icon--purple { @apply border-fuchsia-800 bg-fuchsia-950 text-fuchsia-400; }
-  .contact-link__icon--blue   { @apply border-blue-800 bg-blue-950 text-blue-400; }
-  .contact-link__label {
-    @apply flex flex-col gap-0.5;
-  }
-  .contact-link__type  { @apply text-xs text-gray-500 leading-none; }
-  .contact-link__value { @apply text-xs text-gray-200 leading-none; }
-
-  /* ─── XP bar ───────────────────────────────────────────────────────────────── */
-
-  .xp-bar { @apply w-full max-w-xs; }
-  .xp-bar__track { @apply h-4 bg-dark-700 overflow-hidden border border-dark-700; }
-  .xp-bar__fill  { @apply h-full bg-gradient-to-r from-green-500 to-emerald-400 transition-all duration-1000; }
-  .xp-bar__label { @apply text-center text-xs text-gray-500 mt-1; }
+  /* Menu classes moved to index.html inline Tailwind utilities */
 
   /* ─── Paper card (journal) ────────────────────────────────────────────────── */
 
   .card-paper {
     border: 20px solid;
-    border-image-source: url('../images/borders/border-paper.png');
+    border-image-source: url("../images/borders/border-paper.png");
     border-image-slice: 8 8 8 8 fill;
     border-image-width: 20px 20px 20px 20px;
     border-image-outset: 0px 0px 0px 0px;
     border-image-repeat: repeat repeat;
-    transition: transform 100ms ease-in-out, box-shadow 100ms ease-in-out;
+    transition:
+      transform 100ms ease-in-out,
+      box-shadow 100ms ease-in-out;
   }
   .card-paper:hover {
     transform: translateY(-2px);
-    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3), 0 0 18px rgba(139, 100, 43, 0.25);
+    box-shadow:
+      4px 4px 0 rgba(0, 0, 0, 0.3),
+      0 0 18px rgba(139, 100, 43, 0.25);
   }
 
   /* ─── Journal filter buttons ───────────────────────────────────────────────── */

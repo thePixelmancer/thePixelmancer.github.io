@@ -49,7 +49,7 @@ function statusCube(status) {
 // ─── Card HTML ────────────────────────────────────────────────────────────────
 
 function createForgeItemHTML(item) {
-  if (item === "divider") return `<hr class="divider" />`;
+  if (item === "divider") return `<hr class="border-dark-700 border-dashed border-t-4" />`;
 
   const tags        = item.tags ?? [];
   const primaryTag  = tags.find(t => t.primary) ?? tags[0];
@@ -57,11 +57,11 @@ function createForgeItemHTML(item) {
   const titleHover  = TITLE_HOVER[primaryTag?.color] ?? "";
 
   const primaryPill = primaryTag
-    ? `<span class="marker ${tagColor(primaryTag.color).text}">${primaryTag.name}</span>`
+    ? `<span class="px-2 py-1 font-title uppercase border text-xs inline-flex items-center bg-white/8 ${tagColor(primaryTag.color).text}">${primaryTag.name}</span>`
     : `<span></span>`;
 
   const secondPills = secondTags.map(t =>
-    `<span class="marker ${tagColor(t.color).text}">${t.name}</span>`
+    `<span class="px-2 py-1 font-title uppercase border text-xs inline-flex items-center bg-white/8 ${tagColor(t.color).text}">${t.name}</span>`
   ).join("");
 
   const separator = secondTags.length
@@ -83,7 +83,7 @@ function createForgeItemHTML(item) {
     : "";
 
   return `
-    <article class="card group" data-tags="${tags.map(t => t.name).join(",")}">
+    <article class="p-4 bg-dark-800 border-3 border-dark-700 transition-all duration-100 ease-in-out group" data-tags="${tags.map(t => t.name).join(",")}">
       <a href="${item.href}" class="no-underline flex flex-col gap-0">
         <div class="flex items-center justify-between gap-3 mb-3">
           <div class="flex items-center gap-2 flex-wrap">

@@ -31,39 +31,39 @@
       </header>
 
       <!-- ── Main layout ──────────────────────────────────────────────────────── -->
-      <main class="menu-grid">
+      <main class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center max-w-5xl w-full">
 
         <!-- Left column: nav buttons -->
-        <nav class="menu-col menu-col-left order-2 md:order-1" aria-label="Character pages">
-          <a href="bio.html" class="menu-btn menu-btn--amber">
-            <span class="menu-btn__icon menu-btn__icon--amber">📜</span>
-            <span class="menu-btn__label">BIO</span>
+        <nav class="flex flex-col gap-4 order-2 md:order-1" aria-label="Character pages">
+          <a href="bio.html" class="flex items-center bg-dark-900/60 border-2 border-amber-600 p-3 transition-all duration-100 no-underline hover:border-amber-400 hover:translate-x-1.5">
+            <span class="w-8 h-8 flex-shrink-0 flex items-center justify-center border-r-2 border-amber-600 mr-4 text-xs bg-amber-600/20 text-amber-500">📜</span>
+            <span class="text-xs text-amber-400 transition-colors duration-100">BIO</span>
           </a>
-          <a href="skills.html" class="menu-btn menu-btn--blue">
-            <span class="menu-btn__icon menu-btn__icon--blue">📊</span>
-            <span class="menu-btn__label">SKILLS</span>
+          <a href="skills.html" class="flex items-center bg-dark-900/60 border-2 border-blue-600 p-3 transition-all duration-100 no-underline hover:border-blue-400 hover:translate-x-1.5">
+            <span class="w-8 h-8 flex-shrink-0 flex items-center justify-center border-r-2 border-blue-600 mr-4 text-xs bg-blue-600/20 text-blue-500">📊</span>
+            <span class="text-xs text-blue-400 transition-colors duration-100">SKILLS</span>
           </a>
-          <a href="inventory.html" class="menu-btn menu-btn--green">
-            <span class="menu-btn__icon menu-btn__icon--green">🎒</span>
-            <span class="menu-btn__label">INVENTORY</span>
+          <a href="inventory.html" class="flex items-center bg-dark-900/60 border-2 border-green-600 p-3 transition-all duration-100 no-underline hover:border-green-400 hover:translate-x-1.5">
+            <span class="w-8 h-8 flex-shrink-0 flex items-center justify-center border-r-2 border-green-600 mr-4 text-xs bg-green-600/20 text-green-500">🎒</span>
+            <span class="text-xs text-green-400 transition-colors duration-100">INVENTORY</span>
           </a>
         </nav>
 
         <!-- Center: character panel -->
-        <div class="menu-avatar-wrap order-1 md:order-2 gap-3">
+        <div class="flex flex-col items-center gap-3 order-1 md:order-2">
 
           <!-- Avatar frame -->
-          <div class="menu-avatar-frame">
-            <img src="images/avatar.png" alt="Angelo's pixel avatar" class="menu-avatar-img" />
+          <div class="relative p-1 border-4 border-amber-400" style="box-shadow: 0 0 30px rgba(168, 85, 247, 0.35), 0 0 60px rgba(255, 204, 51, 0.1);">
+            <img src="images/avatar.png" alt="Angelo's pixel avatar" class="w-40 h-40 md:w-52 md:h-52 object-cover" style="image-rendering: pixelated;" />
           </div>
 
           <!-- XP bar -->
-          <div class="xp-bar"
+          <div class="w-full max-w-xs"
                role="progressbar" aria-label="Experience points" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-            <div class="xp-bar__track">
-              <div id="xpBar" class="xp-bar__fill"></div>
+            <div class="h-4 bg-dark-700 overflow-hidden border border-dark-700">
+              <div id="xpBar" class="h-full bg-gradient-to-r from-green-500 to-emerald-400 transition-all duration-1000"></div>
             </div>
-            <p id="xpText" class="xp-bar__label">XP: 0 / 100</p>
+            <p id="xpText" class="text-center text-xs text-gray-500 mt-1">XP: 0 / 100</p>
           </div>
 
           <!-- Availability -->
@@ -78,33 +78,33 @@
         </div>
 
         <!-- Right column: nav buttons -->
-        <nav class="menu-col menu-col-right order-3" aria-label="Portfolio sections">
-          <a href="forge.html" class="menu-btn menu-btn--right menu-btn--orange">
-            <span class="menu-btn__label">FORGE</span>
-            <span class="menu-btn__icon menu-btn__icon--orange">⚒️</span>
+        <nav class="flex flex-col gap-4 order-3" aria-label="Portfolio sections">
+          <a href="forge.html" class="flex items-center justify-between bg-dark-900/60 border-2 border-orange-600 p-3 transition-all duration-100 no-underline hover:border-orange-400 hover:-translate-x-1.5">
+            <span class="text-xs text-orange-400 transition-colors duration-100">FORGE</span>
+            <span class="w-8 h-8 flex-shrink-0 flex items-center justify-center border-l-2 border-orange-600 ml-4 text-xs bg-orange-600/20 text-orange-500">⚒️</span>
           </a>
-          <a href="journal.html" class="menu-btn menu-btn--right menu-btn--purple">
-            <span class="menu-btn__label">JOURNAL</span>
-            <span class="menu-btn__icon menu-btn__icon--purple">📖</span>
+          <a href="journal.html" class="flex items-center justify-between bg-dark-900/60 border-2 border-purple-600 p-3 transition-all duration-100 no-underline hover:border-purple-400 hover:-translate-x-1.5">
+            <span class="text-xs text-purple-400 transition-colors duration-100">JOURNAL</span>
+            <span class="w-8 h-8 flex-shrink-0 flex items-center justify-center border-l-2 border-purple-600 ml-4 text-xs bg-purple-600/20 text-purple-500">📖</span>
           </a>
-          <a href="guild-hall.html" class="menu-btn menu-btn--right menu-btn--silver">
-            <span class="menu-btn__label">GUILD HALL</span>
-            <span class="menu-btn__icon menu-btn__icon--silver">🛡️</span>
+          <a href="guild-hall.html" class="flex items-center justify-between bg-dark-900/60 border-2 border-gray-600 p-3 transition-all duration-100 no-underline hover:border-gray-400 hover:-translate-x-1.5">
+            <span class="text-xs text-gray-300 transition-colors duration-100">GUILD HALL</span>
+            <span class="w-8 h-8 flex-shrink-0 flex items-center justify-center border-l-2 border-gray-600 ml-4 text-xs bg-gray-600/20 text-gray-400">🛡️</span>
           </a>
         </nav>
 
       </main>
 
       <!-- ── Contact footer strip ────────────────────────────────────────────── -->
-      <footer class="menu-contact" aria-label="Contact">
-        <a href="mailto:hello@pixelmancer.dev" class="menu-contact__link">
+      <footer class="mt-14 flex flex-wrap items-center justify-center gap-3" aria-label="Contact">
+        <a href="mailto:hello@pixelmancer.dev" class="flex items-center gap-1.5 text-xs text-gray-500 hover:text-gray-200 transition-colors no-underline tracking-wide">
           <svg viewBox="0 0 16 16" class="w-3 h-3 fill-current" aria-hidden="true">
             <path d="M0 4v8h16V4H0zm14 1L8 9 2 5h12zm-12 6V6.5l6 3.5 6-3.5V11H2z"/>
           </svg>
           hello@pixelmancer.dev
         </a>
-        <span class="menu-contact__sep" aria-hidden="true">·</span>
-        <a href="https://github.com/pixelmancer" target="_blank" rel="noopener noreferrer" class="menu-contact__link">
+        <span class="text-dark-700" aria-hidden="true">·</span>
+        <a href="https://github.com/pixelmancer" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 text-xs text-gray-500 hover:text-gray-200 transition-colors no-underline tracking-wide">
           <svg viewBox="0 0 16 16" class="w-3 h-3 fill-current" aria-hidden="true">
             <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
           </svg>

@@ -283,16 +283,11 @@ async function consumeItem(i) {
 
 function showConsumeToast(title) {
   const toast = document.createElement("div");
-  toast.style.cssText =
-    "position:fixed;top:80px;left:50%;transform:translateX(-50%);z-index:20000;" +
-    "background:var(--color-dark-900,#0d0d0d);border:2px solid #f59e0b;" +
-    "padding:8px 16px;white-space:nowrap;transition:opacity 0.4s ease;";
-  toast.className = "font-basic text-amber-300";
-  toast.style.fontSize = "9px";
+  toast.className = "fixed top-20 left-1/2 -translate-x-1/2 z-[20000] font-basic text-[9px] text-amber-300 bg-dark-900 border-2 border-amber-500 px-4 py-2 whitespace-nowrap transition-opacity duration-[400ms]";
   toast.textContent = `Used: ${title}`;
   document.body.appendChild(toast);
 
-  setTimeout(() => { toast.style.opacity = "0"; }, 1100);
+  setTimeout(() => { toast.classList.add("opacity-0"); }, 1100);
   setTimeout(() => { toast.remove(); }, 1500);
 }
 

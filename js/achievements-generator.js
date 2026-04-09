@@ -60,8 +60,7 @@ function createCardHTML(item) {
 
   return `
     <a href="${item.url}" target="_blank" rel="noopener noreferrer"
-       class="card flex flex-col items-center gap-3 p-8 relative overflow-hidden no-underline
-              hover:-translate-y-1 transition-transform duration-150"
+       class="p-8 bg-dark-800 flex flex-col items-center gap-3 relative overflow-hidden no-underline border-3 border-dark-700 transition-transform duration-150 ease-in-out hover:-translate-y-1"
        style="${borderStyle} box-shadow: var(--shadow-sharp), 0 0 30px ${c.topGlow}">
 
       <div class="absolute top-0 inset-x-0 h-px pointer-events-none"
@@ -75,7 +74,7 @@ function createCardHTML(item) {
       </div>
 
       <h3 class="font-title text-base ${c.heading} text-center">${item.name}</h3>
-      <span class="marker ${c.role}">${item.role}</span>
+      <span class="px-2 py-1 font-title uppercase border text-xs inline-flex items-center bg-white/8 ${c.role}">${item.role}</span>
       <span class="text-xs text-gray-600 tracking-widest mt-auto">${item.year}</span>
     </a>
   `;

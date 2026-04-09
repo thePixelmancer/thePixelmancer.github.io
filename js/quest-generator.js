@@ -8,9 +8,9 @@
 let allQuests = [];
 
 const ROLE_BADGE = {
-  lead:   { label: "Project Lead", classes: "text-amber-800 border-amber-700/60"   },
-  dev:    { label: "Developer",    classes: "text-blue-800 border-blue-700/60"     },
-  artist: { label: "Artist",       classes: "text-fuchsia-800 border-fuchsia-700/60" },
+  lead: { label: "Project Lead", classes: "bg-amber-900 text-amber-100 border-amber-600" },
+  dev: { label: "Developer", classes: "bg-blue-900 text-blue-100 border-blue-600" },
+  artist: { label: "Artist", classes: "bg-fuchsia-900 text-fuchsia-100 border-fuchsia-600" },
 };
 
 async function loadQuests() {
@@ -33,20 +33,21 @@ function renderQuests(quests) {
     const card = e.target.closest("[data-quest-index]");
     if (!card) return;
     const quest = allQuests[parseInt(card.dataset.questIndex, 10)];
-    if (quest) openQuestModal(quest);
+    if (quest && quest.featured !== "superhero") openQuestModal(quest);
   });
 }
 
 function createQuestHTML(quest, index) {
-  const isHero     = quest.featured === "superhero";
+  const isHero = quest.featured === "superhero";
   const isFeatured = quest.featured === "hero";
-  const badge  = ROLE_BADGE[quest.roleType] ?? ROLE_BADGE.dev;
-  const roleBadge = `<span class="marker ${badge.classes}">${badge.label}</span>`;
+  const badge = ROLE_BADGE[quest.roleType] ?? ROLE_BADGE.dev;
+  const roleBadge = `<span class="px-2 py-1 font-title uppercase border text-xs inline-flex items-center ${badge.classes}">${badge.label}</span>`;
 
   if (isHero) {
     // Hero: image left (2 cols, 16:9) + info right (1 col), top-aligned
-    const heroImageEl = quest.image
-      ? `<div class="relative overflow-hidden border-3 border-dark-700 aspect-video">
+    const heroImageEl =
+      quest.image ?
+        `<div class="relative overflow-hidden border-3 border-dark-700 aspect-video">
           <img src="${quest.image}" alt="${quest.alt}"
                class="w-full h-full bg-gray-800 object-cover group-hover:scale-105 transition-transform duration-200" />
          </div>`
@@ -60,27 +61,33 @@ function createQuestHTML(quest, index) {
           <div class="flex flex-col gap-3 pt-1">
             <div class="flex items-center justify-between gap-3">
               ${roleBadge}
-              <span class="text-xs tracking-widest text-stone-500 uppercase">${quest.type}</span>
+              <span class="project-type-label">${quest.type}</span>
             </div>
             <h3 class="font-title text-base text-stone-800 group-hover:text-amber-800 transition-colors leading-relaxed">${quest.title}</h3>
             ${quest.description ? `<p class="text-xs text-stone-600 leading-relaxed">${quest.description}</p>` : ""}
             <div class="flex flex-col gap-1 mt-1">
               ${[
-                ["Type",    quest.type    || "—"],
-                ["Studio",  quest.project || "—"],
-                ["Role",    badge.label         ],
-                ["Date",    quest.date    || "Ongoing"],
-              ].map(([k, v]) => `
+                ["Type", quest.type || "-"],
+                ["Studio", quest.project || "-"],
+                ["Role", badge.label],
+                ["Date", quest.date || "Ongoing"],
+              ]
+                .map(
+                  ([k, v]) => `
                 <div class="flex items-center justify-between gap-2 border-b border-stone-400/50 pb-1">
                   <span class="text-[8px] tracking-widest text-stone-500 uppercase">${k}</span>
                   <span class="text-xs text-stone-700">${v}</span>
-                </div>`).join("")}
+                </div>`,
+                )
+                .join("")}
             </div>
-            ${quest.link && quest.link !== "#"
-              ? `<a href="${quest.link}" target="_blank" rel="noopener noreferrer"
+            ${
+              quest.link && quest.link !== "#" ?
+                `<a href="${quest.link}" target="_blank" rel="noopener noreferrer"
                     class="mt-auto button-purple text-center no-underline"
                     onclick="event.stopPropagation()">VIEW PROJECT</a>`
-              : ""}
+              : ""
+            }
           </div>
         </div>
       </article>`;
@@ -88,8 +95,9 @@ function createQuestHTML(quest, index) {
 
   if (isFeatured) {
     // Featured (medium): 2-col span, image + title + badge only
-    const featImageEl = quest.image
-      ? `<div class="relative overflow-hidden border-3 border-dark-700 aspect-video w-full">
+    const featImageEl =
+      quest.image ?
+        `<div class="relative overflow-hidden border-3 border-dark-700 aspect-video w-full">
           <img src="${quest.image}" alt="${quest.alt}"
                class="w-full h-full bg-gray-800 object-cover group-hover:scale-105 transition-transform duration-200" />
          </div>`
@@ -106,8 +114,9 @@ function createQuestHTML(quest, index) {
       </article>`;
   }
 
-  const imageEl = quest.image
-    ? `<div class="relative overflow-hidden border-3 border-dark-700 aspect-video w-full">
+  const imageEl =
+    quest.image ?
+      `<div class="relative overflow-hidden border-3 border-dark-700 aspect-video w-full">
         <img src="${quest.image}" alt="${quest.alt}"
              class="w-full h-full bg-gray-800 object-cover group-hover:scale-105 transition-transform duration-200" />
        </div>`
@@ -119,7 +128,7 @@ function createQuestHTML(quest, index) {
       ${imageEl}
       <div class="flex flex-wrap justify-between items-center gap-2">
         ${roleBadge}
-        <span class="text-xs tracking-widest text-stone-500 uppercase">${quest.type}</span>
+        <span class="project-type-label">${quest.type}</span>
       </div>
       <div class="flex flex-col gap-1">
         <h3 class="font-title text-base text-stone-800 group-hover:text-amber-800 transition-colors">${quest.title}</h3>
@@ -144,25 +153,25 @@ function setupFilters() {
 // ─── Modal ────────────────────────────────────────────────────────────────────
 
 function openQuestModal(quest) {
-  document.getElementById("modalTitle").textContent              = quest.title;
-  document.getElementById("modalImage").src                      = quest.image || "";
-  document.getElementById("modalImage").alt                      = quest.alt   || "";
-  document.getElementById("modalProjectTitle").textContent       = quest.title;
+  document.getElementById("modalTitle").textContent = quest.title;
+  document.getElementById("modalImage").src = quest.image || "";
+  document.getElementById("modalImage").alt = quest.alt || "";
+  document.getElementById("modalProjectTitle").textContent = quest.title;
   document.getElementById("modalProjectDescription").textContent = quest.description;
 
   const badge = ROLE_BADGE[quest.roleType] ?? ROLE_BADGE.dev;
   const metadata = {
-    Type:    quest.type    || "Unknown",
+    Type: quest.type || "Unknown",
     Project: quest.project || "Unknown",
-    Role:    badge.label,
-    Date:    quest.date    || "Ongoing",
+    Role: badge.label,
+    Date: quest.date || "Ongoing",
   };
 
   const metadataContainer = document.getElementById("modalMetadata");
   metadataContainer.innerHTML = "";
   for (const [key, value] of Object.entries(metadata)) {
     const item = document.createElement("div");
-    item.className = "card p-2 flex justify-between";
+    item.className = "card-nohover flex justify-between";
     item.innerHTML = `<span class="text-xs text-gray-500">${key}:</span><span class="text-xs text-fuchsia-300">${value}</span>`;
     metadataContainer.appendChild(item);
   }
