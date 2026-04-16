@@ -104,14 +104,19 @@
 
           <!-- HTML tooltip (positioned absolute inside map-paper) -->
           <div id="journey-tooltip" class="hidden">
-            <div class="border-3 border-dark-700 bg-dark-900 flex flex-col gap-2 p-3" style="box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.6)">
-              <div class="flex items-start justify-between gap-2 pb-2 border-b border-dark-700">
-                <span id="jt-company" class="font-title text-[9px] text-amber-300 leading-snug"></span>
-                <span id="jt-kind" class="font-title text-[7px] text-gray-600 uppercase shrink-0 mt-0.5"></span>
+            <div class="bg-dark-900 border-2 border-dark-700 flex flex-col overflow-hidden" style="box-shadow: var(--shadow-overlay)">
+              <!-- Color accent bar — background filled by JS from node color -->
+              <div id="jt-accent-bar" class="h-0.5 w-full shrink-0"></div>
+              <!-- Header: company + kind badge -->
+              <div class="px-3 pt-3 pb-2 border-b border-dark-700">
+                <span id="jt-company" class="font-title text-xs leading-tight"></span>
               </div>
-              <p id="jt-title" class="font-title text-[8px] text-gray-100 leading-snug"></p>
-              <p id="jt-desc" class="text-[8px] text-gray-400 leading-relaxed"></p>
-              <p id="jt-period" class="text-[8px] text-gray-600 tracking-widest mt-1"></p>
+              <!-- Body -->
+              <div class="px-3 pt-2 pb-3 flex flex-col gap-2">
+                <p id="jt-title" class="font-title text-sm text-gray-100 leading-snug"></p>
+                <p id="jt-desc" class="text-xs text-gray-400 leading-relaxed hidden"></p>
+                <p id="jt-period" class="font-title text-xs text-gray-600 tracking-widest hidden"></p>
+              </div>
             </div>
           </div>
         </div>

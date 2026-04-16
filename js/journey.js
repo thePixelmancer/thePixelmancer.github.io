@@ -1,126 +1,119 @@
-/**
- * journey.js  —  Angelo's Career Map
- * ════════════════════════════════════
- *
- * Edit node positions and connections here.
- * Canvas internal resolution: 1200 × 1000
- *
- * ── Color reference ────────────────────────────────────────────────────────
- *
- *   Independent      / green    #4ade80
- *   Shapescape       / purple   #c084fc
- *   Tsunami          / blue     #60a5fa
- *   Simply Brilliant / amber    #fbbf24
- *   Origin           / gray     #9ca3af
- *
- */
-
 JourneyMap.init(function (map) {
+  const S = JourneyMap.styles;
 
   // ─── Nodes ───────────────────────────────────────────────────────────────
 
   const modder = map.originNode(200, 800, {
-    label:       "Java Modder",
     color:       "#4ade80",
     description: "Started tinkering with Java mods. The spark that started everything.",
-    period:      "2016",
-    labelAbove:  false,
+    label: [
+      { text: "Java Modder", style: S.title },
+      { text: "2016",        style: S.period },
+    ],
   });
 
   const freelance = map.majorNode(450, 800, {
-    company:     "Independent",
-    title:       "Freelance Designer",
     color:       "#4ade80",
     description: "Went out on my own. Bedrock contracts, asset work, learning the ecosystem.",
-    period:      "2017 – 2018",
-    labelAbove:  false,
+    label: [
+      { text: "Freelance Designer", style: S.title  },
+      { text: "Independent",        style: S.green  },
+      { text: "2017 – 2018",        style: S.period },
+    ],
   });
 
   const builder = map.majorNode(700, 780, {
-    company:     "Independent",
-    title:       "Minecraft Builder",
     color:       "#4ade80",
-    description: "Went out on my own. Bedrock contracts, asset work, learning the ecosystem.",
-    period:      "2018 – 2019",
-    labelAbove:  false,
+    description: "Hands-on build work. Detailed environments and game-ready structures.",
+    label: [
+      { text: "Minecraft Builder", style: S.title  },
+      { text: "Independent",       style: S.green  },
+      { text: "2018 – 2019",       style: S.period },
+    ],
   });
 
   const shapeAsset = map.majorNode(980, 600, {
-    company:     "Shapescape",
-    title:       "Asset Creator",
     color:       "#c084fc",
     description: "First studio. Building assets and learning how a real pipeline operates.",
-    period:      "2019 – 2020",
-    labelAbove:  false,
+    label: [
+      { text: "Asset Creator", style: S.title  },
+      { text: "Shapescape",    style: S.purple },
+      { text: "2019 – 2020",   style: S.period },
+    ],
   });
 
   const shapeLead = map.minorNode(800, 540, {
-    company:     "Shapescape",
-    title:       "Branch Lead",
     color:       "#c084fc",
     description: "Promoted. Stepped up into a leadership role within the studio.",
-    period:      "2020 – 2021",
-    labelAbove:  false,
+    label: [
+      { text: "Branch Lead",  style: S.title  },
+      { text: "Shapescape",   style: S.purple },
+      { text: "2020 – 2021",  style: S.period },
+    ],
   });
 
   const shapeDirector = map.minorNode(600, 500, {
-    company:     "Shapescape",
-    title:       "Art Director",
     color:       "#c084fc",
     description: "Art direction across projects — style guides, reviews, visual identity.",
-    period:      "2021 – 2022",
-    labelAbove:  false,
+    label: [
+      { text: "Art Director", style: S.title  },
+      { text: "Shapescape",   style: S.purple },
+      { text: "2021 – 2022",  style: S.period },
+    ],
   });
 
   const pixelmancer = map.minorNode(500, 350, {
-    company:     "Independent",
-    title:       "Art Director",
     color:       "#4ade80",
-    description: "Art direction across projects — style guides, reviews, visual identity.",
-    period:      "2022 – Present",
-    labelAbove:  false,
     current:     true,
+    description: "Running my own brand. Creative direction, client work, and personal projects.",
+    label: [
+      { text: "Art Director",   style: S.title  },
+      { text: "Independent",    style: S.green  },
+      { text: "2022 – Present", style: S.period },
+    ],
   });
 
   const tsunamiDev = map.majorNode(800, 300, {
-    company:     "Tsunami Studios",
-    title:       "Asset Creator & Developer",
     color:       "#60a5fa",
     description: "Boss behaviors, scripting, art pipelines, full-stack add-on work.",
-    period:      "2022 – 2023",
-    labelAbove:  false,
+    label: [
+      { text: "Asset Creator & Developer", style: S.title  },
+      { text: "Tsunami Studios",           style: S.blue   },
+      { text: "2022 – 2023",               style: S.period },
+    ],
   });
 
   const tsunamiLead = map.minorNode(750, 100, {
-    company:     "Tsunami Studios",
-    title:       "Project Lead",
     color:       "#60a5fa",
-    description: "Promoted to lead. Steering technical and creative direction.",
-    period:      "2023 – Present",
-    labelAbove:  false,
     current:     true,
+    description: "Promoted to lead. Steering technical and creative direction.",
+    label: [
+      { text: "Project Lead",    style: S.title  },
+      { text: "Tsunami Studios", style: S.blue   },
+      { text: "2023 – Present",  style: S.period },
+    ],
   });
 
   const simplyBrilliant = map.majorNode(450, 100, {
-    company:     "Simply Brilliant",
-    title:       "Asset Creator & Developer",
     color:       "#fbbf24",
-    description: "New chapter, running parallel. Unannounced projects, new creative horizons.",
-    period:      "2023 – Present",
-    labelAbove:  false,
     current:     true,
+    description: "New chapter, running parallel. Unannounced projects, new creative horizons.",
+    label: [
+      { text: "Asset Creator & Developer", style: S.title  },
+      { text: "Simply Brilliant",          style: S.amber  },
+      { text: "2023 – Present",            style: S.period },
+    ],
   });
 
   // ─── Roads ───────────────────────────────────────────────────────────────
 
-  map.road(modder,       freelance);
-  map.road(freelance,    builder);
-  map.road(builder,      shapeAsset);
-  map.road(shapeAsset,   shapeLead);
-  map.road(shapeLead,    shapeDirector);
+  map.road(modder, freelance);
+  map.road(freelance, builder);
+  map.road(builder, shapeAsset);
+  map.road(shapeAsset, shapeLead);
+  map.road(shapeLead, shapeDirector);
   map.road(shapeDirector, pixelmancer);
-  map.road(pixelmancer,  tsunamiDev);
-  map.road(pixelmancer,  simplyBrilliant);
-  map.road(tsunamiDev,   tsunamiLead);
-
+  map.road(pixelmancer, tsunamiDev);
+  map.road(pixelmancer, simplyBrilliant);
+  map.road(tsunamiDev, tsunamiLead);
 });

@@ -10,6 +10,7 @@
   --font-basic: "Press Start 2P", cursive;
   --font-title: "Silkscreen", monospace;
   --shadow-sharp: 4px 4px 0px rgba(0, 0, 0, 0.2);
+  --shadow-overlay: 4px 4px 0px rgba(0, 0, 0, 0.8);
 }
 
 /* ─── Layout ───────────────────────────────────────────────────────────────── */
