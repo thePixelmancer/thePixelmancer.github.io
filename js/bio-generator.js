@@ -10,20 +10,22 @@ const EXPERIENCE_COLORS = {
   gray:    "text-gray-400",
 };
 
-async function loadBio() {
-  try {
-    const res = await fetch("./data/bio.json");
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-    renderStats(data.stats);
-    renderExperience([...data.experience].reverse());
-  } catch (err) {
-    console.error("[Bio] load failed:", err);
-  }
+const DEFAULT_LORE = {
+  title: "Lore",
+  paragraphs: [
+    "Started as a Java modder in 2016 and never really stopped - just gradually shifted toward the professional side. Since 2019 I've been deep in Bedrock: entity AI, custom animations, art pipelines, and the tooling that makes all of it less painful.",
+    "I work across the full stack of an add-on - behaviors, scripting, modeling, textures, and the build systems that tie it together. Currently at Tsunami Studios while contributing to unannounced work at Simply Brilliant.",
+  ],
+};
+
+async function loadBioData() {
+  const res = await fetch("./data/bio.json");
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
 }
 
-function renderStats(stats) {
-  const container = document.getElementById("bio-stats");
+function renderStats(stats, containerId = "bio-stats") {
+  const container = document.getElementById(containerId);
   if (!container) return;
 
   const yearsActive = new Date().getFullYear() - 2018;
@@ -40,6 +42,17 @@ function renderStats(stats) {
       <dd class="font-title text-sm text-amber-300">${value}</dd>
     </div>
   `).join("");
+}
+
+function getLore(data) {
+  if (!data || !data.lore || !Array.isArray(data.lore.paragraphs)) {
+    return DEFAULT_LORE;
+  }
+
+  return {
+    title: data.lore.title || DEFAULT_LORE.title,
+    paragraphs: data.lore.paragraphs.length ? data.lore.paragraphs : DEFAULT_LORE.paragraphs,
+  };
 }
 
 function entryCard(entry) {
@@ -100,4 +113,24 @@ function renderExperience(experience) {
   }).join("");
 }
 
-document.addEventListener("DOMContentLoaded", loadBio);
+async function loadBioPage() {
+  try {
+    const data = await loadBioData();
+    renderStats(data.stats);
+    renderExperience([...data.experience].reverse());
+  } catch (err) {
+    console.error("[Bio] load failed:", err);
+  }
+}
+
+window.BioProfile = {
+  getLore,
+  loadBioData,
+  renderStats,
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (document.getElementById("bio-stats") || document.getElementById("bio-experience")) {
+    loadBioPage();
+  }
+});
