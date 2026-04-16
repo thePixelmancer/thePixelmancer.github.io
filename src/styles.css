@@ -133,6 +133,54 @@
     border-image-source: url("../images/borders/border_big.png");
     border-style: solid;
   }
+  .border-simply {
+    border-image-slice: 24;
+    border-image-width: 4rem;
+    border-image-outset: 0px;
+    border-image-repeat: stretch stretch;
+    border-image-source: url("../images/borders/border-simply.png");
+    border-style: solid;
+  }
+  .border-shapescape {
+    border-image-slice: 24;
+    border-image-width: 4rem;
+    border-image-outset: 0px;
+    border-image-repeat: stretch stretch;
+    border-image-source: url("../images/borders/border-shapescape.png");
+    border-style: solid;
+  }
+  .border-nitric {
+    border-image-slice: 24;
+    border-image-width: 4rem;
+    border-image-outset: 0px;
+    border-image-repeat: stretch stretch;
+    border-image-source: url("../images/borders/border-nitric.png");
+    border-style: solid;
+  }
+  .border-water {
+    border-image-slice: 24;
+    border-image-width: 4rem;
+    border-image-outset: 0px;
+    border-image-repeat: stretch stretch;
+    border-image-source: url("../images/borders/border_water.png");
+    border-style: solid;
+  }
+  .border-paper {
+    border-image-slice: 24;
+    border-image-width: 4rem;
+    border-image-outset: 0px;
+    border-image-repeat: stretch stretch;
+    border-image-source: url("../images/borders/border-paper.png");
+    border-style: solid;
+  }
+  .border-xp {
+    border-image-slice: 24;
+    border-image-width: 4rem;
+    border-image-outset: 0px;
+    border-image-repeat: stretch stretch;
+    border-image-source: url("../images/borders/border_xp.png");
+    border-style: solid;
+  }
   .border-small {
     border-image-slice: 24;
     border-image-width: 4rem;
@@ -140,6 +188,70 @@
     border-image-repeat: stretch stretch;
     border-image-source: url("../images/borders/border_small.png");
     border-style: solid;
+  }
+
+  .guild-card {
+    --guild-glow-soft: rgba(156, 163, 175, 0.08);
+    --guild-glow-strong: rgba(156, 163, 175, 0.3);
+    --guild-line: rgba(156, 163, 175, 0.6);
+    --guild-title: rgb(209, 213, 219);
+    --guild-role: rgb(156, 163, 175);
+    @apply p-8 bg-dark-800 flex flex-col items-center gap-3 relative overflow-hidden no-underline border-3 border-dark-700 transition-transform duration-150 ease-in-out hover:-translate-y-1;
+    box-shadow:
+      var(--shadow-sharp),
+      0 0 30px var(--guild-glow-soft);
+  }
+  .guild-card-line {
+    @apply absolute top-0 inset-x-0 h-px pointer-events-none;
+    background: linear-gradient(90deg, transparent, var(--guild-line), transparent);
+  }
+  .guild-card-icon {
+    @apply w-20 h-20 border-4 border-dark-700 bg-dark-900 flex items-center justify-center;
+    box-shadow: 0 0 20px var(--guild-glow-strong);
+  }
+  .guild-card-title {
+    @apply font-title text-base text-center;
+    color: var(--guild-title);
+  }
+  .guild-card-role {
+    @apply px-2 py-1 font-title uppercase border text-xs inline-flex items-center bg-white/8;
+    color: var(--guild-role);
+  }
+
+  .guild-card--blue {
+    --guild-glow-soft: rgba(96, 165, 250, 0.08);
+    --guild-glow-strong: rgba(96, 165, 250, 0.3);
+    --guild-line: rgba(96, 165, 250, 0.6);
+    --guild-title: rgb(147, 197, 253);
+    --guild-role: rgb(96, 165, 250);
+  }
+  .guild-card--yellow {
+    --guild-glow-soft: rgba(245, 158, 11, 0.08);
+    --guild-glow-strong: rgba(245, 158, 11, 0.3);
+    --guild-line: rgba(245, 158, 11, 0.6);
+    --guild-title: rgb(253, 224, 71);
+    --guild-role: rgb(250, 204, 21);
+  }
+  .guild-card--purple {
+    --guild-glow-soft: rgba(192, 132, 252, 0.08);
+    --guild-glow-strong: rgba(192, 132, 252, 0.3);
+    --guild-line: rgba(192, 132, 252, 0.6);
+    --guild-title: rgb(216, 180, 254);
+    --guild-role: rgb(192, 132, 252);
+  }
+  .guild-card--green {
+    --guild-glow-soft: rgba(74, 222, 128, 0.08);
+    --guild-glow-strong: rgba(74, 222, 128, 0.3);
+    --guild-line: rgba(74, 222, 128, 0.6);
+    --guild-title: rgb(134, 239, 172);
+    --guild-role: rgb(74, 222, 128);
+  }
+  .guild-card--orange {
+    --guild-glow-soft: rgba(251, 146, 60, 0.08);
+    --guild-glow-strong: rgba(251, 146, 60, 0.3);
+    --guild-line: rgba(251, 146, 60, 0.6);
+    --guild-title: rgb(253, 186, 116);
+    --guild-role: rgb(251, 146, 60);
   }
 
   /* ─── Menu (index page) ────────────────────────────────────────────────────── */

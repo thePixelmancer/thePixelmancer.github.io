@@ -21,9 +21,19 @@ window.JourneyMap = (function () {
   const MAP_LABEL_DEFAULT_SIZE = 22; // fallback map-region label font size
   const MAP_LABEL_WIDTH_FACTOR = 0.35; // estimated glyph width multiplier for map-label bounds
   const MAP_LABEL_MIN_HALF_W = 40; // minimum half-width used for map-label bounds
+  const AUTO_REGION_PADDING = 180; // extra world-space padding around auto-generated Voronoi regions
+  const AUTO_REGION_ALPHA = 28; // fill alpha for auto-generated regions
   const PHONE_BREAKPOINT_PX = 768; // viewport breakpoint where phone-specific zoom start is used
   const MIN_BOUNDS_SIZE = 1; // lower bound to avoid divide-by-zero when fitting zoom
   const EDGE_FADE_PX = 20; // fade distance at canvas edges before hard clip
+  const DEBUG_REGION_POINT_SCREEN_RADIUS = 5; // on-screen radius for region debug dots
+
+  const DEBUG = {
+    showNodes: true,
+    showRoads: true,
+    showLabels: true,
+    showRegionPoints: false,
+  };
 
   const MAJOR_S = 30; // major node half-size (square)
   const MINOR_S = 15; // minor node half-size (diamond)
@@ -57,10 +67,26 @@ window.JourneyMap = (function () {
   let nodes = [];
   let roads = [];
   let regions = [];
+  let autoRegions = [];
+  let autoRegionConfig = {
+    enabled: false,
+    padding: AUTO_REGION_PADDING,
+    alpha: AUTO_REGION_ALPHA,
+  };
+  let manualVoronoiRegions = [];
+  let manualVoronoiConfig = {
+    enabled: false,
+    padding: AUTO_REGION_PADDING,
+    alpha: AUTO_REGION_ALPHA,
+  };
+  let manualRegionSeedPoints = [];
   let mapLabels = [];
   let hovered = null;
+  let hoveredRegion = null;
   let imageCache = {};
   let pendingIcons = [];
+  let guildHallDocPromise = null;
+  let regionTipRequestToken = 0;
   let viewW = FALLBACK_VIEW_W;
   let viewH = FALLBACK_VIEW_H;
   let camera = {
@@ -89,6 +115,8 @@ window.JourneyMap = (function () {
   const tipTitle = document.getElementById("jt-title");
   const tipDesc = document.getElementById("jt-desc");
   const tipPeriod = document.getElementById("jt-period");
+  const regionTip = document.getElementById("journey-region-tooltip");
+  const regionTipContent = document.getElementById("jr-content");
 
   function showTip(node) {
     const wrap = document.getElementById("journey-canvas-wrap");
@@ -133,6 +161,83 @@ window.JourneyMap = (function () {
     tip.classList.add("hidden");
   }
 
+  function hideRegionTip() {
+    if (!regionTip) return;
+    regionTipRequestToken += 1;
+    regionTip.classList.add("hidden");
+  }
+
+  async function loadGuildHallDocument() {
+    if (guildHallDocPromise) return guildHallDocPromise;
+    guildHallDocPromise = fetch("./guild-hall.html")
+      .then((response) => {
+        if (!response.ok) return null;
+        return response.text();
+      })
+      .then((html) => {
+        if (!html) return null;
+        const parser = new DOMParser();
+        return parser.parseFromString(html, "text/html");
+      })
+      .catch(() => null);
+    return guildHallDocPromise;
+  }
+
+  async function buildGuildElementTooltipHTML(id) {
+    const doc = await loadGuildHallDocument();
+    if (!doc) return "";
+    const card = doc.getElementById(id);
+    if (!card) return "";
+    const clone = card.cloneNode(true);
+    clone.classList.remove("hidden");
+    if (clone.classList.contains("flex-col") && !clone.classList.contains("flex")) {
+      clone.classList.add("flex");
+    }
+    clone.removeAttribute("aria-hidden");
+    clone.removeAttribute("tabindex");
+    if (clone.style?.display === "none") clone.style.removeProperty("display");
+    return clone.outerHTML;
+  }
+
+  async function showRegionTip(region, screenPt) {
+    if (!regionTip || !regionTipContent || !screenPt) return;
+
+    const wrap = document.getElementById("journey-canvas-wrap");
+    const rect = wrap.getBoundingClientRect();
+    const px = (screenPt.x / viewW) * rect.width;
+    const py = (screenPt.y / viewH) * rect.height;
+
+    const tw = Math.min(280, Math.max(220, rect.width - 24));
+    const th = 230;
+    let left = px + 18;
+    let top = py - 18;
+
+    if (left + tw > rect.width - 8) left = px - tw - 18;
+    if (top + th > rect.height - 8) top = rect.height - th - 8;
+    if (top < 4) top = 4;
+    if (left < 4) left = 4;
+
+    regionTip.style.left = `${left}px`;
+    regionTip.style.top = `${top}px`;
+
+    const requestToken = ++regionTipRequestToken;
+    const tooltip = region.tooltip;
+    if (typeof tooltip !== "string" || !tooltip.trim()) {
+      hideRegionTip();
+      return;
+    }
+
+    const tooltipText = tooltip.trim();
+    const guildHtml = await buildGuildElementTooltipHTML(tooltipText);
+    if (requestToken !== regionTipRequestToken) return;
+    if (!guildHtml) {
+      hideRegionTip();
+      return;
+    }
+    regionTipContent.innerHTML = guildHtml;
+    regionTip.classList.remove("hidden");
+  }
+
   function getHitRadius(node) {
     const base =
       node.kind === "major" ? MAJOR_S + HIT_RADIUS_WORLD_PAD
@@ -163,6 +268,48 @@ window.JourneyMap = (function () {
     if (p5inst && !p5inst.isLooping()) p5inst.redraw();
   }
 
+  function pointInPolygon(x, y, points) {
+    let inside = false;
+    for (let i = 0, j = points.length - 1; i < points.length; j = i++) {
+      const xi = points[i][0],
+        yi = points[i][1];
+      const xj = points[j][0],
+        yj = points[j][1];
+      const intersects = yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi || 1e-9) + xi;
+      if (intersects) inside = !inside;
+    }
+    return inside;
+  }
+
+  function findRegionAt(x, y) {
+    for (const region of manualVoronoiRegions) {
+      if (!region.points?.length) continue;
+      if (!pointInPolygon(x, y, region.points)) continue;
+      return {
+        color: region.color,
+        tooltip: region.tooltip,
+      };
+    }
+    return null;
+  }
+
+  function setHoveredRegion(region, screenPt = null) {
+    const prevColor = hoveredRegion?.color || null;
+    const nextColor = region?.color || null;
+    hoveredRegion = region;
+
+    if (region) {
+      showRegionTip(region, screenPt);
+      if (!hovered) updateCursor("pointer");
+    } else {
+      hideRegionTip();
+      if (!hovered) updateCursor(activePointers.size ? "grabbing" : "grab");
+    }
+
+    const changed = prevColor !== nextColor;
+    if (changed && p5inst && !p5inst.isLooping()) p5inst.redraw();
+  }
+
   // -- Utilities -----------------------------------------------------------------
 
   function hexToRgb(hex) {
@@ -172,6 +319,18 @@ window.JourneyMap = (function () {
 
   function clamp(value, min, max) {
     return Math.min(Math.max(value, min), max);
+  }
+
+  function normalizeHexColor(color) {
+    if (typeof color !== "string" || !color) return "#9ca3af";
+    const c = color.trim().toLowerCase();
+    if (c.startsWith("#")) {
+      if (c.length === 4) {
+        return `#${c[1]}${c[1]}${c[2]}${c[2]}${c[3]}${c[3]}`;
+      }
+      if (c.length === 7) return c;
+    }
+    return "#9ca3af";
   }
 
   function expandBounds(minX, minY, maxX, maxY) {
@@ -233,6 +392,146 @@ window.JourneyMap = (function () {
       maxX: contentBounds.maxX + CONTENT_FIT_PAD,
       maxY: contentBounds.maxY + CONTENT_FIT_PAD,
     };
+  }
+
+  function rebuildAutoRegions() {
+    autoRegions = [];
+    if (!autoRegionConfig.enabled || !nodes.length) return;
+    if (!window.d3?.Delaunay) return;
+
+    const seeds = nodes.map((node) => ({
+      x: node.x,
+      y: node.y,
+      color: normalizeHexColor(node.opts.color),
+    }));
+    if (!seeds.length) return;
+
+    const boundsW = Math.max(contentBounds.maxX - contentBounds.minX, MIN_BOUNDS_SIZE);
+    const boundsH = Math.max(contentBounds.maxY - contentBounds.minY, MIN_BOUNDS_SIZE);
+    const pad = Math.max(0, autoRegionConfig.padding ?? AUTO_REGION_PADDING, boundsW, boundsH);
+    const minX = contentBounds.minX - pad;
+    const minY = contentBounds.minY - pad;
+    const maxX = contentBounds.maxX + pad;
+    const maxY = contentBounds.maxY + pad;
+
+    if (seeds.length === 1) {
+      autoRegions.push({
+        points: [
+          [minX, minY],
+          [maxX, minY],
+          [maxX, maxY],
+          [minX, maxY],
+        ],
+        color: seeds[0].color,
+        alpha: autoRegionConfig.alpha,
+        stroke: false,
+      });
+      return;
+    }
+
+    const delaunay = window.d3.Delaunay.from(
+      seeds,
+      (seed) => seed.x,
+      (seed) => seed.y,
+    );
+    const voronoi = delaunay.voronoi([minX, minY, maxX, maxY]);
+
+    for (let i = 0; i < seeds.length; i++) {
+      const polygon = voronoi.cellPolygon(i);
+      if (!polygon || polygon.length < 3) continue;
+
+      const points = [];
+      for (const [x, y] of polygon) {
+        if (!Number.isFinite(x) || !Number.isFinite(y)) continue;
+        points.push([x, y]);
+      }
+
+      if (points.length < 3) continue;
+      autoRegions.push({
+        points,
+        color: seeds[i].color,
+        alpha: autoRegionConfig.alpha,
+        stroke: false,
+      });
+    }
+  }
+
+  function rebuildManualVoronoiRegions() {
+    manualVoronoiRegions = [];
+    manualRegionSeedPoints = [];
+    if (!manualVoronoiConfig.enabled) return;
+    if (!window.d3?.Delaunay) return;
+
+    const seeds = [];
+    for (const region of manualVoronoiConfig.regions || []) {
+      const color = normalizeHexColor(region.color);
+      for (const pt of region.points || []) {
+        if (!Array.isArray(pt) || pt.length < 2) continue;
+        const x = Number(pt[0]);
+        const y = Number(pt[1]);
+        if (!Number.isFinite(x) || !Number.isFinite(y)) continue;
+        manualRegionSeedPoints.push({ x, y, color });
+        seeds.push({
+          x,
+          y,
+          tooltip: region.tooltip,
+          color,
+        });
+      }
+    }
+
+    if (!seeds.length) return;
+
+    const boundsW = Math.max(contentBounds.maxX - contentBounds.minX, MIN_BOUNDS_SIZE);
+    const boundsH = Math.max(contentBounds.maxY - contentBounds.minY, MIN_BOUNDS_SIZE);
+    const pad = Math.max(0, manualVoronoiConfig.padding ?? AUTO_REGION_PADDING, boundsW, boundsH);
+    const minX = contentBounds.minX - pad;
+    const minY = contentBounds.minY - pad;
+    const maxX = contentBounds.maxX + pad;
+    const maxY = contentBounds.maxY + pad;
+
+    if (seeds.length === 1) {
+      manualVoronoiRegions.push({
+        points: [
+          [minX, minY],
+          [maxX, minY],
+          [maxX, maxY],
+          [minX, maxY],
+        ],
+        tooltip: seeds[0].tooltip,
+        color: seeds[0].color,
+        alpha: manualVoronoiConfig.alpha,
+        stroke: false,
+      });
+      return;
+    }
+
+    const delaunay = window.d3.Delaunay.from(
+      seeds,
+      (seed) => seed.x,
+      (seed) => seed.y,
+    );
+    const voronoi = delaunay.voronoi([minX, minY, maxX, maxY]);
+
+    for (let i = 0; i < seeds.length; i++) {
+      const polygon = voronoi.cellPolygon(i);
+      if (!polygon || polygon.length < 3) continue;
+
+      const points = [];
+      for (const [x, y] of polygon) {
+        if (!Number.isFinite(x) || !Number.isFinite(y)) continue;
+        points.push([x, y]);
+      }
+      if (points.length < 3) continue;
+
+      manualVoronoiRegions.push({
+        points,
+        tooltip: seeds[i].tooltip,
+        color: seeds[i].color,
+        alpha: manualVoronoiConfig.alpha,
+        stroke: false,
+      });
+    }
   }
 
   function updateViewSize() {
@@ -479,18 +778,67 @@ window.JourneyMap = (function () {
     p.pop();
   }
 
+  function saturateRgb(rgb, amount = 1.25) {
+    const avg = (rgb[0] + rgb[1] + rgb[2]) / 3;
+    return [
+      Math.max(0, Math.min(255, Math.round(avg + (rgb[0] - avg) * amount))),
+      Math.max(0, Math.min(255, Math.round(avg + (rgb[1] - avg) * amount))),
+      Math.max(0, Math.min(255, Math.round(avg + (rgb[2] - avg) * amount))),
+    ];
+  }
+
+  function drawCurrentGlow(p, x, y, baseSize, rgb, pulse01) {
+    const glowRadius = baseSize + 8 + pulse01 * 5;
+    const glowAlpha = 34 + pulse01 * 20;
+    p.noStroke();
+    p.fill(rgb[0], rgb[1], rgb[2], glowAlpha);
+    p.circle(x, y, glowRadius * 2);
+  }
+
+  function pulseCurrentAura(p, x, y, baseSize, rgb) {
+    const t = (p.frameCount % 120) / 120;
+    const t2 = ((p.frameCount + 40) % 120) / 120;
+
+    for (const [phase, mult] of [
+      [t, 1],
+      [t2, 0.7],
+    ]) {
+      const alpha = Math.round((1 - phase) * 85 * mult);
+      if (alpha <= 0) continue;
+      const radius = baseSize + 12 + phase * 34;
+      p.noFill();
+      p.stroke(rgb[0], rgb[1], rgb[2], alpha);
+      p.strokeWeight(2);
+      p.circle(x, y, radius * 2);
+    }
+
+    const glow = 22 + Math.sin((p.frameCount / 120) * Math.PI * 2) * 8;
+    p.noStroke();
+    p.fill(rgb[0], rgb[1], rgb[2], glow);
+    p.circle(x, y, (baseSize + 10) * 2);
+  }
+
   // -- Node rendering ------------------------------------------------------------
 
   function drawNode(node) {
     const p = p5inst;
     const { x, y, kind, opts } = node;
     const hov = node === hovered;
-    const rgb = hexToRgb(opts.color || "#9ca3af");
+    const baseRgb = hexToRgb(opts.color || "#9ca3af");
+    const currentPulse = opts.current ? (Math.sin((p.frameCount / 45) * Math.PI * 2) + 1) / 2 : 0;
+    const rgb = opts.current ? saturateRgb(baseRgb, 1.35) : baseRgb;
     const cr = (a) => `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${a / 255})`;
 
+    if (opts.current) {
+      const base =
+        kind === "major" ? MAJOR_S
+        : kind === "promotion" ? MINOR_S + 4
+        : ORIGIN_S;
+      drawCurrentGlow(p, x, y, base, rgb, currentPulse);
+    }
+
     if (kind === "origin") {
-      const S = ORIGIN_S + (hov ? 1 : 0);
-      if (opts.current) pulseRect(p, x, y, ORIGIN_S, rgb);
+      const S = ORIGIN_S + (hov ? 1 : 0) + (opts.current ? currentPulse * 1.4 : 0);
 
       p.fill("rgba(0,0,0,0.5)");
       p.noStroke();
@@ -519,8 +867,7 @@ window.JourneyMap = (function () {
 
       drawLabel(x, y, ORIGIN_S, node);
     } else if (kind === "major") {
-      const S = MAJOR_S + (hov ? 2 : 0);
-      if (opts.current) pulseRect(p, x, y, MAJOR_S, rgb);
+      const S = MAJOR_S + (hov ? 2 : 0) + (opts.current ? currentPulse * 2.2 : 0);
 
       p.fill("rgba(0,0,0,0.5)");
       p.noStroke();
@@ -542,8 +889,7 @@ window.JourneyMap = (function () {
 
       drawLabel(x, y, MAJOR_S, node);
     } else if (kind === "promotion") {
-      const S = MINOR_S + (hov ? 2 : 0);
-      if (opts.current) pulseDiamond(p, x, y, MINOR_S, rgb);
+      const S = MINOR_S + (hov ? 2 : 0) + (opts.current ? currentPulse * 1.8 : 0);
 
       p.push();
       p.translate(x, y);
@@ -574,7 +920,8 @@ window.JourneyMap = (function () {
     const pts = region.points;
     if (!pts || pts.length < 3) return;
     const rgb = hexToRgb(region.color || "#6b7280");
-    const alph = region.alpha ?? 40;
+    const isHoveredRegion = Boolean(hoveredRegion?.color && region.color === hoveredRegion.color);
+    const alph = Math.min((region.alpha ?? 40) + (isHoveredRegion ? 24 : 0), 180);
 
     p.noStroke();
     p.fill(rgb[0], rgb[1], rgb[2], alph);
@@ -582,13 +929,89 @@ window.JourneyMap = (function () {
     for (const [x, y] of pts) p.vertex(x, y);
     p.endShape(p.CLOSE);
 
+    if (region.stroke !== false) {
+      p.noFill();
+      p.stroke(rgb[0], rgb[1], rgb[2], Math.min(alph * 2.5, 120));
+      p.strokeWeight(1);
+      p.beginShape();
+      for (const [x, y] of pts) p.vertex(x, y);
+      p.endShape(p.CLOSE);
+      p.noStroke();
+    }
+  }
+
+  function makePointKey(x, y) {
+    return `${x.toFixed(3)},${y.toFixed(3)}`;
+  }
+
+  function makeEdgeKey(a, b) {
+    const aKey = makePointKey(a[0], a[1]);
+    const bKey = makePointKey(b[0], b[1]);
+    return aKey < bKey ? `${aKey}|${bKey}` : `${bKey}|${aKey}`;
+  }
+
+  function drawHoveredRegionOutline() {
+    if (!hoveredRegion?.color) return;
+    const p = p5inst;
+    if (!p) return;
+
+    const selected = manualVoronoiRegions.filter((region) => region.color === hoveredRegion.color && region.points?.length >= 3);
+    if (!selected.length) return;
+
+    const edgeCounts = new Map();
+
+    for (const region of selected) {
+      const pts = region.points;
+      const pointCount = pts.length;
+      if (pointCount < 3) continue;
+
+      // d3 Voronoi polygons are typically closed with last == first; skip degenerate closing edge.
+      const maxIndex = pts[0][0] === pts[pointCount - 1][0] && pts[0][1] === pts[pointCount - 1][1] ? pointCount - 1 : pointCount;
+
+      for (let i = 0; i < maxIndex; i++) {
+        const a = pts[i];
+        const b = pts[(i + 1) % maxIndex];
+        const key = makeEdgeKey(a, b);
+        const existing = edgeCounts.get(key);
+        if (existing) existing.count += 1;
+        else edgeCounts.set(key, { count: 1, a, b });
+      }
+    }
+
+    p.push();
     p.noFill();
-    p.stroke(rgb[0], rgb[1], rgb[2], Math.min(alph * 2.5, 120));
-    p.strokeWeight(1);
-    p.beginShape();
-    for (const [x, y] of pts) p.vertex(x, y);
-    p.endShape(p.CLOSE);
-    p.noStroke();
+    p.stroke(255, 255, 255, 190);
+    p.strokeWeight(2.5);
+    p.drawingContext.lineJoin = "round";
+    p.drawingContext.lineCap = "round";
+
+    for (const edge of edgeCounts.values()) {
+      if (edge.count !== 1) continue;
+      p.line(edge.a[0], edge.a[1], edge.b[0], edge.b[1]);
+    }
+
+    p.pop();
+  }
+
+  function drawRegionDebugPoints() {
+    if (!DEBUG.showRegionPoints || !manualRegionSeedPoints.length) return;
+    const p = p5inst;
+    if (!p) return;
+
+    const radius = Math.max(DEBUG_REGION_POINT_SCREEN_RADIUS / camera.zoom, 1 / camera.zoom);
+
+    p.push();
+    for (const point of manualRegionSeedPoints) {
+      const rgb = hexToRgb(point.color || "#9ca3af");
+      p.noStroke();
+      p.fill(rgb[0], rgb[1], rgb[2], 240);
+      p.circle(point.x, point.y, radius * 2);
+      p.noFill();
+      p.stroke(0, 0, 0, 180);
+      p.strokeWeight(Math.max(1 / camera.zoom, 0.75 / camera.zoom));
+      p.circle(point.x, point.y, radius * 2);
+    }
+    p.pop();
   }
 
   // -- Map label -----------------------------------------------------------------
@@ -668,6 +1091,9 @@ window.JourneyMap = (function () {
         userSetup(publicAPI);
 
         recomputeContentBounds();
+        rebuildAutoRegions();
+        rebuildManualVoronoiRegions();
+        recomputeContentBounds();
         updateViewSize();
         p.resizeCanvas(viewW, viewH);
         resetCamera();
@@ -696,6 +1122,7 @@ window.JourneyMap = (function () {
 
           updateCursor("grabbing");
           setHoveredNode(null);
+          setHoveredRegion(null);
         });
 
         canvasEl.addEventListener("pointermove", (event) => {
@@ -730,7 +1157,14 @@ window.JourneyMap = (function () {
           if (wasDragPointer && !wasDragPointer.moved) {
             const point = getCanvasPoint(event.clientX, event.clientY);
             const world = screenToWorld(point.x, point.y);
-            setHoveredNode(findNodeAt(world.x, world.y));
+            const node = findNodeAt(world.x, world.y);
+            if (node) {
+              setHoveredRegion(null);
+              setHoveredNode(node);
+            } else {
+              setHoveredNode(null);
+              setHoveredRegion(findRegionAt(world.x, world.y), point);
+            }
           }
 
           if (dragState && dragState.pointerId === event.pointerId) {
@@ -762,6 +1196,7 @@ window.JourneyMap = (function () {
             p.resizeCanvas(viewW, viewH);
             resetCamera();
             setHoveredNode(null);
+            setHoveredRegion(null);
           });
           wrapResizeObserver.observe(wrap);
         }
@@ -771,6 +1206,7 @@ window.JourneyMap = (function () {
           p.resizeCanvas(viewW, viewH);
           resetCamera();
           setHoveredNode(null);
+          setHoveredRegion(null);
         });
       };
 
@@ -779,10 +1215,20 @@ window.JourneyMap = (function () {
         p.push();
         p.translate(viewW / 2 + camera.panX, viewH / 2 + camera.panY);
         p.scale(camera.zoom);
+        for (const r of manualVoronoiRegions) drawRegion(r);
+        for (const r of autoRegions) drawRegion(r);
         for (const r of regions) drawRegion(r);
-        for (const l of mapLabels) drawMapLabel(l);
-        for (const r of roads) drawRoad(r);
-        for (const n of nodes) drawNode(n);
+        drawHoveredRegionOutline();
+        if (DEBUG.showLabels) {
+          for (const l of mapLabels) drawMapLabel(l);
+        }
+        if (DEBUG.showRoads) {
+          for (const r of roads) drawRoad(r);
+        }
+        if (DEBUG.showNodes) {
+          for (const n of nodes) drawNode(n);
+        }
+        drawRegionDebugPoints();
         p.pop();
         applyEdgeFade();
       };
@@ -790,11 +1236,20 @@ window.JourneyMap = (function () {
       p.mouseMoved = function () {
         if (dragState || pinchState || activePointers.size) return;
         const world = screenToWorld(p.mouseX, p.mouseY);
-        setHoveredNode(findNodeAt(world.x, world.y));
+        const node = findNodeAt(world.x, world.y);
+        if (node) {
+          setHoveredRegion(null);
+          setHoveredNode(node);
+          return;
+        }
+
+        setHoveredNode(null);
+        setHoveredRegion(findRegionAt(world.x, world.y), { x: p.mouseX, y: p.mouseY });
       };
 
       p.mouseExited = function () {
         setHoveredNode(null);
+        setHoveredRegion(null);
       };
     });
   }
@@ -828,6 +1283,36 @@ window.JourneyMap = (function () {
     },
     label(text, x, y, opts = {}) {
       mapLabels.push({ text, x, y, ...opts });
+    },
+    autoRegionsByColor(opts = {}) {
+      autoRegionConfig = {
+        ...autoRegionConfig,
+        enabled: true,
+        ...opts,
+      };
+    },
+    defineVoronoiRegions(regionsData = [], opts = {}) {
+      const normalized = [];
+      for (const region of regionsData) {
+        if (!region || typeof region !== "object") continue;
+        if (!region.color) continue;
+
+        const normalizedColor = normalizeHexColor(region.color);
+        const tooltipData = typeof region.tooltip === "string" ? region.tooltip : "";
+
+        normalized.push({
+          color: normalizedColor,
+          tooltip: tooltipData,
+          points: Array.isArray(region.points) ? region.points : [],
+        });
+      }
+
+      manualVoronoiConfig = {
+        ...manualVoronoiConfig,
+        enabled: true,
+        regions: normalized,
+        ...opts,
+      };
     },
   };
 

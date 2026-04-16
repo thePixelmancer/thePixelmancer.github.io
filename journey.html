@@ -64,6 +64,20 @@
         transform: translateY(3px);
       }
 
+      #journey-region-tooltip {
+        position: absolute;
+        z-index: 31;
+        width: 280px;
+        pointer-events: none;
+        transition:
+          opacity 100ms ease,
+          transform 100ms ease;
+      }
+      #journey-region-tooltip.hidden {
+        opacity: 0;
+        transform: translateY(3px);
+      }
+
       @keyframes mapReveal {
         from {
           opacity: 0;
@@ -81,6 +95,10 @@
       @media (max-width: 768px) {
         #journey-tooltip {
           width: min(240px, calc(100vw - 40px));
+        }
+
+        #journey-region-tooltip {
+          width: min(280px, calc(100vw - 40px));
         }
 
         .map-mobile-hint {
@@ -138,6 +156,10 @@
               </div>
             </div>
           </div>
+
+          <div id="journey-region-tooltip" class="hidden">
+            <div id="jr-content"></div>
+          </div>
         </div>
         <p class="map-mobile-hint hidden md:block">Drag to pan. Wheel or pinch to zoom. Tap markers.</p>
       </div>
@@ -147,6 +169,9 @@
 
     <!-- p5.js from CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.3/p5.min.js"></script>
+
+    <!-- Voronoi / Delaunay helper -->
+    <script src="https://cdn.jsdelivr.net/npm/d3-delaunay@6.0.4/dist/d3-delaunay.min.js"></script>
 
     <!-- Drawing primitives library -->
     <script src="./js/journey-map.js"></script>
