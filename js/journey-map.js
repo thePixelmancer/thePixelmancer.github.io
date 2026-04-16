@@ -4,8 +4,12 @@ window.JourneyMap = (function () {
 
   // -- Canvas constants ----------------------------------------------------------
 
-  const CW       = 1200; // internal canvas width
-  const CH       = 1000; // internal canvas height
+  const CW       = 600; // world width
+  const CH       = 800; // max world height
+  const MIN_VIEW_H = 420;
+  const MAX_VIEW_H = 820;
+  const FIT_PAD    = 140;
+  const LABEL_HALF_W = 170;
 
   const MAJOR_S  = 20;   // major node half-size (square)
   const MINOR_S  = 13;   // minor node half-size (diamond)
@@ -39,6 +43,19 @@ window.JourneyMap = (function () {
   let hovered      = null;
   let imageCache   = {};
   let pendingIcons = [];
+  let viewW        = CW;
+  let viewH        = Math.min(CH, MAX_VIEW_H);
+  let camera       = {
+    zoom: 1,
+    minZoom: 1,
+    maxZoom: 1,
+    panX: 0,
+    panY: 0,
+  };
+  let activePointers = new Map();
+  let dragState    = null;
+  let pinchState   = null;
+  let contentBounds = { minX: 0, minY: 0, maxX: CW, maxY: CH };
 
   // -- Tooltip -------------------------------------------------------------------
 
@@ -52,8 +69,9 @@ window.JourneyMap = (function () {
   function showTip(node) {
     const wrap = document.getElementById("journey-canvas-wrap");
     const rect = wrap.getBoundingClientRect();
-    const px   = node.x / (CW / rect.width);
-    const py   = node.y / (CH / rect.height);
+    const pt   = worldToScreen(node.x, node.y);
+    const px   = (pt.x / viewW) * rect.width;
+    const py   = (pt.y / viewH) * rect.height;
 
     const tw = 244, th = 180;
     let left = px + 20, top = py - 18;
@@ -89,6 +107,36 @@ window.JourneyMap = (function () {
     tip.classList.add("hidden");
   }
 
+  function getHitRadius(node) {
+    const base = node.kind === "major"     ? MAJOR_S  + 12
+               : node.kind === "promotion" ? MINOR_S  + 12
+               :                              ORIGIN_R + 12;
+    return Math.max(base, 22 / camera.zoom);
+  }
+
+  function findNodeAt(x, y) {
+    if (x < 0 || y < 0 || x > CW || y > CH) return null;
+    for (const node of nodes) {
+      if (Math.hypot(node.x - x, node.y - y) < getHitRadius(node)) return node;
+    }
+    return null;
+  }
+
+  function setHoveredNode(node) {
+    if (node === hovered) return;
+    hovered = node;
+
+    if (node) {
+      showTip(node);
+      updateCursor("pointer");
+    } else {
+      hideTip();
+      updateCursor(activePointers.size ? "grabbing" : "grab");
+    }
+
+    if (p5inst && !p5inst.isLooping()) p5inst.redraw();
+  }
+
   // -- Utilities -----------------------------------------------------------------
 
   function hexToRgb(hex) {
@@ -98,6 +146,170 @@ window.JourneyMap = (function () {
       parseInt(h.slice(2, 4), 16),
       parseInt(h.slice(4, 6), 16),
     ];
+  }
+
+  function clamp(value, min, max) {
+    return Math.min(Math.max(value, min), max);
+  }
+
+  function expandBounds(minX, minY, maxX, maxY) {
+    contentBounds.minX = Math.min(contentBounds.minX, minX);
+    contentBounds.minY = Math.min(contentBounds.minY, minY);
+    contentBounds.maxX = Math.max(contentBounds.maxX, maxX);
+    contentBounds.maxY = Math.max(contentBounds.maxY, maxY);
+  }
+
+  function recomputeContentBounds() {
+    contentBounds = { minX: CW, minY: CH, maxX: 0, maxY: 0 };
+
+    for (const node of nodes) {
+      const markerEdge = node.kind === "major" ? MAJOR_S : node.kind === "promotion" ? MINOR_S + 4 : ORIGIN_R;
+      const labels = node.opts.label || [];
+      const [dx, dy] = node.opts.labelOffset ?? [0, markerEdge + LABEL_GAP + LINE_H];
+      const labelTop = labels.length ? node.y + dy - 24 : node.y;
+      const labelBottom = labels.length ? node.y + dy + LINE_H * labels.length : node.y;
+      expandBounds(
+        node.x - Math.max(markerEdge + 20, labels.length ? LABEL_HALF_W - dx : 0),
+        Math.min(node.y - markerEdge - 20, labelTop),
+        node.x + Math.max(markerEdge + 20, labels.length ? LABEL_HALF_W + dx : 0),
+        Math.max(node.y + markerEdge + 20, labelBottom),
+      );
+    }
+
+    for (const region of regions) {
+      if (!region.points?.length) continue;
+      for (const [x, y] of region.points) expandBounds(x, y, x, y);
+    }
+
+    for (const lbl of mapLabels) {
+      const size = lbl.size || 22;
+      const halfW = Math.max((lbl.text?.length || 0) * size * 0.35, 40);
+      expandBounds(lbl.x - halfW, lbl.y - size, lbl.x + halfW, lbl.y + size);
+    }
+
+    if (contentBounds.minX > contentBounds.maxX || contentBounds.minY > contentBounds.maxY) {
+      contentBounds = { minX: 0, minY: 0, maxX: CW, maxY: CH };
+      return;
+    }
+
+    contentBounds = {
+      minX: clamp(contentBounds.minX - FIT_PAD, 0, CW),
+      minY: clamp(contentBounds.minY - FIT_PAD, 0, CH),
+      maxX: clamp(contentBounds.maxX + FIT_PAD, 0, CW),
+      maxY: clamp(contentBounds.maxY + FIT_PAD, 0, CH),
+    };
+  }
+
+  function updateViewSize() {
+    const wrap = document.getElementById("journey-canvas-wrap");
+    if (!wrap) return;
+
+    viewW = Math.max(wrap.clientWidth || CW, 280);
+    viewH = clamp(Math.round(window.innerHeight * 0.72), MIN_VIEW_H, MAX_VIEW_H);
+    wrap.style.height = `${viewH}px`;
+  }
+
+  function clampCamera() {
+    const boundsW = contentBounds.maxX - contentBounds.minX;
+    const boundsH = contentBounds.maxY - contentBounds.minY;
+    const contentW = boundsW * camera.zoom;
+    const contentH = boundsH * camera.zoom;
+    const minPanX = viewW - contentBounds.maxX * camera.zoom;
+    const maxPanX = -contentBounds.minX * camera.zoom;
+    const minPanY = viewH - contentBounds.maxY * camera.zoom;
+    const maxPanY = -contentBounds.minY * camera.zoom;
+
+    if (contentW <= viewW) camera.panX = (viewW - contentW) / 2 - contentBounds.minX * camera.zoom;
+    else camera.panX = clamp(camera.panX, minPanX, maxPanX);
+
+    if (contentH <= viewH) camera.panY = (viewH - contentH) / 2 - contentBounds.minY * camera.zoom;
+    else camera.panY = clamp(camera.panY, minPanY, maxPanY);
+  }
+
+  function resetCamera() {
+    const boundsW = Math.max(contentBounds.maxX - contentBounds.minX, 1);
+    const boundsH = Math.max(contentBounds.maxY - contentBounds.minY, 1);
+    camera.minZoom = Math.min(viewW / boundsW, viewH / boundsH);
+    camera.maxZoom = camera.minZoom * 4;
+    camera.zoom = camera.minZoom;
+    camera.panX = (viewW - boundsW * camera.zoom) / 2 - contentBounds.minX * camera.zoom;
+    camera.panY = (viewH - boundsH * camera.zoom) / 2 - contentBounds.minY * camera.zoom;
+  }
+
+  function worldToScreen(x, y) {
+    return {
+      x: x * camera.zoom + camera.panX,
+      y: y * camera.zoom + camera.panY,
+    };
+  }
+
+  function screenToWorld(x, y) {
+    return {
+      x: (x - camera.panX) / camera.zoom,
+      y: (y - camera.panY) / camera.zoom,
+    };
+  }
+
+  function zoomAt(newZoom, screenX, screenY) {
+    const targetZoom = clamp(newZoom, camera.minZoom, camera.maxZoom);
+    const anchor = screenToWorld(screenX, screenY);
+    camera.zoom = targetZoom;
+    camera.panX = screenX - anchor.x * camera.zoom;
+    camera.panY = screenY - anchor.y * camera.zoom;
+    clampCamera();
+    if (hovered) showTip(hovered);
+    if (p5inst && !p5inst.isLooping()) p5inst.redraw();
+  }
+
+  function getCanvasPoint(clientX, clientY) {
+    const wrap = document.getElementById("journey-canvas-wrap");
+    const rect = wrap.getBoundingClientRect();
+    return {
+      x: ((clientX - rect.left) / rect.width) * viewW,
+      y: ((clientY - rect.top) / rect.height) * viewH,
+    };
+  }
+
+  function syncPointer(pointerId, event) {
+    activePointers.set(pointerId, { x: event.clientX, y: event.clientY });
+  }
+
+  function startPinch() {
+    if (activePointers.size < 2) {
+      pinchState = null;
+      return;
+    }
+
+    const [a, b] = Array.from(activePointers.values());
+    const center = getCanvasPoint((a.x + b.x) / 2, (a.y + b.y) / 2);
+    pinchState = {
+      startDistance: Math.hypot(b.x - a.x, b.y - a.y),
+      startZoom: camera.zoom,
+      worldCenter: screenToWorld(center.x, center.y),
+    };
+    dragState = null;
+    setHoveredNode(null);
+  }
+
+  function applyPinch() {
+    if (!pinchState || activePointers.size < 2) return;
+
+    const [a, b] = Array.from(activePointers.values());
+    const distance = Math.hypot(b.x - a.x, b.y - a.y);
+    if (!distance || !pinchState.startDistance) return;
+
+    const center = getCanvasPoint((a.x + b.x) / 2, (a.y + b.y) / 2);
+    camera.zoom = clamp(pinchState.startZoom * (distance / pinchState.startDistance), camera.minZoom, camera.maxZoom);
+    camera.panX = center.x - pinchState.worldCenter.x * camera.zoom;
+    camera.panY = center.y - pinchState.worldCenter.y * camera.zoom;
+    clampCamera();
+    if (hovered) showTip(hovered);
+    if (p5inst && !p5inst.isLooping()) p5inst.redraw();
+  }
+
+  function updateCursor(cursor) {
+    const wrap = document.getElementById("journey-canvas-wrap");
+    if (wrap) wrap.style.cursor = cursor;
   }
 
   // -- Drawing helpers -----------------------------------------------------------
@@ -356,51 +568,128 @@ window.JourneyMap = (function () {
       p.setup = function () {
         const wrap = document.getElementById("journey-canvas-wrap");
         const cnv  = p.createCanvas(CW, CH);
+        const canvasEl = cnv.elt;
         cnv.parent(wrap);
         cnv.style("background", "transparent");
+        canvasEl.style.touchAction = "none";
         p.textFont("Silkscreen");
         p.frameRate(30);
         p.noLoop();
 
         userSetup(publicAPI);
 
+        recomputeContentBounds();
+        updateViewSize();
+        p.resizeCanvas(viewW, viewH);
+        resetCamera();
+
         if (nodes.some((n) => n.opts.current)) p.loop();
+
+        canvasEl.addEventListener("pointerdown", (event) => {
+          if (event.pointerType === "mouse" && event.button !== 0) return;
+
+          syncPointer(event.pointerId, event);
+          canvasEl.setPointerCapture(event.pointerId);
+
+          if (activePointers.size === 1) {
+            dragState = {
+              pointerId: event.pointerId,
+              startX: event.clientX,
+              startY: event.clientY,
+              startPanX: camera.panX,
+              startPanY: camera.panY,
+              moved: false,
+            };
+            pinchState = null;
+          } else {
+            startPinch();
+          }
+
+          updateCursor("grabbing");
+          setHoveredNode(null);
+        });
+
+        canvasEl.addEventListener("pointermove", (event) => {
+          if (activePointers.has(event.pointerId)) syncPointer(event.pointerId, event);
+
+          if (pinchState && activePointers.size >= 2) {
+            applyPinch();
+            return;
+          }
+
+          if (!dragState || dragState.pointerId !== event.pointerId) return;
+
+          const dx = event.clientX - dragState.startX;
+          const dy = event.clientY - dragState.startY;
+          if (Math.hypot(dx, dy) > 4) dragState.moved = true;
+          camera.panX = dragState.startPanX + dx;
+          camera.panY = dragState.startPanY + dy;
+          clampCamera();
+          if (p5inst && !p5inst.isLooping()) p5inst.redraw();
+        });
+
+        const finishPointer = (event) => {
+          const wasDragPointer = dragState && dragState.pointerId === event.pointerId ? dragState : null;
+          activePointers.delete(event.pointerId);
+
+          if (activePointers.size >= 2) {
+            startPinch();
+          } else {
+            pinchState = null;
+          }
+
+          if (wasDragPointer && !wasDragPointer.moved) {
+            const point = getCanvasPoint(event.clientX, event.clientY);
+            const world = screenToWorld(point.x, point.y);
+            setHoveredNode(findNodeAt(world.x, world.y));
+          }
+
+          if (dragState && dragState.pointerId === event.pointerId) {
+            dragState = null;
+          }
+
+          if (!activePointers.size) updateCursor("grab");
+        };
+
+        canvasEl.addEventListener("pointerup", finishPointer);
+        canvasEl.addEventListener("pointercancel", finishPointer);
+
+        canvasEl.addEventListener("wheel", (event) => {
+          event.preventDefault();
+          const point = getCanvasPoint(event.clientX, event.clientY);
+          zoomAt(camera.zoom * Math.exp(-event.deltaY * 0.0015), point.x, point.y);
+        }, { passive: false });
+
+        updateCursor("grab");
+
+        window.addEventListener("resize", () => {
+          updateViewSize();
+          p.resizeCanvas(viewW, viewH);
+          resetCamera();
+          setHoveredNode(null);
+        });
       };
 
       p.draw = function () {
         p.clear();
+        p.push();
+        p.translate(camera.panX, camera.panY);
+        p.scale(camera.zoom);
         for (const r of regions)   drawRegion(r);
         for (const l of mapLabels) drawMapLabel(l);
         for (const r of roads)     drawRoad(r);
         for (const n of nodes)     drawNode(n);
+        p.pop();
       };
 
       p.mouseMoved = function () {
-        const mx = p.mouseX, my = p.mouseY;
-        if (mx < 0 || my < 0 || mx > CW || my > CH) {
-          if (hovered) { hovered = null; hideTip(); if (!p.isLooping()) p.redraw(); }
-          return;
-        }
-
-        let found = null;
-        for (const node of nodes) {
-          const hitR = node.kind === "major"     ? MAJOR_S  + 12
-                     : node.kind === "promotion" ? MINOR_S  + 12
-                     :                             ORIGIN_R + 12;
-          if (Math.hypot(node.x - mx, node.y - my) < hitR) { found = node; break; }
-        }
-
-        if (found !== hovered) {
-          hovered = found;
-          const wrap = document.getElementById("journey-canvas-wrap");
-          if (found) { showTip(found); wrap.style.cursor = "pointer"; }
-          else       { hideTip();      wrap.style.cursor = "default"; }
-          if (!p.isLooping()) p.redraw();
-        }
+        if (dragState || pinchState || activePointers.size) return;
+        const world = screenToWorld(p.mouseX, p.mouseY);
+        setHoveredNode(findNodeAt(world.x, world.y));
       };
 
       p.mouseExited = function () {
-        if (hovered) { hovered = null; hideTip(); if (!p.isLooping()) p.redraw(); }
+        setHoveredNode(null);
       };
     });
   }

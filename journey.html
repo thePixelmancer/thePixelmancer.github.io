@@ -28,16 +28,30 @@
         display: block;
       }
 
-      /* Canvas sits flush inside and scales to fill */
+      .map-shell {
+        width: min(100%, 1080px);
+      }
+
+      .map-mobile-hint {
+        margin-top: 0.75rem;
+        text-align: center;
+        font-family: "Silkscreen", cursive;
+        font-size: 0.5rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: rgb(156, 163, 175);
+      }
+
       #journey-canvas-wrap {
         display: block;
         width: 100%;
         position: relative;
+        min-height: 420px;
       }
       #journey-canvas-wrap canvas {
         display: block;
         width: 100% !important;
-        height: auto !important;
+        height: 100% !important;
         image-rendering: pixelated;
       }
 
@@ -69,6 +83,25 @@
       .map-reveal {
         animation: mapReveal 280ms ease-out forwards;
       }
+
+      @media (max-width: 768px) {
+        .map-shell {
+          width: 100%;
+        }
+
+        .map-paper {
+          width: 100%;
+        }
+
+        #journey-tooltip {
+          width: min(240px, calc(100vw - 40px));
+        }
+
+        .map-mobile-hint {
+          font-size: 0.45rem;
+          letter-spacing: 0.14em;
+        }
+      }
     </style>
   </head>
 
@@ -95,7 +128,7 @@
 
     <!-- Full remaining height, center the map vertically and horizontally -->
     <main class="flex-1 flex items-center justify-center px-4 py-6 md:px-8 relative z-10">
-      <div class="map-reveal">
+      <div class="map-reveal map-shell">
         <!-- MAP -->
         <div class="map-paper">
           <div id="journey-canvas-wrap">
@@ -120,6 +153,7 @@
             </div>
           </div>
         </div>
+        <p class="map-mobile-hint">Drag to pan. Wheel or pinch to zoom. Tap markers.</p>
       </div>
     </main>
 
