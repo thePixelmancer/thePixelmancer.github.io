@@ -3,7 +3,7 @@ JourneyMap.init(function (map) {
 
   // ─── Nodes ───────────────────────────────────────────────────────────────
 
-  const modder = map.originNode(200, 800, {
+  const modder = map.originNode(-390, 350, {
     color:       "#4ade80",
     description: "Started tinkering with Java mods. The spark that started everything.",
     label: [
@@ -12,7 +12,7 @@ JourneyMap.init(function (map) {
     ],
   });
 
-  const freelance = map.majorNode(450, 800, {
+  const freelance = map.majorNode(-140, 350, {
     color:       "#4ade80",
     description: "Went out on my own. Bedrock contracts, asset work, learning the ecosystem.",
     label: [
@@ -22,7 +22,7 @@ JourneyMap.init(function (map) {
     ],
   });
 
-  const builder = map.majorNode(700, 780, {
+  const builder = map.majorNode(110, 330, {
     color:       "#4ade80",
     description: "Hands-on build work. Detailed environments and game-ready structures.",
     label: [
@@ -32,7 +32,7 @@ JourneyMap.init(function (map) {
     ],
   });
 
-  const shapeAsset = map.majorNode(980, 600, {
+  const shapeAsset = map.majorNode(390, 150, {
     color:       "#c084fc",
     description: "First studio. Building assets and learning how a real pipeline operates.",
     label: [
@@ -42,7 +42,7 @@ JourneyMap.init(function (map) {
     ],
   });
 
-  const shapeLead = map.minorNode(800, 540, {
+  const shapeLead = map.minorNode(210, 90, {
     color:       "#c084fc",
     description: "Promoted. Stepped up into a leadership role within the studio.",
     label: [
@@ -52,7 +52,7 @@ JourneyMap.init(function (map) {
     ],
   });
 
-  const shapeDirector = map.minorNode(600, 500, {
+  const shapeDirector = map.minorNode(10, 50, {
     color:       "#c084fc",
     description: "Art direction across projects — style guides, reviews, visual identity.",
     label: [
@@ -62,7 +62,7 @@ JourneyMap.init(function (map) {
     ],
   });
 
-  const pixelmancer = map.minorNode(500, 350, {
+  const pixelmancer = map.minorNode(-90, -100, {
     color:       "#4ade80",
     current:     true,
     description: "Running my own brand. Creative direction, client work, and personal projects.",
@@ -73,7 +73,7 @@ JourneyMap.init(function (map) {
     ],
   });
 
-  const tsunamiDev = map.majorNode(800, 300, {
+  const tsunamiDev = map.majorNode(210, -150, {
     color:       "#60a5fa",
     description: "Boss behaviors, scripting, art pipelines, full-stack add-on work.",
     label: [
@@ -83,7 +83,7 @@ JourneyMap.init(function (map) {
     ],
   });
 
-  const tsunamiLead = map.minorNode(750, 100, {
+  const tsunamiLead = map.minorNode(160, -350, {
     color:       "#60a5fa",
     current:     true,
     description: "Promoted to lead. Steering technical and creative direction.",
@@ -94,7 +94,7 @@ JourneyMap.init(function (map) {
     ],
   });
 
-  const simplyBrilliant = map.majorNode(450, 100, {
+  const simplyBrilliant = map.majorNode(-140, -350, {
     color:       "#fbbf24",
     current:     true,
     description: "New chapter, running parallel. Unannounced projects, new creative horizons.",

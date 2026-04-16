@@ -28,10 +28,6 @@
         display: block;
       }
 
-      .map-shell {
-        width: min(100%, 1080px);
-      }
-
       .map-mobile-hint {
         margin-top: 0.75rem;
         text-align: center;
@@ -44,9 +40,7 @@
 
       #journey-canvas-wrap {
         display: block;
-        width: 100%;
         position: relative;
-        min-height: 420px;
       }
       #journey-canvas-wrap canvas {
         display: block;
@@ -85,14 +79,6 @@
       }
 
       @media (max-width: 768px) {
-        .map-shell {
-          width: 100%;
-        }
-
-        .map-paper {
-          width: 100%;
-        }
-
         #journey-tooltip {
           width: min(240px, calc(100vw - 40px));
         }
@@ -105,7 +91,7 @@
     </style>
   </head>
 
-  <body class="bg-dark-900 min-h-screen flex flex-col" style="--page-accent: rgba(192, 132, 252, 0.1)">
+  <body class="bg-dark-900 flex h-[100dvh] min-h-0 flex-col overflow-hidden" style="--page-accent: rgba(192, 132, 252, 0.1)">
     <div
       class="page-header"
       style="
@@ -126,12 +112,12 @@
       <div class="flex-shrink-0 w-16" aria-hidden="true"></div>
     </div>
 
-    <!-- Full remaining height, center the map vertically and horizontally -->
-    <main class="flex-1 flex items-center justify-center px-4 py-6 md:px-8 relative z-10">
-      <div class="map-reveal map-shell">
+    <!-- Container sizing controlled by Tailwind; canvas only fits this box -->
+    <main class="relative z-10 flex flex-1 min-h-0 items-stretch justify-center p-5 md:items-center md:px-8 md:py-6">
+      <div class="map-reveal map-shell flex h-full min-h-0 w-full flex-col md:h-auto md:w-[96vw] md:max-w-[1500px]">
         <!-- MAP -->
-        <div class="map-paper">
-          <div id="journey-canvas-wrap">
+        <div class="map-paper flex-1 min-h-0 md:flex-none md:aspect-[4/3]">
+          <div id="journey-canvas-wrap" class="h-full w-full min-h-0">
             <!-- p5 canvas injected here by journey-map.js -->
           </div>
 
@@ -153,7 +139,7 @@
             </div>
           </div>
         </div>
-        <p class="map-mobile-hint">Drag to pan. Wheel or pinch to zoom. Tap markers.</p>
+        <p class="map-mobile-hint hidden md:block">Drag to pan. Wheel or pinch to zoom. Tap markers.</p>
       </div>
     </main>
 
