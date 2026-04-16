@@ -7,95 +7,100 @@
       {
         "id": "entity-behaviors",
         "label": "Entity Behaviors",
+        "icon": "images/icon_placeholder.png",
         "spells": [
           {
             "title": "Boss AI Systems",
             "description": "Design complex boss behaviors with multiple phases, attack patterns, and environmental interactions.",
-            "icon": "images/skills/boss-ai.png"
+            "icon": "images/icon_placeholder.png"
           },
           {
             "title": "Entity Components",
             "description": "Create modular, reusable entity components for efficient behavior management and data-driven design.",
-            "icon": "images/skills/components.png"
+            "icon": "images/icon_placeholder.png"
           },
           {
             "title": "AI Navigation",
             "description": "Implement pathfinding, goal-based behaviors, and dynamic decision-making systems for entities.",
-            "icon": "images/skills/navigation.png"
+            "icon": "images/icon_placeholder.png"
           }
         ]
       },
       {
         "id": "scripting-api",
         "label": "Scripting API",
+        "icon": "images/icon_placeholder.png",
         "spells": [
           {
             "title": "GameTest Framework",
             "description": "Leverage Minecraft's Scripting API to create dynamic gameplay mechanics and server-side logic.",
-            "icon": "images/skills/gametest.png"
+            "icon": "images/icon_placeholder.png"
           },
           {
             "title": "Event Handling",
             "description": "Build robust event-driven systems for player actions, world events, and custom triggers.",
-            "icon": "images/skills/events.png"
+            "icon": "images/icon_placeholder.png"
           },
           {
             "title": "Custom Commands",
             "description": "Develop custom slash commands and admin tools using the Scripting API.",
-            "icon": "images/skills/commands.png"
+            "icon": "images/icon_placeholder.png"
           }
         ]
       },
       {
         "id": "items",
         "label": "Items",
+        "icon": "images/icon_placeholder.png",
         "spells": [
           {
             "title": "Custom Item System",
             "description": "Design items with unique properties, custom durability, and special abilities.",
-            "icon": "images/skills/items.png"
+            "icon": "images/icon_placeholder.png"
           },
           {
             "title": "Item Components",
             "description": "Implement modular item components for enchantments, durability, and dynamic behaviors.",
-            "icon": "images/skills/item-components.png"
+            "icon": "images/icon_placeholder.png"
           }
         ]
       },
       {
         "id": "blocks",
         "label": "Blocks",
+        "icon": "images/icon_placeholder.png",
         "spells": [
           {
             "title": "Custom Block States",
             "description": "Create blocks with multiple states, rotations, and interactive properties.",
-            "icon": "images/skills/blocks.png"
+            "icon": "images/icon_placeholder.png"
           },
           {
             "title": "Block Events",
             "description": "Implement on_interact, on_place, and on_destroy events for dynamic block behavior.",
-            "icon": "images/skills/block-events.png"
+            "icon": "images/icon_placeholder.png"
           }
         ]
       },
       {
         "id": "automation",
         "label": "Automation",
+        "icon": "images/icon_placeholder.png",
         "spells": [
           {
             "title": "Regolith Workflow",
             "description": "Build efficient development pipelines with Regolith filters for automated asset processing.",
-            "icon": "images/skills/regolith.png"
+            "icon": "images/icon_placeholder.png"
           },
           {
             "title": "Build Systems",
             "description": "Create automated build scripts, deployment pipelines, and version management systems.",
-            "icon": "images/skills/build.png"
+            "icon": "images/icon_placeholder.png"
           },
           {
             "title": "Testing Automation",
             "description": "Implement automated testing frameworks for behavior validation and regression testing.",
-            "icon": "images/skills/testing.png"
+            "icon": "images/icon_placeholder.png"
           }
         ]
       }
@@ -109,105 +114,110 @@
       {
         "id": "texturing",
         "label": "Texturing",
+        "icon": "images/icon_placeholder.png",
         "spells": [
           {
             "title": "Pixel Art Mastery",
             "description": "Create crisp, consistent pixel art textures with proper color palettes and anti-aliasing techniques.",
-            "icon": "images/skills/pixel.png"
+            "icon": "images/icon_placeholder.png"
           },
           {
             "title": "Texture Atlasing",
             "description": "Optimize texture usage by combining multiple textures into efficient atlases for better performance.",
-            "icon": "images/skills/atlas.png"
+            "icon": "images/icon_placeholder.png"
           },
           {
             "title": "PBR Workflows",
             "description": "Implement physically-based rendering with roughness, metallic, and normal maps for realistic materials.",
-            "icon": "images/skills/pbr.png"
+            "icon": "images/icon_placeholder.png"
           }
         ]
       },
       {
         "id": "3d-modeling",
         "label": "3D Modeling",
+        "icon": "images/icon_placeholder.png",
         "spells": [
           {
             "title": "Blockbench Workflow",
             "description": "Efficient entity and block modeling in Blockbench with proper hierarchy, pivots, and UV mapping.",
-            "icon": "images/skills/blockbench.png"
+            "icon": "images/icon_placeholder.png"
           },
           {
             "title": "Model Optimization",
             "description": "Reduce polygon counts and optimize geometry while maintaining visual quality for performance.",
-            "icon": "images/skills/optimize-model.png"
+            "icon": "images/icon_placeholder.png"
           },
           {
             "title": "Custom Geometry",
             "description": "Design complex custom models with proper bone structure for entities, items, and blocks.",
-            "icon": "images/skills/geometry.png"
+            "icon": "images/icon_placeholder.png"
           }
         ]
       },
       {
         "id": "animation",
         "label": "Animation",
+        "icon": "images/icon_placeholder.png",
         "spells": [
           {
             "title": "Entity Animation",
             "description": "Create smooth character animations with proper weight distribution, timing, and motion flow.",
-            "icon": "images/skills/keyframe.png"
+            "icon": "images/icon_placeholder.png"
           },
           {
             "title": "Math-Based Animation",
             "description": "Use Molang expressions and mathematical functions for procedural and dynamic animations.",
-            "icon": "images/skills/math-anim.png"
+            "icon": "images/icon_placeholder.png"
           },
           {
             "title": "Animation Controllers",
             "description": "Build complex animation state machines with smooth transitions and conditional logic.",
-            "icon": "images/skills/controllers.png"
+            "icon": "images/icon_placeholder.png"
           }
         ]
       },
       {
         "id": "particles",
         "label": "Particles",
+        "icon": "images/icon_placeholder.png",
         "spells": [
           {
             "title": "Particle Systems",
             "description": "Design stunning particle effects with custom behaviors, billboarding, and color gradients.",
-            "icon": "images/skills/particles.png"
+            "icon": "images/icon_placeholder.png"
           },
           {
             "title": "Performance Optimization",
             "description": "Implement efficient particle systems with LOD and culling for high particle counts.",
-            "icon": "images/skills/particle-opt.png"
+            "icon": "images/icon_placeholder.png"
           },
           {
             "title": "Effect Emitters",
             "description": "Create complex particle emitters with custom spawn rules, motion paths, and lifetime control.",
-            "icon": "images/skills/emitters.png"
+            "icon": "images/icon_placeholder.png"
           }
         ]
       },
       {
         "id": "implementation",
         "label": "Implementation",
+        "icon": "images/icon_placeholder.png",
         "spells": [
           {
             "title": "Asset Integration",
             "description": "Integrate 3D models, textures, and animations into resource packs with proper file structure.",
-            "icon": "images/skills/integration.png"
+            "icon": "images/icon_placeholder.png"
           },
           {
             "title": "Render Controllers",
             "description": "Build advanced render controllers for conditional rendering, overlays, and material blending.",
-            "icon": "images/skills/render.png"
+            "icon": "images/icon_placeholder.png"
           },
           {
             "title": "Visual Polish",
             "description": "Apply final touches with proper lighting, effects, and visual feedback for polished results.",
-            "icon": "images/skills/polish.png"
+            "icon": "images/icon_placeholder.png"
           }
         ]
       }

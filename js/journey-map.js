@@ -21,8 +21,8 @@ window.JourneyMap = (function () {
   const MAP_LABEL_DEFAULT_SIZE = 22; // fallback map-region label font size
   const MAP_LABEL_WIDTH_FACTOR = 0.35; // estimated glyph width multiplier for map-label bounds
   const MAP_LABEL_MIN_HALF_W = 40; // minimum half-width used for map-label bounds
-  const AUTO_REGION_PADDING = 180; // extra world-space padding around auto-generated Voronoi regions
-  const AUTO_REGION_ALPHA = 28; // fill alpha for auto-generated regions
+  const REGION_PADDING = 120; // extra world-space padding around Voronoi regions
+  const REGION_ALPHA = 100; // fill alpha for regions
   const PHONE_BREAKPOINT_PX = 768; // viewport breakpoint where phone-specific zoom start is used
   const MIN_BOUNDS_SIZE = 1; // lower bound to avoid divide-by-zero when fitting zoom
   const EDGE_FADE_PX = 20; // fade distance at canvas edges before hard clip
@@ -67,17 +67,9 @@ window.JourneyMap = (function () {
   let nodes = [];
   let roads = [];
   let regions = [];
-  let autoRegions = [];
-  let autoRegionConfig = {
-    enabled: false,
-    padding: AUTO_REGION_PADDING,
-    alpha: AUTO_REGION_ALPHA,
-  };
   let manualVoronoiRegions = [];
   let manualVoronoiConfig = {
     enabled: false,
-    padding: AUTO_REGION_PADDING,
-    alpha: AUTO_REGION_ALPHA,
   };
   let manualRegionSeedPoints = [];
   let mapLabels = [];
@@ -87,6 +79,7 @@ window.JourneyMap = (function () {
   let pendingIcons = [];
   let guildHallDocPromise = null;
   let regionTipRequestToken = 0;
+  let lastMouseScreen = { x: 0, y: 0 };
   let viewW = FALLBACK_VIEW_W;
   let viewH = FALLBACK_VIEW_H;
   let camera = {
@@ -121,9 +114,8 @@ window.JourneyMap = (function () {
   function showTip(node) {
     const wrap = document.getElementById("journey-canvas-wrap");
     const rect = wrap.getBoundingClientRect();
-    const pt = worldToScreen(node.x, node.y);
-    const px = (pt.x / viewW) * rect.width;
-    const py = (pt.y / viewH) * rect.height;
+    const px = (lastMouseScreen.x / viewW) * rect.width;
+    const py = (lastMouseScreen.y / viewH) * rect.height;
 
     const tw = 244,
       th = 180;
@@ -394,68 +386,6 @@ window.JourneyMap = (function () {
     };
   }
 
-  function rebuildAutoRegions() {
-    autoRegions = [];
-    if (!autoRegionConfig.enabled || !nodes.length) return;
-    if (!window.d3?.Delaunay) return;
-
-    const seeds = nodes.map((node) => ({
-      x: node.x,
-      y: node.y,
-      color: normalizeHexColor(node.opts.color),
-    }));
-    if (!seeds.length) return;
-
-    const boundsW = Math.max(contentBounds.maxX - contentBounds.minX, MIN_BOUNDS_SIZE);
-    const boundsH = Math.max(contentBounds.maxY - contentBounds.minY, MIN_BOUNDS_SIZE);
-    const pad = Math.max(0, autoRegionConfig.padding ?? AUTO_REGION_PADDING, boundsW, boundsH);
-    const minX = contentBounds.minX - pad;
-    const minY = contentBounds.minY - pad;
-    const maxX = contentBounds.maxX + pad;
-    const maxY = contentBounds.maxY + pad;
-
-    if (seeds.length === 1) {
-      autoRegions.push({
-        points: [
-          [minX, minY],
-          [maxX, minY],
-          [maxX, maxY],
-          [minX, maxY],
-        ],
-        color: seeds[0].color,
-        alpha: autoRegionConfig.alpha,
-        stroke: false,
-      });
-      return;
-    }
-
-    const delaunay = window.d3.Delaunay.from(
-      seeds,
-      (seed) => seed.x,
-      (seed) => seed.y,
-    );
-    const voronoi = delaunay.voronoi([minX, minY, maxX, maxY]);
-
-    for (let i = 0; i < seeds.length; i++) {
-      const polygon = voronoi.cellPolygon(i);
-      if (!polygon || polygon.length < 3) continue;
-
-      const points = [];
-      for (const [x, y] of polygon) {
-        if (!Number.isFinite(x) || !Number.isFinite(y)) continue;
-        points.push([x, y]);
-      }
-
-      if (points.length < 3) continue;
-      autoRegions.push({
-        points,
-        color: seeds[i].color,
-        alpha: autoRegionConfig.alpha,
-        stroke: false,
-      });
-    }
-  }
-
   function rebuildManualVoronoiRegions() {
     manualVoronoiRegions = [];
     manualRegionSeedPoints = [];
@@ -482,9 +412,7 @@ window.JourneyMap = (function () {
 
     if (!seeds.length) return;
 
-    const boundsW = Math.max(contentBounds.maxX - contentBounds.minX, MIN_BOUNDS_SIZE);
-    const boundsH = Math.max(contentBounds.maxY - contentBounds.minY, MIN_BOUNDS_SIZE);
-    const pad = Math.max(0, manualVoronoiConfig.padding ?? AUTO_REGION_PADDING, boundsW, boundsH);
+    const pad = Math.max(0, REGION_PADDING);
     const minX = contentBounds.minX - pad;
     const minY = contentBounds.minY - pad;
     const maxX = contentBounds.maxX + pad;
@@ -500,7 +428,6 @@ window.JourneyMap = (function () {
         ],
         tooltip: seeds[0].tooltip,
         color: seeds[0].color,
-        alpha: manualVoronoiConfig.alpha,
         stroke: false,
       });
       return;
@@ -528,7 +455,6 @@ window.JourneyMap = (function () {
         points,
         tooltip: seeds[i].tooltip,
         color: seeds[i].color,
-        alpha: manualVoronoiConfig.alpha,
         stroke: false,
       });
     }
@@ -880,7 +806,7 @@ window.JourneyMap = (function () {
 
       const img = imageCache[opts.iconPath];
       if (img) {
-        p.image(img, x - S + 3, y - S + 3, S * 2 - 6, S * 2 - 6);
+        p.image(img, x - S, y - S, S * 2, S * 2);
       } else {
         p.fill(rgb[0], rgb[1], rgb[2], 28);
         p.noStroke();
@@ -920,8 +846,7 @@ window.JourneyMap = (function () {
     const pts = region.points;
     if (!pts || pts.length < 3) return;
     const rgb = hexToRgb(region.color || "#6b7280");
-    const isHoveredRegion = Boolean(hoveredRegion?.color && region.color === hoveredRegion.color);
-    const alph = Math.min((region.alpha ?? 40) + (isHoveredRegion ? 24 : 0), 180);
+    const alph = Math.min(REGION_ALPHA, 255);
 
     p.noStroke();
     p.fill(rgb[0], rgb[1], rgb[2], alph);
@@ -1070,6 +995,8 @@ window.JourneyMap = (function () {
   // -- p5 sketch -----------------------------------------------------------------
 
   function createSketch(userSetup) {
+    userSetup(publicAPI);
+
     new p5(function (p) {
       p5inst = p;
 
@@ -1088,10 +1015,7 @@ window.JourneyMap = (function () {
         p.frameRate(30);
         p.noLoop();
 
-        userSetup(publicAPI);
-
-        recomputeContentBounds();
-        rebuildAutoRegions();
+  recomputeContentBounds();
         rebuildManualVoronoiRegions();
         recomputeContentBounds();
         updateViewSize();
@@ -1156,6 +1080,7 @@ window.JourneyMap = (function () {
 
           if (wasDragPointer && !wasDragPointer.moved) {
             const point = getCanvasPoint(event.clientX, event.clientY);
+            lastMouseScreen = { x: point.x, y: point.y };
             const world = screenToWorld(point.x, point.y);
             const node = findNodeAt(world.x, world.y);
             if (node) {
@@ -1216,7 +1141,6 @@ window.JourneyMap = (function () {
         p.translate(viewW / 2 + camera.panX, viewH / 2 + camera.panY);
         p.scale(camera.zoom);
         for (const r of manualVoronoiRegions) drawRegion(r);
-        for (const r of autoRegions) drawRegion(r);
         for (const r of regions) drawRegion(r);
         drawHoveredRegionOutline();
         if (DEBUG.showLabels) {
@@ -1235,11 +1159,13 @@ window.JourneyMap = (function () {
 
       p.mouseMoved = function () {
         if (dragState || pinchState || activePointers.size) return;
+        lastMouseScreen = { x: p.mouseX, y: p.mouseY };
         const world = screenToWorld(p.mouseX, p.mouseY);
         const node = findNodeAt(world.x, world.y);
         if (node) {
           setHoveredRegion(null);
           setHoveredNode(node);
+          if (hovered) showTip(hovered);
           return;
         }
 
@@ -1278,20 +1204,13 @@ window.JourneyMap = (function () {
     preloadIcon(path) {
       pendingIcons.push({ path });
     },
-    region(points, color, alpha) {
-      regions.push({ points, color: color || "#6b7280", alpha: alpha ?? 40 });
+    region(points, color) {
+      regions.push({ points, color: color || "#6b7280" });
     },
     label(text, x, y, opts = {}) {
       mapLabels.push({ text, x, y, ...opts });
     },
-    autoRegionsByColor(opts = {}) {
-      autoRegionConfig = {
-        ...autoRegionConfig,
-        enabled: true,
-        ...opts,
-      };
-    },
-    defineVoronoiRegions(regionsData = [], opts = {}) {
+    defineVoronoiRegions(regionsData = []) {
       const normalized = [];
       for (const region of regionsData) {
         if (!region || typeof region !== "object") continue;
@@ -1311,7 +1230,6 @@ window.JourneyMap = (function () {
         ...manualVoronoiConfig,
         enabled: true,
         regions: normalized,
-        ...opts,
       };
     },
   };

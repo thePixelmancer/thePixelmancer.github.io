@@ -1,5 +1,6 @@
 JourneyMap.init(function (map) {
   const S = JourneyMap.styles;
+  map.preloadIcon("images/icon_placeholder.png");
 
   // ─── Nodes ───────────────────────────────────────────────────────────────
 
@@ -14,6 +15,7 @@ JourneyMap.init(function (map) {
 
   const freelance = map.majorNode(-140, 350, {
     color: "#4ade80",
+    iconPath: "images/icon_placeholder.png",
     description: "Went out on my own. Bedrock contracts, asset work, learning the ecosystem.",
     label: [
       { text: "Freelance Designer", style: S.title },
@@ -24,6 +26,7 @@ JourneyMap.init(function (map) {
 
   const builder = map.majorNode(110, 330, {
     color: "#4ade80",
+    iconPath: "images/icon_placeholder.png",
     description: "Hands-on build work. Detailed environments and game-ready structures.",
     label: [
       { text: "Minecraft Builder", style: S.title },
@@ -34,6 +37,7 @@ JourneyMap.init(function (map) {
 
   const shapeAsset = map.majorNode(390, 150, {
     color: "#c084fc",
+    iconPath: "images/icon_placeholder.png",
     description: "First studio. Building assets and learning how a real pipeline operates.",
     label: [
       { text: "Asset Creator", style: S.title },
@@ -75,6 +79,7 @@ JourneyMap.init(function (map) {
 
   const tsunamiDev = map.majorNode(210, -150, {
     color: "#60a5fa",
+    iconPath: "images/icon_placeholder.png",
     description: "Boss behaviors, scripting, art pipelines, full-stack add-on work.",
     label: [
       { text: "Asset Creator & Developer", style: S.title },
@@ -96,6 +101,7 @@ JourneyMap.init(function (map) {
 
   const simplyBrilliant = map.majorNode(-140, -350, {
     color: "#fbbf24",
+    iconPath: "images/icon_placeholder.png",
     current: true,
     description: "New chapter, running parallel. Unannounced projects, new creative horizons.",
     label: [

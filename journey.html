@@ -141,18 +141,15 @@
 
           <!-- HTML tooltip (positioned absolute inside map-paper) -->
           <div id="journey-tooltip" class="hidden">
-            <div class="bg-dark-900 border-2 border-dark-700 flex flex-col overflow-hidden" style="box-shadow: var(--shadow-overlay)">
-              <!-- Color accent bar — background filled by JS from node color -->
-              <div id="jt-accent-bar" class="h-0.5 w-full shrink-0"></div>
-              <!-- Header: company + kind badge -->
-              <div class="px-3 pt-3 pb-2 border-b border-dark-700">
-                <span id="jt-company" class="font-title text-xs leading-tight"></span>
-              </div>
+            <div class="bg-dark-800 border-3 border-dark-700 flex flex-col overflow-hidden relative" style="box-shadow: var(--shadow-overlay)">
+              <!-- Color accent line — background filled by JS from node color -->
+              <div id="jt-accent-bar" class="absolute top-0 inset-x-0 h-px pointer-events-none shrink-0"></div>
               <!-- Body -->
-              <div class="px-3 pt-2 pb-3 flex flex-col gap-2">
+              <div class="px-4 pt-5 pb-4 flex flex-col items-center gap-2 text-center">
+                <span id="jt-company" class="font-title text-xs leading-tight"></span>
                 <p id="jt-title" class="font-title text-sm text-gray-100 leading-snug"></p>
                 <p id="jt-desc" class="text-xs text-gray-400 leading-relaxed hidden"></p>
-                <p id="jt-period" class="font-title text-xs text-gray-600 tracking-widest hidden"></p>
+                <p id="jt-period" class="font-title text-xs text-gray-600 tracking-widest hidden mt-auto"></p>
               </div>
             </div>
           </div>

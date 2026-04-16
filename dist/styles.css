@@ -286,6 +286,9 @@
   .inset-0 {
     inset: calc(var(--spacing) * 0);
   }
+  .inset-x-0 {
+    inset-inline: calc(var(--spacing) * 0);
+  }
   .top-0 {
     top: calc(var(--spacing) * 0);
   }
@@ -448,9 +451,6 @@
   .size-30 {
     width: calc(var(--spacing) * 30);
     height: calc(var(--spacing) * 30);
-  }
-  .h-0\.5 {
-    height: calc(var(--spacing) * 0.5);
   }
   .h-1\.5 {
     height: calc(var(--spacing) * 1.5);
@@ -1199,8 +1199,8 @@
   .pt-2 {
     padding-top: calc(var(--spacing) * 2);
   }
-  .pt-3 {
-    padding-top: calc(var(--spacing) * 3);
+  .pt-5 {
+    padding-top: calc(var(--spacing) * 5);
   }
   .pb-1 {
     padding-bottom: calc(var(--spacing) * 1);
@@ -1208,8 +1208,8 @@
   .pb-2 {
     padding-bottom: calc(var(--spacing) * 2);
   }
-  .pb-3 {
-    padding-bottom: calc(var(--spacing) * 3);
+  .pb-4 {
+    padding-bottom: calc(var(--spacing) * 4);
   }
   .pb-6 {
     padding-bottom: calc(var(--spacing) * 6);
@@ -2125,7 +2125,7 @@
   .guild-card {
     --guild-glow-soft: rgba(156, 163, 175, 0.08);
     --guild-glow-strong: rgba(156, 163, 175, 0.3);
-    --guild-line: rgba(156, 163, 175, 0.6);
+    --guild-glow-hover: rgba(156, 163, 175, 0.22);
     --guild-title: rgb(209, 213, 219);
     --guild-role: rgb(156, 163, 175);
     position: relative;
@@ -2140,99 +2140,18 @@
     background-color: var(--color-dark-800);
     padding: calc(var(--spacing) * 8);
     text-decoration-line: none;
-    transition-property: transform, translate, scale, rotate;
+    transition-property: all;
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--default-transition-duration));
     --tw-duration: 150ms;
     transition-duration: 150ms;
     --tw-ease: var(--ease-in-out);
     transition-timing-function: var(--ease-in-out);
-    &:hover {
-      @media (hover: hover) {
-        --tw-translate-y: calc(var(--spacing) * -1);
-        translate: var(--tw-translate-x) var(--tw-translate-y);
-      }
-    }
     box-shadow: var(--shadow-sharp), 0 0 30px var(--guild-glow-soft);
   }
-  .guild-card-line {
-    pointer-events: none;
-    position: absolute;
-    inset-inline: calc(var(--spacing) * 0);
-    top: calc(var(--spacing) * 0);
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--guild-line), transparent);
-  }
-  .guild-card-icon {
-    display: flex;
-    height: calc(var(--spacing) * 20);
-    width: calc(var(--spacing) * 20);
-    align-items: center;
-    justify-content: center;
-    border-style: var(--tw-border-style);
-    border-width: 4px;
-    border-color: var(--color-dark-700);
-    background-color: var(--color-dark-900);
-    box-shadow: 0 0 20px var(--guild-glow-strong);
-  }
-  .guild-card-title {
-    text-align: center;
-    font-family: var(--font-title);
-    font-size: var(--text-base);
-    line-height: var(--tw-leading, var(--text-base--line-height));
-    color: var(--guild-title);
-  }
-  .guild-card-role {
-    display: inline-flex;
-    align-items: center;
-    border-style: var(--tw-border-style);
-    border-width: 1px;
-    background-color: color-mix(in srgb, #fff 8%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-white) 8%, transparent);
-    }
-    padding-inline: calc(var(--spacing) * 2);
-    padding-block: calc(var(--spacing) * 1);
-    font-family: var(--font-title);
-    font-size: var(--text-xs);
-    line-height: var(--tw-leading, var(--text-xs--line-height));
-    text-transform: uppercase;
-    color: var(--guild-role);
-  }
-  .guild-card--blue {
-    --guild-glow-soft: rgba(96, 165, 250, 0.08);
-    --guild-glow-strong: rgba(96, 165, 250, 0.3);
-    --guild-line: rgba(96, 165, 250, 0.6);
-    --guild-title: rgb(147, 197, 253);
-    --guild-role: rgb(96, 165, 250);
-  }
-  .guild-card--yellow {
-    --guild-glow-soft: rgba(245, 158, 11, 0.08);
-    --guild-glow-strong: rgba(245, 158, 11, 0.3);
-    --guild-line: rgba(245, 158, 11, 0.6);
-    --guild-title: rgb(253, 224, 71);
-    --guild-role: rgb(250, 204, 21);
-  }
-  .guild-card--purple {
-    --guild-glow-soft: rgba(192, 132, 252, 0.08);
-    --guild-glow-strong: rgba(192, 132, 252, 0.3);
-    --guild-line: rgba(192, 132, 252, 0.6);
-    --guild-title: rgb(216, 180, 254);
-    --guild-role: rgb(192, 132, 252);
-  }
-  .guild-card--green {
-    --guild-glow-soft: rgba(74, 222, 128, 0.08);
-    --guild-glow-strong: rgba(74, 222, 128, 0.3);
-    --guild-line: rgba(74, 222, 128, 0.6);
-    --guild-title: rgb(134, 239, 172);
-    --guild-role: rgb(74, 222, 128);
-  }
-  .guild-card--orange {
-    --guild-glow-soft: rgba(251, 146, 60, 0.08);
-    --guild-glow-strong: rgba(251, 146, 60, 0.3);
-    --guild-line: rgba(251, 146, 60, 0.6);
-    --guild-title: rgb(253, 186, 116);
-    --guild-role: rgb(251, 146, 60);
+  .guild-card:hover {
+    transform: scale(1.04);
+    box-shadow: var(--shadow-sharp), 0 0 0 2px var(--guild-glow-hover), 0 0 40px var(--guild-glow-hover);
   }
   .card-paper {
     border: 20px solid;
