@@ -16,7 +16,7 @@ JourneyMap.init(function (map) {
   const freelance = map.majorNode(-140, 350, {
     color: "#4ade80",
     iconPath: "images/icon_placeholder.png",
-    description: "Went out on my own. Bedrock contracts, asset work, learning the ecosystem.",
+    description: "Started professional freelance work across design, web, and Minecraft content production.",
     label: [
       { text: "Freelance Designer", style: S.title },
       { text: "Independent", style: S.green },
@@ -27,49 +27,49 @@ JourneyMap.init(function (map) {
   const builder = map.majorNode(110, 330, {
     color: "#4ade80",
     iconPath: "images/icon_placeholder.png",
-    description: "Hands-on build work. Detailed environments and game-ready structures.",
+    description: "Moved from building toward 3D modeling and production-ready asset workflows.",
     label: [
       { text: "Minecraft Builder", style: S.title },
       { text: "Independent", style: S.green },
-      { text: "2018 – 2019", style: S.period },
+      { text: "2018", style: S.period },
     ],
   });
 
   const shapeAsset = map.majorNode(390, 150, {
     color: "#c084fc",
     iconPath: "images/icon_placeholder.png",
-    description: "First studio. Building assets and learning how a real pipeline operates.",
+    description: "Joined Shapescape as an Asset Creator and began shipping marketplace content at studio scale.",
     label: [
       { text: "Asset Creator", style: S.title },
       { text: "Shapescape", style: S.purple },
-      { text: "2019 – 2020", style: S.period },
+      { text: "2018 - 2019", style: S.period },
     ],
   });
 
   const shapeLead = map.minorNode(210, 90, {
     color: "#c084fc",
-    description: "Promoted. Stepped up into a leadership role within the studio.",
+    description: "Promoted to Branch Lead, overseeing art quality and advising project direction. Also contributed dragon work to DragonFire for Spectral Studios via Cubecraft licensing.",
     label: [
       { text: "Branch Lead", style: S.title },
       { text: "Shapescape", style: S.purple },
-      { text: "2020 – 2021", style: S.period },
+      { text: "2019 - 2021", style: S.period },
     ],
   });
 
   const shapeDirector = map.minorNode(10, 50, {
     color: "#c084fc",
-    description: "Art direction across projects — style guides, reviews, visual identity.",
+    description: "Briefly served as Art Director, leading style decisions and visual consistency.",
     label: [
       { text: "Art Director", style: S.title },
       { text: "Shapescape", style: S.purple },
-      { text: "2021 – 2022", style: S.period },
+      { text: "2021", style: S.period },
     ],
   });
 
   const pixelmancer = map.minorNode(-90, -100, {
     color: "#4ade80",
     current: true,
-    description: "Running my own brand. Creative direction, client work, and personal projects.",
+    description: "Running my own creative brand while shipping client work, original add-ons, and creator tooling.",
     label: [
       { text: "Art Director", style: S.title },
       { text: "Independent", style: S.green },
@@ -80,7 +80,7 @@ JourneyMap.init(function (map) {
   const tsunamiDev = map.majorNode(210, -150, {
     color: "#60a5fa",
     iconPath: "images/icon_placeholder.png",
-    description: "Boss behaviors, scripting, art pipelines, full-stack add-on work.",
+    description: "Joined Tsunami as Developer and Artist, delivering systems, assets, and gameplay content.",
     label: [
       { text: "Asset Creator & Developer", style: S.title },
       { text: "Tsunami Studios", style: S.blue },
@@ -91,7 +91,7 @@ JourneyMap.init(function (map) {
   const tsunamiLead = map.minorNode(160, -350, {
     color: "#60a5fa",
     current: true,
-    description: "Promoted to lead. Steering technical and creative direction.",
+    description: "Promoted to Project Lead, guiding technical execution and creative direction.",
     label: [
       { text: "Project Lead", style: S.title },
       { text: "Tsunami Studios", style: S.blue },
@@ -103,11 +103,11 @@ JourneyMap.init(function (map) {
     color: "#fbbf24",
     iconPath: "images/icon_placeholder.png",
     current: true,
-    description: "New chapter, running parallel. Unannounced projects, new creative horizons.",
+    description: "Collaborating on vanilla+ marketplace projects with a strong base-game quality bar.",
     label: [
       { text: "Asset Creator & Developer", style: S.title },
       { text: "Simply Brilliant", style: S.amber },
-      { text: "2023 – Present", style: S.period },
+      { text: "Dec 2025 - Present", style: S.period },
     ],
   });
 
@@ -115,7 +115,7 @@ JourneyMap.init(function (map) {
     [
       {
         color: "#000000",
-        tooltip: "guild-education",
+        tooltip: "guild-java-modding",
         points: [[-500, 350]],
       },
       {
