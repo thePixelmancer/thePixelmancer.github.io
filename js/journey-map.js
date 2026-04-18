@@ -27,6 +27,7 @@ window.JourneyMap = (function () {
   const MIN_BOUNDS_SIZE = 1; // lower bound to avoid divide-by-zero when fitting zoom
   const EDGE_FADE_PX = 20; // fade distance at canvas edges before hard clip
   const DEBUG_REGION_POINT_SCREEN_RADIUS = 5; // on-screen radius for region debug dots
+  const DEV_REGION_POINT_SCREEN_RADIUS = 9; // on-screen radius for editable dev Voronoi seeds
 
   const DEBUG = {
     showNodes: true,
@@ -46,6 +47,9 @@ window.JourneyMap = (function () {
   const ROAD_INNER_W = 3; // road inner stroke width
   const ROAD_OUTLINE_COLOR = "#1a1408"; // road outline color
   const ROAD_INNER_DASH_END_INSET = 0.9; // shorten each inner dash so outline is visible on dash ends
+  const ROAD_DOT_SPACING = 18; // distance between dotted-road dots
+  const ROAD_DOT_OUTER_R = 3.2; // outer dot radius for dotted roads
+  const ROAD_DOT_INNER_R = 2.1; // inner dot radius for dotted roads
 
   // -- Text styles ---------------------------------------------------------------
   // Used in node label arrays: { text, style } where style is one of these keys.
@@ -75,6 +79,7 @@ window.JourneyMap = (function () {
   let mapLabels = [];
   let hovered = null;
   let hoveredRegion = null;
+  let hoveredRegionSeedPoint = null;
   let imageCache = {};
   let pendingIcons = [];
   let guildHallDocPromise = null;
@@ -93,6 +98,12 @@ window.JourneyMap = (function () {
   let dragState = null;
   let pinchState = null;
   let wrapResizeObserver = null;
+  let devLayout = {
+    enabled: false,
+    showGuide: true,
+    onExport: null,
+  };
+  let devDragState = null;
   let contentBounds = {
     minX: -FALLBACK_WORLD_W / 2,
     minY: -FALLBACK_WORLD_H / 2,
@@ -278,9 +289,24 @@ window.JourneyMap = (function () {
       if (!region.points?.length) continue;
       if (!pointInPolygon(x, y, region.points)) continue;
       return {
+        id: region.id,
         color: region.color,
         tooltip: region.tooltip,
       };
+    }
+    return null;
+  }
+
+  function getRegionSeedHitRadius() {
+    return Math.max(DEV_REGION_POINT_SCREEN_RADIUS / camera.zoom, 1.5 / camera.zoom);
+  }
+
+  function findRegionSeedPointAt(x, y) {
+    if (!devLayout.enabled) return null;
+    const hitRadius = getRegionSeedHitRadius();
+    for (let index = manualRegionSeedPoints.length - 1; index >= 0; index--) {
+      const point = manualRegionSeedPoints[index];
+      if (Math.hypot(point.x - x, point.y - y) <= hitRadius) return point;
     }
     return null;
   }
@@ -300,6 +326,83 @@ window.JourneyMap = (function () {
 
     const changed = prevColor !== nextColor;
     if (changed && p5inst && !p5inst.isLooping()) p5inst.redraw();
+  }
+
+  function refreshLayoutState() {
+    recomputeContentBounds();
+    rebuildManualVoronoiRegions();
+    clampCamera();
+  }
+
+  function setRegionSeedPointHover(point) {
+    if (point === hoveredRegionSeedPoint) return;
+    hoveredRegionSeedPoint = point;
+    if (point) updateCursor("pointer");
+    else if (!hovered && !hoveredRegion) updateCursor(activePointers.size ? "grabbing" : "grab");
+    if (p5inst && !p5inst.isLooping()) p5inst.redraw();
+  }
+
+  function updateRegionSeedPoint(seedPoint, x, y) {
+    const region = manualVoronoiConfig.regions?.find((entry) => entry.id === seedPoint.regionId);
+    if (!region || !Array.isArray(region.points) || seedPoint.pointIndex < 0 || seedPoint.pointIndex >= region.points.length) {
+      return null;
+    }
+
+    region.points[seedPoint.pointIndex] = [x, y];
+    refreshLayoutState();
+    const updated = manualRegionSeedPoints.find(
+      (point) => point.regionId === seedPoint.regionId && point.pointIndex === seedPoint.pointIndex,
+    );
+    if (updated) hoveredRegionSeedPoint = updated;
+    return updated || null;
+  }
+
+  function addRegionSeedPoint(regionId, x, y) {
+    const region = manualVoronoiConfig.regions?.find((entry) => entry.id === regionId);
+    if (!region) return null;
+    if (!Array.isArray(region.points)) region.points = [];
+    region.points.push([x, y]);
+    refreshLayoutState();
+    return manualRegionSeedPoints.find(
+      (point) => point.regionId === regionId && point.pointIndex === region.points.length - 1,
+    );
+  }
+
+  function removeRegionSeedPoint(seedPoint) {
+    const region = manualVoronoiConfig.regions?.find((entry) => entry.id === seedPoint.regionId);
+    if (!region || !Array.isArray(region.points) || seedPoint.pointIndex < 0 || seedPoint.pointIndex >= region.points.length) {
+      return false;
+    }
+
+    region.points.splice(seedPoint.pointIndex, 1);
+    refreshLayoutState();
+    hoveredRegionSeedPoint = null;
+    return true;
+  }
+
+  function exportNodePositions() {
+    const payload = {
+      nodes: nodes.map((node) => ({
+        id: node.opts.devKey || node.opts.id || `${node.kind}-${nodes.indexOf(node) + 1}`,
+        x: Math.round(node.x),
+        y: Math.round(node.y),
+        kind: node.kind,
+      })),
+      regions: (manualVoronoiConfig.regions || []).map((region) => ({
+        id: region.id || region.tooltip || region.color,
+        color: region.color,
+        tooltip: region.tooltip,
+        points: (region.points || []).map((point) => [Math.round(Number(point[0]) || 0), Math.round(Number(point[1]) || 0)]),
+      })),
+    };
+
+    if (typeof devLayout.onExport === "function") {
+      devLayout.onExport(payload);
+      return payload;
+    }
+
+    console.log("[JourneyMap] Node positions", payload);
+    return payload;
   }
 
   // -- Utilities -----------------------------------------------------------------
@@ -395,17 +498,26 @@ window.JourneyMap = (function () {
     const seeds = [];
     for (const region of manualVoronoiConfig.regions || []) {
       const color = normalizeHexColor(region.color);
+      const regionId = typeof region.id === "string" && region.id.trim() ? region.id.trim() : region.tooltip || color;
       for (const pt of region.points || []) {
         if (!Array.isArray(pt) || pt.length < 2) continue;
         const x = Number(pt[0]);
         const y = Number(pt[1]);
         if (!Number.isFinite(x) || !Number.isFinite(y)) continue;
-        manualRegionSeedPoints.push({ x, y, color });
+        manualRegionSeedPoints.push({
+          x,
+          y,
+          color,
+          tooltip: region.tooltip,
+          regionId,
+          pointIndex: seeds.filter((seed) => seed.regionId === regionId).length,
+        });
         seeds.push({
           x,
           y,
           tooltip: region.tooltip,
           color,
+          regionId,
         });
       }
     }
@@ -420,6 +532,7 @@ window.JourneyMap = (function () {
 
     if (seeds.length === 1) {
       manualVoronoiRegions.push({
+        id: seeds[0].regionId,
         points: [
           [minX, minY],
           [maxX, minY],
@@ -452,6 +565,7 @@ window.JourneyMap = (function () {
       if (points.length < 3) continue;
 
       manualVoronoiRegions.push({
+        id: seeds[i].regionId,
         points,
         tooltip: seeds[i].tooltip,
         color: seeds[i].color,
@@ -624,10 +738,37 @@ window.JourneyMap = (function () {
     p.pop();
   }
 
+  function dottedLine(x1, y1, x2, y2, colorStr, radius, spacing = ROAD_DOT_SPACING) {
+    const p = p5inst;
+    const dx = x2 - x1;
+    const dy = y2 - y1;
+    const len = Math.sqrt(dx * dx + dy * dy);
+    if (len < 1) return;
+
+    const ux = dx / len;
+    const uy = dy / len;
+    const steps = Math.max(1, Math.floor(len / spacing));
+
+    p.push();
+    p.noStroke();
+    p.fill(colorStr);
+    for (let index = 0; index <= steps; index++) {
+      const distance = Math.min(index * spacing, len);
+      p.circle(x1 + ux * distance, y1 + uy * distance, radius * 2);
+    }
+    p.pop();
+  }
+
   // -- Road ---------------------------------------------------------------------
 
   function drawRoad(road) {
-    const color = road.color || road.b.opts.color || "#6b7280";
+    const color = road.color || road.a.opts.color || "#6b7280";
+    if (road.style === "dotted") {
+      dottedLine(road.a.x, road.a.y, road.b.x, road.b.y, ROAD_OUTLINE_COLOR, ROAD_DOT_OUTER_R);
+      dottedLine(road.a.x, road.a.y, road.b.x, road.b.y, color, ROAD_DOT_INNER_R);
+      return;
+    }
+
     dashedLine(road.a.x, road.a.y, road.b.x, road.b.y, ROAD_OUTLINE_COLOR, ROAD_OUTLINE_W, 0);
     dashedLine(road.a.x, road.a.y, road.b.x, road.b.y, color, ROAD_INNER_W, ROAD_INNER_DASH_END_INSET);
   }
@@ -857,10 +998,10 @@ window.JourneyMap = (function () {
     const isHoveredColor = hoveredRegion?.color === region.color;
     const alph = Math.min(REGION_ALPHA, 255);
 
-    if (!isHoveredColor) return;
+    if (!isHoveredColor && !devLayout.enabled) return;
 
     const fillRgb = brightenRgb(rgb, 0.2);
-    const fillAlpha = Math.min(alph + 44, 190);
+    const fillAlpha = devLayout.enabled && !isHoveredColor ? 32 : Math.min(alph + 44, 190);
     p.noStroke();
     p.fill(fillRgb[0], fillRgb[1], fillRgb[2], fillAlpha);
     p.beginShape();
@@ -963,23 +1104,52 @@ window.JourneyMap = (function () {
   }
 
   function drawRegionDebugPoints() {
-    if (!DEBUG.showRegionPoints || !manualRegionSeedPoints.length) return;
+    if ((!DEBUG.showRegionPoints && !devLayout.enabled) || !manualRegionSeedPoints.length) return;
     const p = p5inst;
     if (!p) return;
 
-    const radius = Math.max(DEBUG_REGION_POINT_SCREEN_RADIUS / camera.zoom, 1 / camera.zoom);
+    const radius = devLayout.enabled ? getRegionSeedHitRadius() : Math.max(DEBUG_REGION_POINT_SCREEN_RADIUS / camera.zoom, 1 / camera.zoom);
 
     p.push();
     for (const point of manualRegionSeedPoints) {
       const rgb = hexToRgb(point.color || "#9ca3af");
+      const isHovered = hoveredRegionSeedPoint?.regionId === point.regionId && hoveredRegionSeedPoint?.pointIndex === point.pointIndex;
       p.noStroke();
-      p.fill(rgb[0], rgb[1], rgb[2], 240);
+      p.fill(rgb[0], rgb[1], rgb[2], devLayout.enabled ? 225 : 240);
       p.circle(point.x, point.y, radius * 2);
       p.noFill();
-      p.stroke(0, 0, 0, 180);
+      p.stroke(0, 0, 0, 190);
       p.strokeWeight(Math.max(1 / camera.zoom, 0.75 / camera.zoom));
       p.circle(point.x, point.y, radius * 2);
+
+      if (devLayout.enabled) {
+        p.stroke(255, 255, 255, isHovered ? 255 : 140);
+        p.strokeWeight(Math.max(2 / camera.zoom, 1.25 / camera.zoom));
+        p.line(point.x - radius * 0.45, point.y, point.x + radius * 0.45, point.y);
+        p.line(point.x, point.y - radius * 0.45, point.x, point.y + radius * 0.45);
+      }
     }
+    p.pop();
+  }
+
+  function drawVoronoiDevCells() {
+    if (!devLayout.enabled || !manualVoronoiRegions.length) return;
+    const p = p5inst;
+    if (!p) return;
+
+    p.push();
+    p.noFill();
+    p.strokeWeight(Math.max(1.1 / camera.zoom, 0.8 / camera.zoom));
+
+    for (const region of manualVoronoiRegions) {
+      if (!region.points?.length) continue;
+      const rgb = hexToRgb(region.color || "#9ca3af");
+      p.stroke(rgb[0], rgb[1], rgb[2], 120);
+      p.beginShape();
+      for (const [x, y] of region.points) p.vertex(x, y);
+      p.endShape(p.CLOSE);
+    }
+
     p.pop();
   }
 
@@ -1074,6 +1244,72 @@ window.JourneyMap = (function () {
           syncPointer(event.pointerId, event);
           canvasEl.setPointerCapture(event.pointerId);
 
+          if (devLayout.enabled && activePointers.size === 1) {
+            const point = getCanvasPoint(event.clientX, event.clientY);
+            const world = screenToWorld(point.x, point.y);
+            const regionSeedPoint = findRegionSeedPointAt(world.x, world.y);
+            if (event.shiftKey && regionSeedPoint) {
+              const removed = removeRegionSeedPoint(regionSeedPoint);
+              setHoveredNode(null);
+              setRegionSeedPointHover(null);
+              setHoveredRegion(findRegionAt(world.x, world.y), point);
+              if (removed && p5inst && !p5inst.isLooping()) p5inst.redraw();
+              return;
+            }
+
+            if (regionSeedPoint) {
+              devDragState = {
+                type: "region-seed",
+                pointerId: event.pointerId,
+                regionSeedPoint,
+                offsetX: world.x - regionSeedPoint.x,
+                offsetY: world.y - regionSeedPoint.y,
+              };
+              setHoveredNode(null);
+              setHoveredRegion({ id: regionSeedPoint.regionId, color: regionSeedPoint.color, tooltip: regionSeedPoint.tooltip });
+              setRegionSeedPointHover(regionSeedPoint);
+              updateCursor("grabbing");
+              return;
+            }
+
+            if (event.shiftKey) {
+              const targetRegion = findRegionAt(world.x, world.y);
+              if (targetRegion?.id) {
+                const addedPoint = addRegionSeedPoint(targetRegion.id, world.x, world.y);
+                if (addedPoint) {
+                  devDragState = {
+                    type: "region-seed",
+                    pointerId: event.pointerId,
+                    regionSeedPoint: addedPoint,
+                    offsetX: 0,
+                    offsetY: 0,
+                  };
+                  setHoveredNode(null);
+                  setHoveredRegion(targetRegion);
+                  setRegionSeedPointHover(addedPoint);
+                  updateCursor("grabbing");
+                  if (p5inst && !p5inst.isLooping()) p5inst.redraw();
+                  return;
+                }
+              }
+            }
+
+            const node = findNodeAt(world.x, world.y);
+            if (node) {
+              devDragState = {
+                type: "node",
+                pointerId: event.pointerId,
+                node,
+                offsetX: world.x - node.x,
+                offsetY: world.y - node.y,
+              };
+              setHoveredRegion(null);
+              setHoveredNode(node);
+              updateCursor("grabbing");
+              return;
+            }
+          }
+
           if (activePointers.size === 1) {
             dragState = {
               pointerId: event.pointerId,
@@ -1096,6 +1332,29 @@ window.JourneyMap = (function () {
         canvasEl.addEventListener("pointermove", (event) => {
           if (activePointers.has(event.pointerId)) syncPointer(event.pointerId, event);
 
+          if (devDragState && devDragState.pointerId === event.pointerId) {
+            const point = getCanvasPoint(event.clientX, event.clientY);
+            const world = screenToWorld(point.x, point.y);
+            if (devDragState.type === "region-seed") {
+              const updatedPoint = updateRegionSeedPoint(
+                devDragState.regionSeedPoint,
+                world.x - devDragState.offsetX,
+                world.y - devDragState.offsetY,
+              );
+              if (updatedPoint) {
+                devDragState.regionSeedPoint = updatedPoint;
+                setRegionSeedPointHover(updatedPoint);
+              }
+            } else {
+              devDragState.node.x = world.x - devDragState.offsetX;
+              devDragState.node.y = world.y - devDragState.offsetY;
+              refreshLayoutState();
+              if (hovered === devDragState.node) showTip(devDragState.node);
+            }
+            if (p5inst && !p5inst.isLooping()) p5inst.redraw();
+            return;
+          }
+
           if (pinchState && activePointers.size >= 2) {
             applyPinch();
             return;
@@ -1113,6 +1372,17 @@ window.JourneyMap = (function () {
         });
 
         const finishPointer = (event) => {
+          if (devDragState && devDragState.pointerId === event.pointerId) {
+            activePointers.delete(event.pointerId);
+            devDragState = null;
+            if (!activePointers.size) {
+              setRegionSeedPointHover(null);
+            }
+            if (!activePointers.size) updateCursor("grab");
+            if (p5inst && !p5inst.isLooping()) p5inst.redraw();
+            return;
+          }
+
           const wasDragPointer = dragState && dragState.pointerId === event.pointerId ? dragState : null;
           activePointers.delete(event.pointerId);
 
@@ -1158,6 +1428,17 @@ window.JourneyMap = (function () {
 
         updateCursor("grab");
 
+        window.addEventListener("keydown", (event) => {
+          if (!devLayout.enabled) return;
+          const tag = (event.target && event.target.tagName ? event.target.tagName : "").toLowerCase();
+          if (tag === "input" || tag === "textarea") return;
+
+          if (event.code === "KeyP") {
+            event.preventDefault();
+            exportNodePositions();
+          }
+        });
+
         if (window.ResizeObserver) {
           wrapResizeObserver?.disconnect();
           wrapResizeObserver = new ResizeObserver(() => {
@@ -1186,6 +1467,7 @@ window.JourneyMap = (function () {
         p.scale(camera.zoom);
         for (const r of manualVoronoiRegions) drawRegion(r);
         for (const r of regions) drawRegion(r);
+        drawVoronoiDevCells();
         drawCollectiveRegionOutlines();
         drawHoveredRegionOutline();
         if (DEBUG.showLabels) {
@@ -1206,6 +1488,15 @@ window.JourneyMap = (function () {
         if (dragState || pinchState || activePointers.size) return;
         lastMouseScreen = { x: p.mouseX, y: p.mouseY };
         const world = screenToWorld(p.mouseX, p.mouseY);
+        const regionSeedPoint = findRegionSeedPointAt(world.x, world.y);
+        if (regionSeedPoint) {
+          setHoveredNode(null);
+          setHoveredRegion({ id: regionSeedPoint.regionId, color: regionSeedPoint.color, tooltip: regionSeedPoint.tooltip }, { x: p.mouseX, y: p.mouseY });
+          setRegionSeedPointHover(regionSeedPoint);
+          return;
+        }
+
+        setRegionSeedPointHover(null);
         const node = findNodeAt(world.x, world.y);
         if (node) {
           setHoveredRegion(null);
@@ -1221,6 +1512,7 @@ window.JourneyMap = (function () {
       p.mouseExited = function () {
         setHoveredNode(null);
         setHoveredRegion(null);
+        setRegionSeedPointHover(null);
       };
     });
   }
@@ -1244,7 +1536,10 @@ window.JourneyMap = (function () {
       return node;
     },
     road(nodeA, nodeB, color) {
-      roads.push({ a: nodeA, b: nodeB, color: color || null });
+      roads.push({ a: nodeA, b: nodeB, color: color || null, style: "regular" });
+    },
+    dottedRoad(nodeA, nodeB, color) {
+      roads.push({ a: nodeA, b: nodeB, color: color || null, style: "dotted" });
     },
     preloadIcon(path) {
       pendingIcons.push({ path });
@@ -1265,6 +1560,7 @@ window.JourneyMap = (function () {
         const tooltipData = typeof region.tooltip === "string" ? region.tooltip : "";
 
         normalized.push({
+          id: typeof region.id === "string" && region.id.trim() ? region.id.trim() : tooltipData || normalizedColor,
           color: normalizedColor,
           tooltip: tooltipData,
           points: Array.isArray(region.points) ? region.points : [],
@@ -1277,6 +1573,15 @@ window.JourneyMap = (function () {
         regions: normalized,
       };
     },
+    enableDevLayout(config = {}) {
+      devLayout = {
+        ...devLayout,
+        enabled: true,
+        ...config,
+      };
+      console.info("[JourneyMap] Dev layout mode enabled. Drag nodes and region seeds. Shift+click a seed to delete it or a region to add one. Press P to print layout data.");
+    },
+    exportNodePositions,
   };
 
   return {
