@@ -55,7 +55,7 @@ Answer these directly under each question so we can populate the website accurat
 5. What contact email should be publicly shown?
    angelo.polyart@gmail.com
 6. What are your official links (GitHub, Discord, X/Twitter, LinkedIn, website)?
-   angelo.polyart@gmail.com, thePixelmancer on GitHub, pixelmancer_ on Discord
+   angelo.polyart@gmail.com, thePixelmancer on GitHub, pixelmancer\_ on Discord
 7. Should the site show "Available for work" right now? If yes, what kind of work are you accepting?
    Keep the label as is.
 
@@ -138,7 +138,6 @@ Answer these directly under each question so we can populate the website accurat
    Projects led
    Years of experience
    Marketplace releases
-   Team size led (if applicable)
 2. Any notable achievements, awards, or milestones to highlight?
 3. Any clients/partners you can publicly name?
 
@@ -151,10 +150,10 @@ Answer these directly under each question so we can populate the website accurat
 ### 8) Brand voice and writing style
 
 1. Which tone do you want across the site?
-   Formal professional
-   Creative RPG/lore flavored
+
    Hybrid (professional with light RPG flavor)
-2. Do you prefer first-person ("I build...") or third-person ("Angelo builds...") copy?
+2. Do you prefer first-person ("I build...") or third-person ("Angelo builds...")
+1s person
 3. Any words/phrases you want avoided?
 
 ### 9) Legal/privacy/content boundaries
@@ -169,6 +168,7 @@ Answer these directly under each question so we can populate the website accurat
    Minecraft / Bedrock / add-on / Add-On / studio names
 2. Should we keep dates precise (month/year) or broad (year only)?
 3. Is there a target audience priority?
+   Publishing Studios, Marketplace Directors,
    Recruiters
    Studio leads
    Clients

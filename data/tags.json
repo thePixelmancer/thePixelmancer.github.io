@@ -1,0 +1,20 @@
+{
+  "tags": [
+    { "name": "add-on", "color": "purple" },
+    { "name": "artist", "color": "fuchsia" },
+    { "name": "bedrock", "color": "green" },
+    { "name": "canvas", "color": "blue" },
+    { "name": "dev", "color": "blue" },
+    { "name": "developer", "color": "blue" },
+    { "name": "javascript", "color": "amber" },
+    { "name": "lead", "color": "amber" },
+    { "name": "library", "color": "purple" },
+    { "name": "project lead", "color": "amber" },
+    { "name": "python", "color": "blue" },
+    { "name": "regolith", "color": "purple" },
+    { "name": "tool", "color": "purple" },
+    { "name": "typescript", "color": "blue" },
+    { "name": "vs code ext", "color": "blue" },
+    { "name": "web app", "color": "blue" }
+  ]
+}

@@ -1,371 +1,566 @@
-[
-  {
-    "title": "Into The Wild",
-    "alt": "Wildlife and ecosystem expansion for Bedrock",
-    "description": "A world-building add-on focused on creatures, behavior, and exploration flow. Built to feel natural inside core Minecraft gameplay.",
-    "image": "https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/e4f8d267-23db-4e41-84a9-6eec54d59c00/IntoTheWild_Thumbnail_0.jpg",
-    "type": "Add-On",
-    "project": "Tsunami Studios",
-    "role": "Developer & Artist",
-    "roleType": "dev",
-    "featured": "superhero",
-    "status": "completed",
-    "date": "",
-    "link": "https://www.minecraft.net/en-us/marketplace/pdp/tsunami-studios/into-the-wild-add--on/aa25d7d4-eee4-4ce9-974a-21c07a7e2db2"
-  },
-  {
-    "title": "Be a Mob",
-    "alt": "Play as creatures with custom systems and interactions",
-    "description": "Gameplay-focused transformation project with custom systems and creature-specific interactions.",
-    "image": "https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/27d6f790-d382-491c-a7c1-2a86474b3925/BeAMob_Thumbnail_0.jpg",
-    "type": "Add-On",
-    "project": "Tsunami Studios",
-    "role": "Developer & Artist",
-    "roleType": "dev",
-    "featured": "hero",
-    "status": "completed",
-    "date": "",
-    "link": "https://www.minecraft.net/en-us/marketplace/pdp/tsunami-studios/be-a-mob-add--on/46a67fb6-ba75-42cf-a877-cfe14ef03761"
-  },
-  {
-    "title": "More TNT",
-    "alt": "Explosive variants with custom effects and behaviors",
-    "description": "A high-energy content pack with multiple TNT variants, custom behaviors, and polished visual feedback.",
-    "image": "https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/be3c2cc1-8426-4486-914c-13aa4b0f11ef/MoreTNT_Thumbnail_0.jpg",
-    "type": "Add-On",
-    "project": "Tsunami Studios",
-    "role": "Developer & Artist",
-    "roleType": "dev",
-    "status": "completed",
-    "date": "",
-    "link": "https://www.minecraft.net/en-us/marketplace/pdp/tsunami-studios/more-tnt!-add--on/053bbc6a-d0e6-4f11-a0c5-d855b546b9fa"
-  },
-  {
-    "title": "More Blocks",
-    "alt": "Expanded building palette for creative and survival worlds",
-    "description": "A building-focused expansion adding block variety while preserving the vanilla feel and usability.",
-    "image": "https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/a29f03d8-45b7-4eb9-ba29-d2376b41ece6/MB_Thumbnail_0.jpg",
-    "type": "Add-On",
-    "project": "Shapescape",
-    "role": "Asset Creator",
-    "roleType": "artist",
-    "status": "completed",
-    "date": "",
-    "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/more-blocks-1.2/e66da350-1372-45d7-b672-51a224713a13"
-  },
-  {
-    "title": "Grave Danger",
-    "alt": "Combat and progression themed Bedrock project",
-    "description": "Action-oriented project centered on encounter design, pacing, and content readability.",
-    "image": "https://xforgeassets002.xboxlive.com/pf-title-b63a0803d3653643-20ca2/04adb32d-6e9d-430f-b8de-e6fc49ec05f0/GD_thumbnail_0.jpg",
-    "type": "Add-On",
-    "project": "Shapescape",
-    "role": "Asset Creator & Lead",
-    "roleType": "lead",
-    "status": "completed",
-    "date": "",
-    "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/grave-danger/1b611352-2e33-41ef-917c-2dd76e8c6397"
-  },
-  {
-    "title": "Backrooms Add-On",
-    "alt": "The Backrooms recreated in Minecraft Bedrock",
-    "description": "Liminal horror atmosphere, custom encounters, and environment-first pacing designed for strong immersion.",
-    "image": "https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/a29f03d8-45b7-4eb9-ba29-d2376b41ece6/MB_Thumbnail_0.jpg",
-    "type": "Add-On",
-    "project": "Tsunami Studios",
-    "role": "Developer & Artist",
-    "roleType": "dev",
-    "featured": "hero",
-    "status": "completed",
-    "date": "",
-    "link": "#"
-  },
-  {
-    "title": "Survival+ Demons",
-    "alt": "Infernal expansion branch for Survival+",
-    "description": "A themed expansion adding demonic entities, encounters, and art direction consistency across the content set.",
-    "image": "https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/ddef53ab-a627-46a1-9c96-d17c933914e4/spdem_Thumbnail_0.jpg",
-    "type": "Add-On",
-    "project": "Shapescape",
-    "role": "Asset Creator & Art Director",
-    "roleType": "artist",
-    "status": "completed",
-    "date": "",
-    "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/survival+-demons/61082524-5498-4030-992a-6dfd9ce26318"
-  },
-  {
-    "title": "Weapons Expansion 2",
-    "alt": "Large-scale weapons set for Bedrock",
-    "description": "Large item-set production with strong visual consistency, readability, and quality control at scale.",
-    "image": "https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/152b4b0e-fd96-46f3-8e8a-91a3f6b70142/WE2_Thumbnail_0.jpg",
-    "type": "Add-On",
-    "project": "Shapescape",
-    "role": "Asset Creator & Art Director",
-    "roleType": "artist",
-    "status": "completed",
-    "date": "",
-    "link": "#"
-  },
-  {
-    "title": "Blackout",
-    "alt": "Atmosphere-driven content experience",
-    "description": "Designed for mood, tension, and progression flow with strong visual direction and gameplay clarity.",
-    "image": "https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/cec6a0f7-bee5-4172-8322-4ca2e400b0de/BO_Thumbnail_0.jpg",
-    "type": "Add-On",
-    "project": "Shapescape",
-    "role": "Asset Creator & Lead",
-    "roleType": "lead",
-    "status": "completed",
-    "date": "",
-    "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/blackout/7da85b91-4d46-4c49-942c-c3052d43b939"
-  },
-  {
-    "title": "Dragons Add-On",
-    "alt": "Custom dragon entities for Minecraft Bedrock",
-    "description": "Complex dragon-focused project with custom behavior design, animation, and full production integration.",
-    "image": "https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/6341532e-736e-46c0-b8d0-5c6b3d266b6c/DRAGONS_Thumbnail_0.jpg",
-    "type": "Add-On",
-    "project": "Tsunami Studios",
-    "role": "Developer & Artist",
-    "roleType": "dev",
-    "status": "completed",
-    "date": "",
-    "link": "https://www.minecraft.net/en-us/marketplace/pdp/tsunami-studios/dragons!-add--on/e0b5320f-aece-4de8-80e5-139ebc1089b1"
-  },
-  {
-    "title": "Laser Blasters",
-    "alt": "Sci-fi combat equipment and systems",
-    "description": "Fast-paced combat content with custom weapon feel, effects tuning, and gameplay polish.",
-    "image": "https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/5bfa3a0e-0bdc-44ca-a830-bc374689a273/LASERBLASTERS_Thumbnail_0.jpg",
-    "type": "Add-On",
-    "project": "Tsunami Studios",
-    "role": "Developer & Artist",
-    "roleType": "dev",
-    "status": "completed",
-    "date": "",
-    "link": "https://www.minecraft.net/en-us/marketplace/pdp/tsunami-studios/laser-blasters/a86d0010-28c8-43c8-bafd-fe490de0c211"
-  },
-  {
-    "title": "Bounty Hunter",
-    "alt": "Mission-driven combat and progression project",
-    "description": "Objective-based gameplay project balancing challenge, rewards, and player progression readability.",
-    "image": "https://xforgeassets002.xboxlive.com/pf-title-b63a0803d3653643-20ca2/b218d212-67c7-4a48-95d6-c620a80d150c/BH_Thumbnail_0.jpg",
-    "type": "Add-On",
-    "project": "Shapescape",
-    "role": "Asset Creator & Lead",
-    "roleType": "lead",
-    "status": "completed",
-    "date": "",
-    "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/bounty-hunter/c2d951aa-e4ae-41e4-a164-40b6b974ffe1"
-  },
-  {
-    "title": "Survival+",
-    "alt": "Survival overhaul for Minecraft Bedrock",
-    "description": "Core survival systems expansion built to deepen progression while preserving vanilla gameplay identity.",
-    "image": "https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/b48be9b2-df40-4d57-96bf-67598bc7f4ff/SP_Thumbnail_0.jpg",
-    "type": "Add-On",
-    "project": "Shapescape",
-    "role": "Asset Creator & Branch Lead",
-    "roleType": "lead",
-    "featured": "hero",
-    "status": "completed",
-    "date": "",
-    "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/survival+/96697b3f-1c0f-4434-b608-03040e553615"
-  },
-  {
-    "title": "Gladiators",
-    "alt": "Arena-style combat content",
-    "description": "Combat-forward project tuned around encounter pacing, spectacle, and replayable challenge.",
-    "image": "https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/77e0868b-2741-426a-8b43-4aea416fe500/GLAD_Thumbnail_0.jpg",
-    "type": "Add-On",
-    "project": "Shapescape",
-    "role": "Asset Creator & Lead",
-    "roleType": "lead",
-    "status": "completed",
-    "date": "",
-    "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/gladiators----updated!/1d43528f-816e-417d-be58-b5e25b158b6e"
-  },
-  {
-    "title": "Survival+ Dragons",
-    "alt": "Dragon-focused branch content for Survival+",
-    "description": "A dragon-themed Survival+ branch combining creature design, progression hooks, and strong visual direction.",
-    "image": "https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/cf02fad6-9a25-4808-ae40-c21dc9f64d88/SPD_Thumbnail_0.jpg",
-    "type": "Add-On",
-    "project": "Shapescape",
-    "role": "Asset Creator & Art Director",
-    "roleType": "artist",
-    "status": "completed",
-    "date": "",
-    "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/survival+-dragons/d52d6fb5-2712-4bd0-9801-ab2b94c9054b"
-  },
-  {
-    "title": "Medieval Furniture",
-    "alt": "Decorative medieval-themed furniture set",
-    "description": "Environment-focused content pack delivering themed decorative assets for builders and world creators.",
-    "image": "https://xforgeassets001.xboxlive.com/pf-title-b63a0803d3653643-ee7b/00c59d92-02d5-4e43-a89d-231fbfac0ccf/medfurn_Thumbnail_0.jpg",
-    "type": "Add-On",
-    "project": "Shapescape",
-    "role": "Asset Creator",
-    "roleType": "artist",
-    "status": "completed",
-    "date": "",
-    "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/medieval-furniture/0ce2ed1b-2db9-435e-9075-8d221049c3f6"
-  
-  },
-  {
-    "title": "Boss Expansion",
-    "alt": "Boss-themed content and encounter expansion",
-    "description": "Large-scale boss-focused project with encounter design and polished combat mechanics.",
-    "image": "https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/a853e1f2-d39f-4c0e-aa9f-b52c33e79d16/BE_Thumbnail_0.jpg",
-    "type": "Add-On",
-    "project": "Shapescape",
-    "role": "Asset Creator & Art Director",
-    "roleType": "artist",
-    "status": "completed",
-    "date": "",
-    "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/boss-expansion/dd85e3c8-05f3-4b3a-b7c7-a1f68ebea4fa"
-  },
-  {
-    "title": "Weapons Expansion 3.0",
-    "alt": "Large-scale weapons set for Bedrock",
-    "description": "Extensive weapons collection with custom item feel, visual consistency, and balanced gameplay integration.",
-    "image": "https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/dde6e706-cd10-4967-b7d1-0aaa2c64bd7a/WE3_Thumbnail_0.jpg",
-    "type": "Add-On",
-    "project": "Shapescape",
-    "role": "Asset Creator & Art Director",
-    "roleType": "artist",
-    "status": "completed",
-    "date": "",
-    "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/weapons-expansion-3.0/b0595361-67fd-45a9-8863-7b478586d50f"
-  },
-  {
-    "title": "Ultimate Expansion",
-    "alt": "Comprehensive content expansion pack",
-    "description": "Large-scale multi-faceted expansion combining gameplay, content, and visual improvements.",
-    "image": "https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/9f68de5f-4821-460e-8210-967bba697207/UE_Thumbnail_0.jpg",
-    "type": "Add-On",
-    "project": "Shapescape",
-    "role": "Asset Creator & Art Director",
-    "roleType": "artist",
-    "status": "completed",
-    "date": "",
-    "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/ultimate-expansion/e7d44aab-ae71-4517-8d71-98bb1e3a42ea"
-  },
-  {
-    "title": "Grave Danger 2",
-    "alt": "Combat and progression sequel",
-    "description": "Follow-up to Grave Danger with expanded encounter design, new mechanics, and escalated challenge.",
-    "image": "https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/b9c19567-bbfd-4dc8-8b3d-c2c263785c39/GD2_Thumbnail_0.jpg",
-    "type": "Add-On",
-    "project": "Shapescape",
-    "role": "Asset Creator & Lead",
-    "roleType": "lead",
-    "status": "completed",
-    "date": "",
-    "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/grave-danger-2/9653357c-07a1-4045-91d1-acd98450f9fa"
-  },
-  {
-    "title": "Hercules",
-    "alt": "Mythological-themed adventure content",
-    "description": "Hero-focused project combining epic quests, mythological themes, and polished combat encounters.",
-    "image": "https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/925be056-2a59-49cc-87c3-f255467a1fe3/HERC_Thumbnail_0.jpg",
-    "type": "Add-On",
-    "project": "Shapescape",
-    "role": "Asset Creator & Lead",
-    "roleType": "lead",
-    "status": "completed",
-    "date": "",
-    "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/hercules/2c24e05a-9667-464f-ac00-547499011bfd"
-  },
-  {
-    "title": "Survival+ SCI-FI",
-    "alt": "Sci-fi themed survival expansion",
-    "description": "Futuristic Survival+ branch with technology-focused mechanics, sleek visuals, and space exploration themes.",
-    "image": "https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/e144f8a9-6f41-4c3e-a99c-9fb443827d12/SPS_Thumbnail_0.jpg",
-    "type": "Add-On",
-    "project": "Shapescape",
-    "role": "Asset Creator & Art Director",
-    "roleType": "artist",
-    "status": "completed",
-    "date": "",
-    "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/survival+-sci--fi/2804894a-6cf5-43a7-847f-cc9c6c843c48"
-  },
-  {
-    "title": "Free The World",
-    "alt": "Liberation-themed action adventure",
-    "description": "Objective-driven world exploration project with mission-based gameplay and narrative depth.",
-    "image": "https://xforgeassets002.xboxlive.com/pf-title-b63a0803d3653643-20ca2/32a6a6db-1dac-4b52-a89b-e08f0d49f28a/FTW_Thumbnail_0.jpg",
-    "type": "Add-On",
-    "project": "Shapescape",
-    "role": "Asset Creator & Lead",
-    "roleType": "lead",
-    "status": "completed",
-    "date": "",
-    "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/free-the-world/78cc4992-a8a7-4cda-bde5-93b1e44a35d4"
-  },
-  {
-    "title": "Sherlock Holmes",
-    "alt": "Mystery and detective-themed world",
-    "description": "Puzzle-adventure project centered on mystery-solving, environmental clues, and detective gameplay.",
-    "image": "https://xforgeassets002.xboxlive.com/pf-title-b63a0803d3653643-20ca2/efb2f91e-beea-47f1-94d7-e49b7e414753/SH_Thumbnail_0.jpg",
-    "type": "Add-On",
-    "project": "Shapescape",
-    "role": "Asset Creator & Lead",
-    "roleType": "lead",
-    "status": "completed",
-    "date": "",
-    "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/sherlock-holmes/64d3688d-ac43-4f75-8dbb-9db935482231"
-  },
-  {
-    "title": "Supercars",
-    "alt": "High-performance vehicle worldbuilding",
-    "description": "Vehicle-focused world featuring high-speed cars, racing mechanics, and modern themed environments.",
-    "image": "https://xforgeassets002.xboxlive.com/pf-title-b63a0803d3653643-20ca2/b0a79078-766f-420b-be09-a975966e7821/Supercars_Thumbnail_0.jpg",
-    "type": "Add-On",
-    "project": "Shapescape",
-    "role": "Asset Creator",
-    "roleType": "artist",
-    "status": "completed",
-    "date": "",
-    "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/supercars/8b709638-cecc-4c61-96db-b7772e432ed8"
-  },
-  {
-    "title": "Immersion: London",
-    "alt": "Realistic London recreation",
-    "description": "Large-scale city recreation project featuring authentic architecture, landmarks, and immersive urban exploration.",
-    "image": "https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/3c1e8fdf-01a6-4497-a121-c18fcfe1c8d8/London_Thumbnail_0.jpg",
-    "type": "Add-On",
-    "project": "Shapescape",
-    "role": "Asset Creator & Lead",
-    "roleType": "lead",
-    "status": "completed",
-    "date": "",
-    "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/immersion:-london/e417d755-7368-40be-9f65-768e2908d7de"
-  },
-  {
-    "title": "Combat Actions + Weapons",
-    "alt": "Combat mechanics and weapon systems",
-    "description": "Action-combat system with custom weapon mechanics, animation polish, and gameplay feel tuning.",
-    "image": "https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/09f50e0d-fb7f-4e72-9657-c7c67a93724d/CombatActionsPlusWeapons_thumbnail_0.jpg",
-    "type": "Add-On",
-    "project": "Tsunami Studios",
-    "role": "Developer & Artist",
-    "roleType": "dev",
-    "status": "completed",
-    "date": "",
-    "link": "https://www.minecraft.net/en-us/marketplace/pdp/tsunami-studios/combat-actions-+-weapons-add--on/b93161a2-9d25-47dd-9943-16bb2c969163"
-  },
-  {
-    "title": "MUTANTS! Add-On 2.0",
-    "alt": "Monster mutation gameplay system",
-    "description": "Creature transformation project with custom mob variants, mutation mechanics, and behavior systems.",
-    "image": "https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/f230cec8-9394-4a91-9c33-d34ad80afb1e/MUTANTS_Thumbnail_0.jpg",
-    "type": "Add-On",
-    "project": "Tsunami Studios",
-    "role": "Developer & Artist",
-    "roleType": "dev",
-    "status": "completed",
-    "date": "",
-    "link": "https://www.minecraft.net/en-us/marketplace/pdp/tsunami-studios/mutants!-add--on-2.0/d50bd371-3662-41b2-bce7-dafce66444e7"
-  }
-]
+{
+  "quests": [
+    {
+      "title": "Into The Wild",
+      "alt": "Wildlife and ecosystem expansion for Bedrock",
+      "description": "A world-building add-on focused on creatures, behavior, and exploration flow. Built to feel natural inside core Minecraft gameplay.",
+      "image": "https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/e4f8d267-23db-4e41-84a9-6eec54d59c00/IntoTheWild_Thumbnail_0.jpg",
+      "featured": "superhero",
+      "date": "",
+      "link": "https://www.minecraft.net/en-us/marketplace/pdp/tsunami-studios/into-the-wild-add--on/aa25d7d4-eee4-4ce9-974a-21c07a7e2db2",
+      "team": "Tsunami Studios",
+      "tags": [
+        {
+          "name": "Add-On",
+          "primary": true
+        },
+        {
+          "name": "dev"
+        },
+        {
+          "name": "artist"
+        }
+      ]
+    },
+    {
+      "title": "Be a Mob",
+      "alt": "Play as creatures with custom systems and interactions",
+      "description": "Gameplay-focused transformation project with custom systems and creature-specific interactions.",
+      "image": "https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/27d6f790-d382-491c-a7c1-2a86474b3925/BeAMob_Thumbnail_0.jpg",
+      "featured": "hero",
+      "date": "",
+      "link": "https://www.minecraft.net/en-us/marketplace/pdp/tsunami-studios/be-a-mob-add--on/46a67fb6-ba75-42cf-a877-cfe14ef03761",
+      "team": "Tsunami Studios",
+      "tags": [
+        {
+          "name": "Add-On",
+          "primary": true
+        },
+        {
+          "name": "dev"
+        },
+        {
+          "name": "artist"
+        }
+      ]
+    },
+    {
+      "title": "More TNT",
+      "alt": "Explosive variants with custom effects and behaviors",
+      "description": "A high-energy content pack with multiple TNT variants, custom behaviors, and polished visual feedback.",
+      "image": "https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/be3c2cc1-8426-4486-914c-13aa4b0f11ef/MoreTNT_Thumbnail_0.jpg",
+      "date": "",
+      "link": "https://www.minecraft.net/en-us/marketplace/pdp/tsunami-studios/more-tnt!-add--on/053bbc6a-d0e6-4f11-a0c5-d855b546b9fa",
+      "team": "Tsunami Studios",
+      "tags": [
+        {
+          "name": "Add-On",
+          "primary": true
+        },
+        {
+          "name": "dev"
+        },
+        {
+          "name": "artist"
+        }
+      ]
+    },
+    {
+      "title": "More Blocks",
+      "alt": "Expanded building palette for creative and survival worlds",
+      "description": "A building-focused expansion adding block variety while preserving the vanilla feel and usability.",
+      "image": "https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/a29f03d8-45b7-4eb9-ba29-d2376b41ece6/MB_Thumbnail_0.jpg",
+      "date": "",
+      "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/more-blocks-1.2/e66da350-1372-45d7-b672-51a224713a13",
+      "team": "Shapescape",
+      "tags": [
+        {
+          "name": "Add-On",
+          "primary": true
+        },
+        {
+          "name": "artist"
+        }
+      ]
+    },
+    {
+      "title": "Grave Danger",
+      "alt": "Combat and progression themed Bedrock project",
+      "description": "Action-oriented project centered on encounter design, pacing, and content readability.",
+      "image": "https://xforgeassets002.xboxlive.com/pf-title-b63a0803d3653643-20ca2/04adb32d-6e9d-430f-b8de-e6fc49ec05f0/GD_thumbnail_0.jpg",
+      "date": "",
+      "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/grave-danger/1b611352-2e33-41ef-917c-2dd76e8c6397",
+      "team": "Shapescape",
+      "tags": [
+        {
+          "name": "Add-On",
+          "primary": true
+        },
+        {
+          "name": "artist"
+        },
+        {
+          "name": "lead"
+        }
+      ]
+    },
+    {
+      "title": "Backrooms Add-On",
+      "alt": "The Backrooms recreated in Minecraft Bedrock",
+      "description": "Liminal horror atmosphere, custom encounters, and environment-first pacing designed for strong immersion.",
+      "image": "https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/a29f03d8-45b7-4eb9-ba29-d2376b41ece6/MB_Thumbnail_0.jpg",
+      "featured": "hero",
+      "date": "",
+      "link": "#",
+      "team": "Tsunami Studios",
+      "tags": [
+        {
+          "name": "Add-On",
+          "primary": true
+        },
+        {
+          "name": "dev"
+        },
+        {
+          "name": "artist"
+        }
+      ]
+    },
+    {
+      "title": "Survival+ Demons",
+      "alt": "Infernal expansion branch for Survival+",
+      "description": "A themed expansion adding demonic entities, encounters, and art direction consistency across the content set.",
+      "image": "https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/ddef53ab-a627-46a1-9c96-d17c933914e4/spdem_Thumbnail_0.jpg",
+      "date": "",
+      "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/survival+-demons/61082524-5498-4030-992a-6dfd9ce26318",
+      "team": "Shapescape",
+      "tags": [
+        {
+          "name": "Add-On",
+          "primary": true
+        },
+        {
+          "name": "artist"
+        }
+      ]
+    },
+    {
+      "title": "Weapons Expansion 2",
+      "alt": "Large-scale weapons set for Bedrock",
+      "description": "Large item-set production with strong visual consistency, readability, and quality control at scale.",
+      "image": "https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/152b4b0e-fd96-46f3-8e8a-91a3f6b70142/WE2_Thumbnail_0.jpg",
+      "date": "",
+      "link": "#",
+      "team": "Shapescape",
+      "tags": [
+        {
+          "name": "Add-On",
+          "primary": true
+        },
+        {
+          "name": "artist"
+        }
+      ]
+    },
+    {
+      "title": "Blackout",
+      "alt": "Atmosphere-driven content experience",
+      "description": "Designed for mood, tension, and progression flow with strong visual direction and gameplay clarity.",
+      "image": "https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/cec6a0f7-bee5-4172-8322-4ca2e400b0de/BO_Thumbnail_0.jpg",
+      "date": "",
+      "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/blackout/7da85b91-4d46-4c49-942c-c3052d43b939",
+      "team": "Shapescape",
+      "tags": [
+        {
+          "name": "Add-On",
+          "primary": true
+        },
+        {
+          "name": "artist"
+        },
+        {
+          "name": "lead"
+        }
+      ]
+    },
+    {
+      "title": "Dragons Add-On",
+      "alt": "Custom dragon entities for Minecraft Bedrock",
+      "description": "Complex dragon-focused project with custom behavior design, animation, and full production integration.",
+      "image": "https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/6341532e-736e-46c0-b8d0-5c6b3d266b6c/DRAGONS_Thumbnail_0.jpg",
+      "date": "",
+      "link": "https://www.minecraft.net/en-us/marketplace/pdp/tsunami-studios/dragons!-add--on/e0b5320f-aece-4de8-80e5-139ebc1089b1",
+      "team": "Tsunami Studios",
+      "tags": [
+        {
+          "name": "Add-On",
+          "primary": true
+        },
+        {
+          "name": "dev"
+        },
+        {
+          "name": "artist"
+        }
+      ]
+    },
+    {
+      "title": "Laser Blasters",
+      "alt": "Sci-fi combat equipment and systems",
+      "description": "Fast-paced combat content with custom weapon feel, effects tuning, and gameplay polish.",
+      "image": "https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/5bfa3a0e-0bdc-44ca-a830-bc374689a273/LASERBLASTERS_Thumbnail_0.jpg",
+      "date": "",
+      "link": "https://www.minecraft.net/en-us/marketplace/pdp/tsunami-studios/laser-blasters/a86d0010-28c8-43c8-bafd-fe490de0c211",
+      "team": "Tsunami Studios",
+      "tags": [
+        {
+          "name": "Add-On",
+          "primary": true
+        },
+        {
+          "name": "dev"
+        },
+        {
+          "name": "artist"
+        }
+      ]
+    },
+    {
+      "title": "Bounty Hunter",
+      "alt": "Mission-driven combat and progression project",
+      "description": "Objective-based gameplay project balancing challenge, rewards, and player progression readability.",
+      "image": "https://xforgeassets002.xboxlive.com/pf-title-b63a0803d3653643-20ca2/b218d212-67c7-4a48-95d6-c620a80d150c/BH_Thumbnail_0.jpg",
+      "date": "",
+      "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/bounty-hunter/c2d951aa-e4ae-41e4-a164-40b6b974ffe1",
+      "team": "Shapescape",
+      "tags": [
+        {
+          "name": "Add-On",
+          "primary": true
+        },
+        {
+          "name": "artist"
+        },
+        {
+          "name": "lead"
+        }
+      ]
+    },
+    {
+      "title": "Survival+",
+      "alt": "Survival overhaul for Minecraft Bedrock",
+      "description": "Core survival systems expansion built to deepen progression while preserving vanilla gameplay identity.",
+      "image": "https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/b48be9b2-df40-4d57-96bf-67598bc7f4ff/SP_Thumbnail_0.jpg",
+      "featured": "hero",
+      "date": "",
+      "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/survival+/96697b3f-1c0f-4434-b608-03040e553615",
+      "team": "Shapescape",
+      "tags": [
+        {
+          "name": "Add-On",
+          "primary": true
+        },
+        {
+          "name": "artist"
+        },
+        {
+          "name": "lead"
+        }
+      ]
+    },
+    {
+      "title": "Gladiators",
+      "alt": "Arena-style combat content",
+      "description": "Combat-forward project tuned around encounter pacing, spectacle, and replayable challenge.",
+      "image": "https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/77e0868b-2741-426a-8b43-4aea416fe500/GLAD_Thumbnail_0.jpg",
+      "date": "",
+      "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/gladiators----updated!/1d43528f-816e-417d-be58-b5e25b158b6e",
+      "team": "Shapescape",
+      "tags": [
+        {
+          "name": "Add-On",
+          "primary": true
+        },
+        {
+          "name": "artist"
+        },
+        {
+          "name": "lead"
+        }
+      ]
+    },
+    {
+      "title": "Survival+ Dragons",
+      "alt": "Dragon-focused branch content for Survival+",
+      "description": "A dragon-themed Survival+ branch combining creature design, progression hooks, and strong visual direction.",
+      "image": "https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/cf02fad6-9a25-4808-ae40-c21dc9f64d88/SPD_Thumbnail_0.jpg",
+      "date": "",
+      "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/survival+-dragons/d52d6fb5-2712-4bd0-9801-ab2b94c9054b",
+      "team": "Shapescape",
+      "tags": [
+        {
+          "name": "Add-On",
+          "primary": true
+        },
+        {
+          "name": "artist"
+        }
+      ]
+    },
+    {
+      "title": "Medieval Furniture",
+      "alt": "Decorative medieval-themed furniture set",
+      "description": "Environment-focused content pack delivering themed decorative assets for builders and world creators.",
+      "image": "https://xforgeassets001.xboxlive.com/pf-title-b63a0803d3653643-ee7b/00c59d92-02d5-4e43-a89d-231fbfac0ccf/medfurn_Thumbnail_0.jpg",
+      "date": "",
+      "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/medieval-furniture/0ce2ed1b-2db9-435e-9075-8d221049c3f6",
+      "team": "Shapescape",
+      "tags": [
+        {
+          "name": "Add-On",
+          "primary": true
+        },
+        {
+          "name": "artist"
+        }
+      ]
+    },
+    {
+      "title": "Boss Expansion",
+      "alt": "Boss-themed content and encounter expansion",
+      "description": "Large-scale boss-focused project with encounter design and polished combat mechanics.",
+      "image": "https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/a853e1f2-d39f-4c0e-aa9f-b52c33e79d16/BE_Thumbnail_0.jpg",
+      "date": "",
+      "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/boss-expansion/dd85e3c8-05f3-4b3a-b7c7-a1f68ebea4fa",
+      "team": "Shapescape",
+      "tags": [
+        {
+          "name": "Add-On",
+          "primary": true
+        },
+        {
+          "name": "artist"
+        }
+      ]
+    },
+    {
+      "title": "Weapons Expansion 3.0",
+      "alt": "Large-scale weapons set for Bedrock",
+      "description": "Extensive weapons collection with custom item feel, visual consistency, and balanced gameplay integration.",
+      "image": "https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/dde6e706-cd10-4967-b7d1-0aaa2c64bd7a/WE3_Thumbnail_0.jpg",
+      "date": "",
+      "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/weapons-expansion-3.0/b0595361-67fd-45a9-8863-7b478586d50f",
+      "team": "Shapescape",
+      "tags": [
+        {
+          "name": "Add-On",
+          "primary": true
+        },
+        {
+          "name": "artist"
+        }
+      ]
+    },
+    {
+      "title": "Ultimate Expansion",
+      "alt": "Comprehensive content expansion pack",
+      "description": "Large-scale multi-faceted expansion combining gameplay, content, and visual improvements.",
+      "image": "https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/9f68de5f-4821-460e-8210-967bba697207/UE_Thumbnail_0.jpg",
+      "date": "",
+      "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/ultimate-expansion/e7d44aab-ae71-4517-8d71-98bb1e3a42ea",
+      "team": "Shapescape",
+      "tags": [
+        {
+          "name": "Add-On",
+          "primary": true
+        },
+        {
+          "name": "artist"
+        }
+      ]
+    },
+    {
+      "title": "Grave Danger 2",
+      "alt": "Combat and progression sequel",
+      "description": "Follow-up to Grave Danger with expanded encounter design, new mechanics, and escalated challenge.",
+      "image": "https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/b9c19567-bbfd-4dc8-8b3d-c2c263785c39/GD2_Thumbnail_0.jpg",
+      "date": "",
+      "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/grave-danger-2/9653357c-07a1-4045-91d1-acd98450f9fa",
+      "team": "Shapescape",
+      "tags": [
+        {
+          "name": "Add-On",
+          "primary": true
+        },
+        {
+          "name": "artist"
+        },
+        {
+          "name": "lead"
+        }
+      ]
+    },
+    {
+      "title": "Hercules",
+      "alt": "Mythological-themed adventure content",
+      "description": "Hero-focused project combining epic quests, mythological themes, and polished combat encounters.",
+      "image": "https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/925be056-2a59-49cc-87c3-f255467a1fe3/HERC_Thumbnail_0.jpg",
+      "date": "",
+      "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/hercules/2c24e05a-9667-464f-ac00-547499011bfd",
+      "team": "Shapescape",
+      "tags": [
+        {
+          "name": "Add-On",
+          "primary": true
+        },
+        {
+          "name": "artist"
+        },
+        {
+          "name": "lead"
+        }
+      ]
+    },
+    {
+      "title": "Survival+ SCI-FI",
+      "alt": "Sci-fi themed survival expansion",
+      "description": "Futuristic Survival+ branch with technology-focused mechanics, sleek visuals, and space exploration themes.",
+      "image": "https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/e144f8a9-6f41-4c3e-a99c-9fb443827d12/SPS_Thumbnail_0.jpg",
+      "date": "",
+      "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/survival+-sci--fi/2804894a-6cf5-43a7-847f-cc9c6c843c48",
+      "team": "Shapescape",
+      "tags": [
+        {
+          "name": "Add-On",
+          "primary": true
+        },
+        {
+          "name": "artist"
+        }
+      ]
+    },
+    {
+      "title": "Free The World",
+      "alt": "Liberation-themed action adventure",
+      "description": "Objective-driven world exploration project with mission-based gameplay and narrative depth.",
+      "image": "https://xforgeassets002.xboxlive.com/pf-title-b63a0803d3653643-20ca2/32a6a6db-1dac-4b52-a89b-e08f0d49f28a/FTW_Thumbnail_0.jpg",
+      "date": "",
+      "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/free-the-world/78cc4992-a8a7-4cda-bde5-93b1e44a35d4",
+      "team": "Shapescape",
+      "tags": [
+        {
+          "name": "Add-On",
+          "primary": true
+        },
+        {
+          "name": "artist"
+        },
+        {
+          "name": "lead"
+        }
+      ]
+    },
+    {
+      "title": "Sherlock Holmes",
+      "alt": "Mystery and detective-themed world",
+      "description": "Puzzle-adventure project centered on mystery-solving, environmental clues, and detective gameplay.",
+      "image": "https://xforgeassets002.xboxlive.com/pf-title-b63a0803d3653643-20ca2/efb2f91e-beea-47f1-94d7-e49b7e414753/SH_Thumbnail_0.jpg",
+      "date": "",
+      "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/sherlock-holmes/64d3688d-ac43-4f75-8dbb-9db935482231",
+      "team": "Shapescape",
+      "tags": [
+        {
+          "name": "Add-On",
+          "primary": true
+        },
+        {
+          "name": "artist"
+        },
+        {
+          "name": "lead"
+        }
+      ]
+    },
+    {
+      "title": "Supercars",
+      "alt": "High-performance vehicle worldbuilding",
+      "description": "Vehicle-focused world featuring high-speed cars, racing mechanics, and modern themed environments.",
+      "image": "https://xforgeassets002.xboxlive.com/pf-title-b63a0803d3653643-20ca2/b0a79078-766f-420b-be09-a975966e7821/Supercars_Thumbnail_0.jpg",
+      "date": "",
+      "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/supercars/8b709638-cecc-4c61-96db-b7772e432ed8",
+      "team": "Shapescape",
+      "tags": [
+        {
+          "name": "Add-On",
+          "primary": true
+        },
+        {
+          "name": "artist"
+        }
+      ]
+    },
+    {
+      "title": "Immersion: London",
+      "alt": "Realistic London recreation",
+      "description": "Large-scale city recreation project featuring authentic architecture, landmarks, and immersive urban exploration.",
+      "image": "https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/3c1e8fdf-01a6-4497-a121-c18fcfe1c8d8/London_Thumbnail_0.jpg",
+      "date": "",
+      "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/immersion:-london/e417d755-7368-40be-9f65-768e2908d7de",
+      "team": "Shapescape",
+      "tags": [
+        {
+          "name": "Add-On",
+          "primary": true
+        },
+        {
+          "name": "artist"
+        },
+        {
+          "name": "lead"
+        }
+      ]
+    },
+    {
+      "title": "Combat Actions + Weapons",
+      "alt": "Combat mechanics and weapon systems",
+      "description": "Action-combat system with custom weapon mechanics, animation polish, and gameplay feel tuning.",
+      "image": "https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/09f50e0d-fb7f-4e72-9657-c7c67a93724d/CombatActionsPlusWeapons_thumbnail_0.jpg",
+      "date": "",
+      "link": "https://www.minecraft.net/en-us/marketplace/pdp/tsunami-studios/combat-actions-+-weapons-add--on/b93161a2-9d25-47dd-9943-16bb2c969163",
+      "team": "Tsunami Studios",
+      "tags": [
+        {
+          "name": "Add-On",
+          "primary": true
+        },
+        {
+          "name": "dev"
+        },
+        {
+          "name": "artist"
+        }
+      ]
+    },
+    {
+      "title": "MUTANTS! Add-On 2.0",
+      "alt": "Monster mutation gameplay system",
+      "description": "Creature transformation project with custom mob variants, mutation mechanics, and behavior systems.",
+      "image": "https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/f230cec8-9394-4a91-9c33-d34ad80afb1e/MUTANTS_Thumbnail_0.jpg",
+      "date": "",
+      "link": "https://www.minecraft.net/en-us/marketplace/pdp/tsunami-studios/mutants!-add--on-2.0/d50bd371-3662-41b2-bce7-dafce66444e7",
+      "team": "Tsunami Studios",
+      "tags": [
+        {
+          "name": "Add-On",
+          "primary": true
+        },
+        {
+          "name": "dev"
+        },
+        {
+          "name": "artist"
+        }
+      ]
+    }
+  ]
+}

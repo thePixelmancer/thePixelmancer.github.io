@@ -1,20 +1,20 @@
 // ─── Tag colors ───────────────────────────────────────────────────────────────
 // Full class strings so Tailwind's scanner picks them all up.
 
-const TAG_COLOR = {
-  purple:  { text: "text-purple-400",  border: "border-purple-500/40"  },
-  blue:    { text: "text-blue-400",    border: "border-blue-500/40"    },
-  green:   { text: "text-green-400",   border: "border-green-500/40"   },
-  amber:   { text: "text-amber-400",   border: "border-amber-500/40"   },
-  orange:  { text: "text-orange-400",  border: "border-orange-500/40"  },
-  fuchsia: { text: "text-fuchsia-400", border: "border-fuchsia-500/40" },
-  gray:    { text: "text-gray-400",    border: "border-gray-600"       },
-};
-const TAG_COLOR_DEFAULT = { text: "text-gray-400", border: "border-gray-600" };
+const DEFAULT_BADGE_CLASSES = "bg-dark-800 text-gray-100 border-dark-700";
 
-function tagColor(color) {
-  return TAG_COLOR[color] ?? TAG_COLOR_DEFAULT;
-}
+const TAG_BADGE_BY_COLOR = {
+  amber: "bg-amber-900 text-amber-100 border-amber-600",
+  blue: "bg-blue-900 text-blue-100 border-blue-600",
+  fuchsia: "bg-fuchsia-900 text-fuchsia-100 border-fuchsia-600",
+  green: "bg-green-900 text-green-100 border-green-600",
+  purple: "bg-purple-900 text-purple-100 border-purple-600",
+  orange: "bg-orange-900 text-orange-100 border-orange-600",
+  gray: "bg-dark-800 text-gray-100 border-dark-700",
+  white: "bg-dark-800 text-white border-white/60",
+};
+
+let tagColorLookup = new Map();
 
 // Title hover color derived from primary tag
 const TITLE_HOVER = {
@@ -25,7 +25,65 @@ const TITLE_HOVER = {
   orange:  "group-hover:text-orange-400",
   fuchsia: "group-hover:text-fuchsia-400",
   gray:    "group-hover:text-gray-300",
+  white:   "group-hover:text-gray-100",
 };
+
+function normalizeTagName(name) {
+  return String(name || "").trim().toLowerCase();
+}
+
+function normalizeTag(tag) {
+  if (typeof tag === "string") return { name: tag, primary: false };
+  if (tag && typeof tag === "object") return { name: tag.name || "", primary: !!tag.primary, color: tag.color };
+  return { name: "", primary: false };
+}
+
+function getTagColorName(tag) {
+  if (tag.color) return tag.color;
+  const normalized = normalizeTagName(tag.name);
+  return tagColorLookup.get(normalized) || "white";
+}
+
+function getBadgeClasses(tag) {
+  const color = getTagColorName(tag);
+  return TAG_BADGE_BY_COLOR[color] || DEFAULT_BADGE_CLASSES;
+}
+
+function titleCaseTag(tag) {
+  return String(tag || "")
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
+function createSingleTagHTML(tag) {
+  const classes = getBadgeClasses(tag);
+  return `<span class="px-2 py-1 font-title uppercase border text-xs inline-flex items-center ${classes}">${tag.name}</span>`;
+}
+
+function createTagBadgesHTML(tags) {
+  const primaryTag = tags.find((t) => t.primary) ?? tags[0];
+  if (!primaryTag) return "";
+
+  const secondTags = tags.filter((t) => t !== primaryTag);
+  const separator = secondTags.length ? `<span class="text-dark-700 select-none mx-0.5">|</span>` : "";
+  const secondPills = secondTags.map(createSingleTagHTML).join("");
+
+  return `${createSingleTagHTML(primaryTag)}${separator}${secondPills}`;
+}
+
+function createForgeTitleStackHTML(item, titleHover) {
+  return `
+    <div class="flex flex-col gap-0.5">
+      <h3 class="font-basic text-lg text-gray-100 ${titleHover} transition-colors leading-tight font-semibold">${item.title}</h3>
+    </div>`;
+}
+
+function createForgeDescriptionHTML(text) {
+  if (!text) return "";
+  return `<p class="mt-1 text-sm text-gray-400 leading-relaxed">${text}</p>`;
+}
 
 // ─── Status cube ──────────────────────────────────────────────────────────────
 
@@ -49,56 +107,31 @@ function statusCube(status) {
 // ─── Card HTML ────────────────────────────────────────────────────────────────
 
 function createForgeItemHTML(item) {
-  if (item === "divider") return `<hr class="border-dark-700 border-dashed border-t-4" />`;
+  if (item === "divider") return `<hr class="border-dark-700 border-dashed border-t-4 md:col-span-2" />`;
 
-  const tags        = item.tags ?? [];
+  const tags        = (item.tags ?? []).map(normalizeTag).filter((t) => t.name);
   const primaryTag  = tags.find(t => t.primary) ?? tags[0];
-  const secondTags  = tags.filter(t => t !== primaryTag);
-  const titleHover  = TITLE_HOVER[primaryTag?.color] ?? "";
-
-  const primaryPill = primaryTag
-    ? `<span class="px-2 py-1 font-title uppercase border text-xs inline-flex items-center bg-white/8 ${tagColor(primaryTag.color).text}">${primaryTag.name}</span>`
-    : `<span></span>`;
-
-  const secondPills = secondTags.map(t =>
-    `<span class="px-2 py-1 font-title uppercase border text-xs inline-flex items-center bg-white/8 ${tagColor(t.color).text}">${t.name}</span>`
-  ).join("");
-
-  const separator = secondTags.length
-    ? `<span class="text-dark-700 select-none mx-0.5">|</span>`
-    : "";
+  const titleHover  = TITLE_HOVER[getTagColorName(primaryTag || {})] ?? "";
+  const tagBadges = createTagBadgesHTML(tags);
 
   const imageEl = item.image
     ? `<img src="${item.image}" alt="" class="size-30 bg-gray-800 border-3 border-dark-700 flex-shrink-0 object-cover image-rendering-pixelated" />`
     : "";
 
-  const statsEl = item.stats?.length
-    ? `<div class="flex flex-wrap gap-x-4 gap-y-1 mt-2 border-t border-dark-700 pt-2">
-        ${item.stats.map(s => `
-          <div class="flex items-center gap-1.5">
-            <span class="text-[8px] tracking-widest text-gray-600 uppercase">${s.label}:</span>
-            <span class="text-[9px] text-gray-300">${s.value}</span>
-          </div>`).join("")}
-       </div>`
-    : "";
-
   return `
     <article class="p-4 bg-dark-800 border-3 border-dark-700 transition-all duration-100 ease-in-out group" data-tags="${tags.map(t => t.name).join(",")}">
       <a href="${item.href}" class="no-underline flex flex-col gap-0">
-        <div class="flex items-center justify-between gap-3 mb-3">
+        <div class="flex items-center justify-between gap-3 mb-4">
           <div class="flex items-center gap-2 flex-wrap">
-            ${primaryPill}
-            ${separator}
-            ${secondPills}
+            ${tagBadges}
           </div>
           ${statusCube(item.status)}
         </div>
         <div class="flex gap-4">
           ${imageEl}
-          <div class="flex flex-col gap-1 flex-1 min-w-0">
-            <h3 class="font-title text-base ${titleHover} transition-colors">${item.title}</h3>
-            <p class="text-sm text-gray-500 leading-relaxed">${item.description}</p>
-            ${statsEl}
+          <div class="flex flex-col gap-2 flex-1 min-w-0">
+            ${createForgeTitleStackHTML(item, titleHover)}
+            ${createForgeDescriptionHTML(item.description)}
           </div>
         </div>
       </a>
@@ -109,17 +142,31 @@ function createForgeItemHTML(item) {
 
 let allItems = [];
 
+function readTagDefinitions(payload) {
+  if (Array.isArray(payload)) return payload;
+  return payload?.tags || [];
+}
+
+function setTagColorLookup(definitions) {
+  const map = new Map();
+  (definitions || []).forEach((entry) => {
+    if (!entry?.name || !entry?.color) return;
+    map.set(normalizeTagName(entry.name), String(entry.color).toLowerCase());
+  });
+  tagColorLookup = map;
+}
+
 function buildFilters(items) {
   const strip = document.getElementById("forge-filters");
   if (!strip) return;
 
   const tags = [...new Set(
-    items.filter(i => i !== "divider").flatMap(i => (i.tags ?? []).map(t => t.name))
+    items.filter(i => i !== "divider").flatMap(i => (i.tags ?? []).map((t) => normalizeTag(t).name).filter(Boolean))
   )].sort();
 
   strip.innerHTML = [
     `<button class="journal-filter active" data-tag="all">All</button>`,
-    ...tags.map(t => `<button class="journal-filter" data-tag="${t}">${t}</button>`)
+    ...tags.map(t => `<button class="journal-filter" data-tag="${t}">${titleCaseTag(t)}</button>`)
   ].join("");
 
   strip.addEventListener("click", e => {
@@ -141,7 +188,7 @@ function applyFilter(tag) {
   }
 
   const filtered = allItems.filter(
-    i => i !== "divider" && (i.tags ?? []).some(t => t.name === tag)
+    i => i !== "divider" && (i.tags ?? []).map(normalizeTag).some(t => t.name === tag)
   );
   container.innerHTML = filtered.map(createForgeItemHTML).join("");
 }
@@ -150,8 +197,13 @@ function applyFilter(tag) {
 
 async function loadForgeItems() {
   try {
-    const res = await fetch("./data/forge-items.json");
-    allItems = await res.json();
+    const [itemsRes, tagsRes] = await Promise.all([fetch("./data/forge-items.json"), fetch("./data/tags.json")]);
+    const payload = await itemsRes.json();
+    const tagPayload = await tagsRes.json();
+
+    allItems = Array.isArray(payload) ? payload : payload.items || [];
+    setTagColorLookup(readTagDefinitions(tagPayload));
+
     buildFilters(allItems);
     document.getElementById("forge-items-container").innerHTML = allItems.map(createForgeItemHTML).join("");
   } catch (err) {

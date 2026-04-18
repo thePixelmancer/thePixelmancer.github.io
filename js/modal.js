@@ -26,11 +26,13 @@ function createModal() {
         <img id="modalImage" src="" alt="" class="w-full h-auto object-cover border-3 border-dark-700 mb-5" />
 
         <div class="mb-5 flex flex-col gap-2">
-          <h4 id="modalProjectTitle" class="font-title text-base text-gray-100"></h4>
+          <h4 id="modalProjectTitle" class="font-basic text-2xl text-gray-100 font-semibold leading-snug"></h4>
+          <p id="modalProjectTeam" class="font-title text-xs uppercase tracking-wide text-gray-300"></p>
+          <p id="modalProjectDate" class="text-xs text-gray-500"></p>
           <p id="modalProjectDescription" class="text-sm text-gray-400 leading-relaxed"></p>
         </div>
 
-        <dl id="modalMetadata" class="grid grid-cols-2 gap-3"></dl>
+        <div id="modalTags" class="flex flex-wrap gap-2"></div>
       </div>
 
       <footer class="flex-shrink-0 flex justify-end gap-3 px-5 py-4 bg-dark-900 border-t-4 border-dark-700">
@@ -52,45 +54,6 @@ function createModal() {
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeModal();
   });
-}
-
-// ─── Open / close ─────────────────────────────────────────────────────────────
-
-function openModal(cardElement) {
-  const title = cardElement.querySelector("h3").textContent.trim();
-  const imageSrc = cardElement.querySelector("img").src;
-  const imageAlt = cardElement.querySelector("img").alt;
-  const projectType = cardElement.querySelectorAll("p")[0].textContent.trim();
-  const description = cardElement.querySelectorAll("p")[1].textContent.trim();
-
-  document.getElementById("modalTitle").textContent = title;
-  document.getElementById("modalImage").src = imageSrc;
-  document.getElementById("modalImage").alt = imageAlt;
-  document.getElementById("modalProjectTitle").textContent = title;
-  document.getElementById("modalProjectDescription").textContent = description;
-
-  const metadata = {
-    Type: projectType,
-    Description: description,
-    Image: imageAlt,
-    Project: "CastleBuild",
-  };
-
-  const metadataContainer = document.getElementById("modalMetadata");
-  metadataContainer.innerHTML = "";
-
-  for (const [key, value] of Object.entries(metadata)) {
-    const item = document.createElement("div");
-    item.className = "card p-3 flex flex-col";
-    item.innerHTML = `
-      <span class="text-xs text-gray-500">${key}:</span>
-      <span class="text-xs text-fuchsia-300">${value}</span>
-    `;
-    metadataContainer.appendChild(item);
-  }
-
-  document.getElementById("portfolioModal").classList.remove("hidden");
-  document.getElementById("portfolioModal").classList.add("flex");
 }
 
 function closeModal() {
