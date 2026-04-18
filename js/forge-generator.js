@@ -1,19 +1,7 @@
-// ─── Tag colors ───────────────────────────────────────────────────────────────
-// Full class strings so Tailwind's scanner picks them all up.
+// ─── Shared primitives ───────────────────────────────────────────────────────
 
-const DEFAULT_BADGE_CLASSES = "bg-dark-800 text-gray-100 border-dark-700";
-
-const TAG_BADGE_BY_COLOR = {
-  amber: "bg-amber-900 text-amber-100 border-amber-600",
-  blue: "bg-blue-900 text-blue-100 border-blue-600",
-  fuchsia: "bg-fuchsia-900 text-fuchsia-100 border-fuchsia-600",
-  green: "bg-green-900 text-green-100 border-green-600",
-  orange: "bg-orange-900 text-orange-100 border-orange-600",
-  purple: "bg-purple-900 text-purple-100 border-purple-600",
-};
-
-let tagColorLookup = new Map();
-let revealRunId = 0;
+const tagManager = window.AngeloCore.createTagManager();
+const animateForgeReveal = window.AngeloCore.createSequentialRevealer();
 
 // Title hover color derived from primary tag
 const TITLE_HOVER = {
@@ -26,32 +14,23 @@ const TITLE_HOVER = {
 };
 
 function normalizeTagName(name) {
-  return String(name || "").trim().toLowerCase();
+  return tagManager.normalizeTagName(name);
 }
 
 function normalizeTag(tag) {
-  if (typeof tag === "string") return { name: tag, primary: false };
-  if (tag && typeof tag === "object") return { name: tag.name || "", primary: !!tag.primary, color: tag.color };
-  return { name: "", primary: false };
+  return tagManager.normalizeTagEntry(tag);
 }
 
 function getTagColorName(tag) {
-  if (tag.color) return tag.color;
-  const normalized = normalizeTagName(tag.name);
-  return tagColorLookup.get(normalized) || "white";
+  return tagManager.getTagColorName(tag.name, tag.color);
 }
 
 function getBadgeClasses(tag) {
-  const color = getTagColorName(tag);
-  return TAG_BADGE_BY_COLOR[color] || DEFAULT_BADGE_CLASSES;
+  return tagManager.getBadgeClasses(tag.name, tag.color);
 }
 
 function titleCaseTag(tag) {
-  return String(tag || "")
-    .split(/\s+/)
-    .filter(Boolean)
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(" ");
+  return window.AngeloCore.titleCaseTag(tag);
 }
 
 function createSingleTagHTML(tag) {
@@ -135,29 +114,6 @@ function createForgeItemHTML(item) {
     </article>`;
 }
 
-function animateForgeReveal(container) {
-  const items = Array.from(container.querySelectorAll(".sequential-reveal-item"));
-  if (!items.length) return;
-
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  items.forEach((item) => item.classList.remove("is-visible"));
-
-  if (prefersReducedMotion) {
-    items.forEach((item) => item.classList.add("is-visible"));
-    return;
-  }
-
-  revealRunId += 1;
-  const runId = revealRunId;
-
-  items.forEach((item, index) => {
-    window.setTimeout(() => {
-      if (runId !== revealRunId) return;
-      item.classList.add("is-visible");
-    }, 30 + index * 55);
-  });
-}
-
 function renderForgeItems(items) {
   const container = document.getElementById("forge-items-container");
   if (!container) return;
@@ -171,17 +127,7 @@ function renderForgeItems(items) {
 let allItems = [];
 
 function readTagDefinitions(payload) {
-  if (Array.isArray(payload)) return payload;
-  return payload?.tags || [];
-}
-
-function setTagColorLookup(definitions) {
-  const map = new Map();
-  (definitions || []).forEach((entry) => {
-    if (!entry?.name || !entry?.color) return;
-    map.set(normalizeTagName(entry.name), String(entry.color).toLowerCase());
-  });
-  tagColorLookup = map;
+  return window.AngeloCore.readTagDefinitions(payload);
 }
 
 function buildFilters(items) {
@@ -222,12 +168,13 @@ function applyFilter(tag) {
 
 async function loadForgeItems() {
   try {
-    const [itemsRes, tagsRes] = await Promise.all([fetch("./data/forge-items.json"), fetch("./data/tags.json")]);
-    const payload = await itemsRes.json();
-    const tagPayload = await tagsRes.json();
+    const { data, tagDefinitions } = await window.AngeloCore.loadDataWithTags({
+      dataUrl: "./data/forge-items.json",
+      dataKey: "items",
+    });
 
-    allItems = Array.isArray(payload) ? payload : payload.items || [];
-    setTagColorLookup(readTagDefinitions(tagPayload));
+    allItems = data;
+    tagManager.setTagColorLookup(readTagDefinitions(tagDefinitions));
 
     buildFilters(allItems);
     renderForgeItems(allItems);

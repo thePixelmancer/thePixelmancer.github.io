@@ -7,49 +7,15 @@
 
 let allQuests = [];
 let activeFilter = "all";
-let tagColorLookup = new Map();
-let revealRunId = 0;
-
-const DEFAULT_BADGE_CLASSES = "bg-dark-800 text-gray-100 border-dark-700";
-
-const TAG_BADGE_BY_COLOR = {
-  amber: "bg-amber-900 text-amber-100 border-amber-600",
-  blue: "bg-blue-900 text-blue-100 border-blue-600",
-  fuchsia: "bg-fuchsia-900 text-fuchsia-100 border-fuchsia-600",
-  green: "bg-green-900 text-green-100 border-green-600",
-  orange: "bg-orange-900 text-orange-100 border-orange-600",
-  purple: "bg-purple-900 text-purple-100 border-purple-600",
-};
-
-function normalizeTagName(name) {
-  return String(name || "")
-    .trim()
-    .toLowerCase();
-}
-
-function normalizeTagEntry(tag) {
-  if (typeof tag === "string") return { name: tag, primary: false };
-  if (tag && typeof tag === "object") return { name: tag.name || "", primary: !!tag.primary, color: tag.color };
-  return { name: "", primary: false };
-}
-
-function getTagColorName(tagName, explicitColor) {
-  if (explicitColor) return explicitColor;
-  const normalized = normalizeTagName(tagName);
-  return tagColorLookup.get(normalized) || "white";
-}
-
-function getBadgeClasses(tagName, explicitColor) {
-  const color = getTagColorName(tagName, explicitColor);
-  return TAG_BADGE_BY_COLOR[color] || DEFAULT_BADGE_CLASSES;
-}
+const tagManager = window.AngeloCore.createTagManager();
+const animateQuestReveal = window.AngeloCore.createSequentialRevealer();
 
 function normalizeTag(tag) {
-  return normalizeTagName(tag);
+  return tagManager.normalizeTagName(tag);
 }
 
 function getQuestTagObjects(quest) {
-  return (quest.tags ?? []).map(normalizeTagEntry).filter((t) => t.name);
+  return (quest.tags ?? []).map(tagManager.normalizeTagEntry).filter((t) => t.name);
 }
 
 function getQuestTags(quest) {
@@ -60,15 +26,11 @@ function getQuestTags(quest) {
 }
 
 function titleCaseTag(tag) {
-  return String(tag || "")
-    .split(/\s+/)
-    .filter(Boolean)
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(" ");
+  return window.AngeloCore.titleCaseTag(tag);
 }
 
 function createSingleTagHTML(tag) {
-  const classes = getBadgeClasses(tag.name, tag.color);
+  const classes = tagManager.getBadgeClasses(tag.name, tag.color);
   return `<span class="px-2 py-1 font-title uppercase border text-xs inline-flex items-center ${classes}">${tag.name}</span>`;
 }
 
@@ -98,57 +60,21 @@ function createQuestDescriptionHTML(text, classes) {
   return `<p class="mt-2 ${classes}">${text}</p>`;
 }
 
-function readTagDefinitions(payload) {
-  if (Array.isArray(payload)) return payload;
-  return payload?.tags || [];
-}
-
-function setTagColorLookup(definitions) {
-  const map = new Map();
-  (definitions || []).forEach((entry) => {
-    if (!entry?.name || !entry?.color) return;
-    map.set(normalizeTagName(entry.name), String(entry.color).toLowerCase());
-  });
-  tagColorLookup = map;
-}
-
 async function loadQuests() {
   try {
-    const [questsResponse, tagsResponse] = await Promise.all([fetch("./data/quests.json"), fetch("./data/tags.json")]);
-    const payload = await questsResponse.json();
-    const tagPayload = await tagsResponse.json();
+    const { data, tagDefinitions } = await window.AngeloCore.loadDataWithTags({
+      dataUrl: "./data/quests.json",
+      dataKey: "quests",
+    });
 
-    allQuests = Array.isArray(payload) ? payload : payload.quests || [];
-    setTagColorLookup(readTagDefinitions(tagPayload));
+    allQuests = data;
+    tagManager.setTagColorLookup(tagDefinitions);
 
     setupFilters();
     applyActiveFilter();
   } catch (error) {
     console.error("[Quests] load failed:", error);
   }
-}
-
-function animateQuestReveal(container) {
-  const cards = Array.from(container.querySelectorAll(".sequential-reveal-item"));
-  if (!cards.length) return;
-
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  cards.forEach((card) => card.classList.remove("is-visible"));
-
-  if (prefersReducedMotion) {
-    cards.forEach((card) => card.classList.add("is-visible"));
-    return;
-  }
-
-  revealRunId += 1;
-  const runId = revealRunId;
-
-  cards.forEach((card, index) => {
-    window.setTimeout(() => {
-      if (runId !== revealRunId) return;
-      card.classList.add("is-visible");
-    }, 30 + index * 55);
-  });
 }
 
 function renderQuests(quests) {
@@ -158,6 +84,7 @@ function renderQuests(quests) {
   animateQuestReveal(container);
 
   container.onclick = (e) => {
+    if (e.target.closest("[data-quest-link]")) return;
     const card = e.target.closest("[data-quest-index]");
     if (!card) return;
     const quest = allQuests[parseInt(card.dataset.questIndex, 10)];
@@ -193,7 +120,7 @@ function createQuestHTML(quest, index) {
               quest.link && quest.link !== "#" ?
                 `<a href="${quest.link}" target="_blank" rel="noopener noreferrer"
                     class="mt-auto button-purple text-center no-underline"
-                    onclick="event.stopPropagation()">VIEW PROJECT</a>`
+                    data-quest-link>VIEW PROJECT</a>`
               : ""
             }
           </div>
@@ -296,8 +223,15 @@ function openQuestModal(quest) {
   const viewBtn = document.querySelector("#portfolioModal .button-purple");
   if (viewBtn) viewBtn.onclick = () => quest.link && quest.link !== "#" && window.open(quest.link, "_blank");
 
-  document.getElementById("portfolioModal").classList.remove("hidden");
-  document.getElementById("portfolioModal").classList.add("flex");
+  if (typeof window.openModal === "function") {
+    window.openModal();
+    return;
+  }
+
+  const modal = document.getElementById("portfolioModal");
+  if (!modal) return;
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
 }
 
 document.addEventListener("DOMContentLoaded", loadQuests);

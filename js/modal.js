@@ -1,5 +1,7 @@
 // ─── Modal DOM injection ──────────────────────────────────────────────────────
 
+let portfolioModalController = null;
+
 function createModal() {
   const modal = document.createElement("div");
   modal.id = "portfolioModal";
@@ -15,7 +17,7 @@ function createModal() {
         <h3 id="modalTitle" class="font-title text-base text-gray-100">Project Details</h3>
         <button
           type="button"
-          onclick="closeModal()"
+          data-modal-close
           class="font-title text-xs px-3 py-1 text-gray-400 hover:text-gray-100 transition-colors"
           aria-label="Close modal">
           ✕ Close
@@ -37,7 +39,7 @@ function createModal() {
 
       <footer class="flex-shrink-0 flex justify-end gap-3 px-5 py-4 bg-dark-900 border-t-4 border-dark-700">
         <button type="button" class="button-purple w-auto m-0 px-5">View Project</button>
-        <button type="button" class="button w-auto m-0 px-5" onclick="closeModal()">Close</button>
+        <button type="button" class="button w-auto m-0 px-5" data-modal-close>Close</button>
       </footer>
 
     </div>
@@ -45,21 +47,37 @@ function createModal() {
 
   document.body.appendChild(modal);
 
-  // Close on backdrop click
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) closeModal();
+  portfolioModalController = window.AngeloCore.createModalController({
+    modalId: "portfolioModal",
   });
-
-  // Close on Escape key
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeModal();
-  });
+  portfolioModalController.attachListeners();
 }
 
 function closeModal() {
-  document.getElementById("portfolioModal").classList.add("hidden");
-  document.getElementById("portfolioModal").classList.remove("flex");
+  if (portfolioModalController) {
+    portfolioModalController.close();
+    return;
+  }
+  const modal = document.getElementById("portfolioModal");
+  if (!modal) return;
+  modal.classList.add("hidden");
+  modal.classList.remove("flex");
 }
+
+function openModal() {
+  if (portfolioModalController) {
+    portfolioModalController.open();
+    return;
+  }
+  const modal = document.getElementById("portfolioModal");
+  if (!modal) return;
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+}
+
+window.closeModal = closeModal;
+window.openModal = openModal;
+window.getPortfolioModalController = () => portfolioModalController;
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
 

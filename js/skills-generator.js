@@ -4,23 +4,27 @@
  */
 
 let skillsData = null;
+let spellbookHandlersAttached = false;
+let spellbookModalController = null;
 
 const PATH_CONFIG = {
   development: {
-    listId:      "dev-skill-list",
-    color:       "#60a5fa",
-    colorFaint:  "rgba(96,165,250,0.15)",
-    colorBorder: "rgba(96,165,250,0.5)",
-    colorText:   "#93c5fd",
-    accentBg:    "bg-blue-500",
+    listId: "dev-skill-list",
+    accentBg: "bg-blue-500",
+    iconBgClass: "bg-blue-500/15",
+    iconBorderClass: "border-blue-400",
+    iconTextClass: "text-blue-300",
+    buttonToneClass: "hover:border-blue-400/70 hover:shadow-[var(--shadow-sharp),0_0_10px_rgba(96,165,250,0.15)]",
+    labelToneClass: "group-hover:text-blue-300",
   },
   art: {
-    listId:      "art-skill-list",
-    color:       "#e879f9",
-    colorFaint:  "rgba(232,121,249,0.15)",
-    colorBorder: "rgba(232,121,249,0.5)",
-    colorText:   "#f0abfc",
-    accentBg:    "bg-fuchsia-500",
+    listId: "art-skill-list",
+    accentBg: "bg-fuchsia-500",
+    iconBgClass: "bg-fuchsia-500/15",
+    iconBorderClass: "border-fuchsia-400",
+    iconTextClass: "text-fuchsia-300",
+    buttonToneClass: "hover:border-fuchsia-400/70 hover:shadow-[var(--shadow-sharp),0_0_10px_rgba(232,121,249,0.15)]",
+    labelToneClass: "group-hover:text-fuchsia-300",
   },
 };
 
@@ -28,10 +32,9 @@ const PATH_CONFIG = {
 
 async function loadSkills() {
   try {
-    const res = await fetch("./data/skills.json");
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    skillsData = await res.json();
+    skillsData = await window.AngeloCore.loadJSON("./data/skills.json");
     buildSpellbookModal();
+    attachSkillIconFallbackHandler();
     renderAllPaths();
   } catch (err) {
     console.error("[Skills] load failed:", err);
@@ -48,38 +51,42 @@ function renderAllPaths() {
     if (!container) return;
 
     container.innerHTML = path.skills.map((skill) => `
-      <button type="button" class="skill-tag w-full flex items-center gap-4 p-4 bg-dark-900 border-2 border-dark-700 transition-all duration-100 text-left hover:-translate-y-px"
+      <button type="button" class="skill-tag group ${cfg.buttonToneClass}"
               data-path="${pathKey}"
               data-skill="${skill.id}"
-              aria-label="Open ${skill.label} spellbook"
-              onmouseenter="this.style.borderColor='${cfg.colorBorder}';this.querySelector('.skill-label').style.color='${cfg.colorText}';this.style.boxShadow='var(--shadow-sharp), 0 0 10px ${cfg.colorFaint}'"
-              onmouseleave="this.style.borderColor='';this.querySelector('.skill-label').style.color='';this.style.boxShadow=''">
-        <div class="w-11 h-11 flex-shrink-0 flex items-center justify-center border-2"
-             style="background:${cfg.colorFaint};border-color:${cfg.color};">
-          <img src="${skill.icon ?? ""}" alt="" class="w-7 h-7 [image-rendering:pixelated]"
-               onerror="this.style.display='none';this.nextElementSibling.classList.remove('hidden')" />
-          <span class="hidden text-base" style="color:${cfg.color}">✦</span>
+              aria-label="Open ${skill.label} spellbook">
+        <div class="w-11 h-11 flex-shrink-0 flex items-center justify-center border-2 ${cfg.iconBgClass} ${cfg.iconBorderClass}">
+          <img src="${skill.icon ?? ""}" alt="" class="skill-icon-image w-7 h-7 [image-rendering:pixelated]" />
+          <span class="skill-icon-fallback hidden text-base ${cfg.iconTextClass}">✦</span>
         </div>
-        <span class="skill-label flex-1 text-xs text-gray-400 transition-colors duration-100">${skill.label}</span>
+        <span class="skill-label flex-1 text-xs text-gray-400 transition-colors duration-100 ${cfg.labelToneClass}">${skill.label}</span>
         <span class="text-gray-700 transition-colors duration-100">›</span>
       </button>
     `).join("");
   });
 }
 
+function attachSkillIconFallbackHandler() {
+  if (spellbookHandlersAttached) return;
+  spellbookHandlersAttached = true;
+
+  document.addEventListener(
+    "error",
+    (event) => {
+      const img = event.target;
+      if (!(img instanceof HTMLImageElement) || !img.classList.contains("skill-icon-image")) return;
+      img.classList.add("hidden");
+      const fallback = img.nextElementSibling;
+      if (fallback) fallback.classList.remove("hidden");
+    },
+    true
+  );
+}
+
 // ─── Spellbook Modal ──────────────────────────────────────────────────────────
 
 function buildSpellbookModal() {
   if (document.getElementById("spellbookModal")) return;
-
-  const style = document.createElement("style");
-  style.textContent = `
-    .scroll-content-scrollbar::-webkit-scrollbar { width: 8px; }
-    .scroll-content-scrollbar::-webkit-scrollbar-track { background: rgb(17,24,40); }
-    .scroll-content-scrollbar::-webkit-scrollbar-thumb { background: rgb(55,65,81); border-radius: 2px; }
-    .scroll-content-scrollbar::-webkit-scrollbar-thumb:hover { background: rgb(75,85,99); }
-  `;
-  document.head.appendChild(style);
 
   const modal = document.createElement("div");
   modal.id = "spellbookModal";
@@ -98,7 +105,8 @@ function buildSpellbookModal() {
             <p id="spellbookPath" class="text-xs mt-0.5 uppercase tracking-widest text-gray-500"></p>
           </div>
         </div>
-        <button type="button" onclick="closeSpellbook()"
+        <button type="button"
+          data-modal-close
                 class="font-title text-xs px-3 py-1 text-gray-400 hover:text-gray-100 transition-colors"
                 aria-label="Close spellbook">
           ✕ Close
@@ -110,8 +118,10 @@ function buildSpellbookModal() {
   `;
 
   document.body.appendChild(modal);
-  modal.addEventListener("click", (e) => { if (e.target === modal) closeSpellbook(); });
-  document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeSpellbook(); });
+  spellbookModalController = window.AngeloCore.createModalController({
+    modalId: "spellbookModal",
+  });
+  spellbookModalController.attachListeners();
 
   document.addEventListener("click", (e) => {
     const tag = e.target.closest(".skill-tag");
@@ -136,9 +146,8 @@ function openSpellbook(pathKey, skillId) {
     .map((spell) => `
       <div class="flex items-start gap-4 py-4 border-b border-dark-700 last:border-b-0">
         <div class="w-12 h-12 flex-shrink-0 border-2 border-dark-700 bg-dark-900 flex items-center justify-center">
-          <img src="${spell.icon}" alt="" class="w-full h-full object-cover [image-rendering:pixelated]"
-               onerror="this.style.display='none';this.nextElementSibling.classList.remove('hidden')"/>
-          <span class="hidden text-xl text-gray-600">✦</span>
+          <img src="${spell.icon}" alt="" class="skill-icon-image w-full h-full object-cover [image-rendering:pixelated]" />
+          <span class="skill-icon-fallback hidden text-xl text-gray-600">✦</span>
         </div>
         <div class="flex flex-col gap-1.5 flex-1">
           <div class="flex items-center gap-2">
@@ -154,17 +163,26 @@ function openSpellbook(pathKey, skillId) {
   const scrollEl = document.getElementById("spellbookContent");
   if (scrollEl) scrollEl.scrollTop = 0;
 
+  if (spellbookModalController) {
+    spellbookModalController.open();
+    return;
+  }
+
   const modal = document.getElementById("spellbookModal");
+  if (!modal) return;
   modal.classList.remove("hidden");
   modal.classList.add("flex");
 }
 
 function closeSpellbook() {
-  const modal = document.getElementById("spellbookModal");
-  if (modal) {
-    modal.classList.add("hidden");
-    modal.classList.remove("flex");
+  if (spellbookModalController) {
+    spellbookModalController.close();
+    return;
   }
+  const modal = document.getElementById("spellbookModal");
+  if (!modal) return;
+  modal.classList.add("hidden");
+  modal.classList.remove("flex");
 }
 
 // ─── Init ─────────────────────────────────────────────────────────────────────

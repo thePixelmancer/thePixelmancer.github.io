@@ -13,24 +13,24 @@
     <link rel="stylesheet" href="dist/styles.css" />
   </head>
 
-  <body class="bg-dark-900 flex flex-col min-h-screen" style="--page-accent: rgba(74,222,128,0.12)">
+  <body class="bg-dark-900 flex flex-col min-h-screen theme-green">
 
-    <div class="page-header" style="--header-accent-border: rgba(74, 222, 128, 0.4); --header-accent-text: rgb(134, 239, 172); --header-accent-glow: rgba(74, 222, 128, 0.5); --header-accent-line: rgba(74, 222, 128, 0.3);">
-      <a href="index.html" class="page-back-btn" aria-label="Back to menu">&lt;</a>
-      <div class="flex-1 flex flex-col items-center gap-1">
-        <h1 class="page-title">INVENTORY</h1>
-        <div class="flex items-center gap-3">
-          <div class="page-title-line"></div>
-          <p class="page-subtitle">Tools I use</p>
-          <div class="page-title-line"></div>
+    <div class="page-shell page-shell--fill">
+      <div class="page-header">
+        <div class="page-title-stack">
+          <h1 class="page-title"><span class="page-title-prefix"><a href="index.html" class="page-title-home">index</a><span class="page-title-sep" aria-hidden="true">&gt;</span></span><span class="page-title-current">INVENTORY</span></h1>
+          <div class="flex items-center gap-3">
+            <div class="page-title-line"></div>
+            <p class="page-subtitle">Tools I use</p>
+            <div class="page-title-line"></div>
+          </div>
         </div>
       </div>
-      <div class="flex-shrink-0 w-16" aria-hidden="true"></div>
-    </div>
 
-    <main class="page-main flex-1 flex items-center justify-center">
-      <div id="inventory-container" class="section-content section-content--page max-w-sm w-full"></div>
-    </main>
+      <main class="page-main flex-1 flex items-center justify-center">
+        <div id="inventory-container" class="section-content section-content--page max-w-sm w-full"></div>
+      </main>
+    </div>
 
     <div class="ambient-glow"></div>
 
