@@ -8,13 +8,12 @@ const TAG_BADGE_BY_COLOR = {
   blue: "bg-blue-900 text-blue-100 border-blue-600",
   fuchsia: "bg-fuchsia-900 text-fuchsia-100 border-fuchsia-600",
   green: "bg-green-900 text-green-100 border-green-600",
-  purple: "bg-purple-900 text-purple-100 border-purple-600",
   orange: "bg-orange-900 text-orange-100 border-orange-600",
-  gray: "bg-dark-800 text-gray-100 border-dark-700",
-  white: "bg-dark-800 text-white border-white/60",
+  purple: "bg-purple-900 text-purple-100 border-purple-600",
 };
 
 let tagColorLookup = new Map();
+let revealRunId = 0;
 
 // Title hover color derived from primary tag
 const TITLE_HOVER = {
@@ -24,8 +23,6 @@ const TITLE_HOVER = {
   amber:   "group-hover:text-amber-400",
   orange:  "group-hover:text-orange-400",
   fuchsia: "group-hover:text-fuchsia-400",
-  gray:    "group-hover:text-gray-300",
-  white:   "group-hover:text-gray-100",
 };
 
 function normalizeTagName(name) {
@@ -107,7 +104,7 @@ function statusCube(status) {
 // ─── Card HTML ────────────────────────────────────────────────────────────────
 
 function createForgeItemHTML(item) {
-  if (item === "divider") return `<hr class="border-dark-700 border-dashed border-t-4 md:col-span-2" />`;
+  if (item === "divider") return `<hr class="sequential-reveal-item border-dark-700 border-dashed border-t-4 md:col-span-2" />`;
 
   const tags        = (item.tags ?? []).map(normalizeTag).filter((t) => t.name);
   const primaryTag  = tags.find(t => t.primary) ?? tags[0];
@@ -119,7 +116,7 @@ function createForgeItemHTML(item) {
     : "";
 
   return `
-    <article class="p-4 bg-dark-800 border-3 border-dark-700 transition-all duration-100 ease-in-out group" data-tags="${tags.map(t => t.name).join(",")}">
+    <article class="sequential-reveal-item p-4 bg-dark-800 border-3 border-dark-700 transition-all duration-100 ease-in-out group" data-tags="${tags.map(t => t.name).join(",")}">
       <a href="${item.href}" class="no-underline flex flex-col gap-0">
         <div class="flex items-center justify-between gap-3 mb-4">
           <div class="flex items-center gap-2 flex-wrap">
@@ -136,6 +133,37 @@ function createForgeItemHTML(item) {
         </div>
       </a>
     </article>`;
+}
+
+function animateForgeReveal(container) {
+  const items = Array.from(container.querySelectorAll(".sequential-reveal-item"));
+  if (!items.length) return;
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  items.forEach((item) => item.classList.remove("is-visible"));
+
+  if (prefersReducedMotion) {
+    items.forEach((item) => item.classList.add("is-visible"));
+    return;
+  }
+
+  revealRunId += 1;
+  const runId = revealRunId;
+
+  items.forEach((item, index) => {
+    window.setTimeout(() => {
+      if (runId !== revealRunId) return;
+      item.classList.add("is-visible");
+    }, 30 + index * 55);
+  });
+}
+
+function renderForgeItems(items) {
+  const container = document.getElementById("forge-items-container");
+  if (!container) return;
+
+  container.innerHTML = items.map(createForgeItemHTML).join("");
+  animateForgeReveal(container);
 }
 
 // ─── Filter strip ─────────────────────────────────────────────────────────────
@@ -179,18 +207,15 @@ function buildFilters(items) {
 }
 
 function applyFilter(tag) {
-  const container = document.getElementById("forge-items-container");
-  if (!container) return;
-
   if (tag === "all") {
-    container.innerHTML = allItems.map(createForgeItemHTML).join("");
+    renderForgeItems(allItems);
     return;
   }
 
   const filtered = allItems.filter(
     i => i !== "divider" && (i.tags ?? []).map(normalizeTag).some(t => t.name === tag)
   );
-  container.innerHTML = filtered.map(createForgeItemHTML).join("");
+  renderForgeItems(filtered);
 }
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
@@ -205,7 +230,7 @@ async function loadForgeItems() {
     setTagColorLookup(readTagDefinitions(tagPayload));
 
     buildFilters(allItems);
-    document.getElementById("forge-items-container").innerHTML = allItems.map(createForgeItemHTML).join("");
+    renderForgeItems(allItems);
   } catch (err) {
     console.error("[Forge] load failed:", err);
   }

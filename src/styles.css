@@ -57,12 +57,35 @@
   /* ─── Sticky back-navigation bar ──────────────────────────────────────────── */
 
   .page-header {
-    @apply sticky top-0 z-20 flex items-center px-6 py-4 bg-dark-900/95 border-b-4;
-    backdrop-filter: blur(4px);
-    border-bottom-color: var(--header-accent-border, rgba(156, 163, 175, 0.3));
+    @apply sticky top-0 z-20 flex items-center gap-3 px-4 md:px-6 py-3 md:py-4 bg-dark-900/95 border-b-2 border-dark-700;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.35);
   }
   .page-back-btn {
-    @apply text-[9px] text-gray-600 hover:text-gray-300 tracking-widest transition-colors duration-100 no-underline flex-shrink-0 w-16;
+    @apply inline-flex items-center justify-center flex-shrink-0 px-3 md:px-4 py-2 text-[8px] md:text-[9px] uppercase no-underline border-2 border-dark-700 bg-dark-800 transition-all duration-100;
+    min-width: 5.5rem;
+    letter-spacing: 0.24em;
+    color: rgb(156, 163, 175);
+    box-shadow: var(--shadow-sharp);
+  }
+  .page-back-btn::before {
+    content: "\2190";
+    margin-right: 0.35rem;
+    color: var(--header-accent-text, rgb(209, 213, 219));
+    text-shadow: 0 0 8px var(--header-accent-glow, rgba(156, 163, 175, 0.35));
+  }
+  .page-back-btn:hover {
+    color: rgb(243, 244, 246);
+    border-color: var(--header-accent-line, rgba(156, 163, 175, 0.45));
+    background: rgb(31, 41, 55);
+    transform: translateX(-1px);
+  }
+  .page-back-btn:active {
+    transform: translate(0, 1px);
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.25);
+  }
+  .page-header > [aria-hidden="true"] {
+    width: 5.5rem;
+    flex-shrink: 0;
   }
   .page-title {
     @apply text-2xl font-title text-center;
@@ -70,11 +93,25 @@
     text-shadow: 0 0 18px var(--header-accent-glow, rgba(245, 158, 11, 0.5));
   }
   .page-title-line {
-    @apply h-px w-8;
-    background: var(--header-accent-line, rgba(156, 163, 175, 0.2));
+    @apply hidden;
   }
   .page-subtitle {
-    @apply text-[8px] tracking-[0.25em] text-gray-500 uppercase text-center;
+    @apply text-[8px] uppercase text-center;
+    letter-spacing: 0.22em;
+    color: rgb(156, 163, 175);
+  }
+
+  @media (max-width: 640px) {
+    .page-back-btn {
+      min-width: 4.75rem;
+      padding-left: 0.6rem;
+      padding-right: 0.6rem;
+      letter-spacing: 0.18em;
+    }
+
+    .page-header > [aria-hidden="true"] {
+      width: 4.75rem;
+    }
   }
 
   /* ─── Ambient glow — shared across all section pages ──────────────────────── */
@@ -239,7 +276,7 @@
            hover:border-gray-400 hover:text-gray-200 transition-colors cursor-pointer bg-transparent;
   }
   .journal-filter.active {
-    @apply border-purple-500 text-purple-300;
+    @apply border-amber-500 text-amber-300;
   }
 
   /* ─── Buttons ──────────────────────────────────────────────────────────────── */
@@ -258,6 +295,73 @@
            border-b-4 border-purple-800
            shadow-sharp active:translate-y-0.5 active:shadow-none active:border-b-transparent
            transition-all duration-50 ease-in-out;
+  }
+
+  /* ─── Index intro animations ─────────────────────────────────────────────── */
+
+  .index-reveal {
+    opacity: 0;
+    transform: translateY(10px) scale(0.99);
+    filter: blur(2px);
+  }
+
+  .index-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+    transition:
+      opacity 360ms ease-out,
+      transform 360ms ease-out,
+      filter 360ms ease-out;
+  }
+
+  .sequential-reveal-item {
+    opacity: 0;
+    transform: translateY(8px);
+    filter: blur(1px);
+  }
+
+  .sequential-reveal-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+    transition:
+      opacity 300ms ease-out,
+      transform 300ms ease-out,
+      filter 300ms ease-out;
+  }
+
+  .typewriter-line {
+    min-height: 1.5em;
+  }
+
+  .typewriter-line.is-typing::after {
+    content: "_";
+    margin-left: 2px;
+    color: rgb(251 191 36);
+    animation: terminalCursor 0.75s step-end infinite;
+  }
+
+  .typewriter-reveal-wait {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  .typewriter-reveal-in {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 220ms ease-out;
+  }
+
+  @keyframes terminalCursor {
+    0%,
+    45% {
+      opacity: 1;
+    }
+    46%,
+    100% {
+      opacity: 0;
+    }
   }
 }
 

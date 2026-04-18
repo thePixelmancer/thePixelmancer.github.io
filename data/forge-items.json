@@ -1,43 +1,172 @@
 {
   "items": [
     {
-      "id": "regolith-filters",
-      "image": "images/items/rego.png",
-      "href": "https://github.com/thePixelmancer/regolith-filters",
-      "title": "Regolith Filters",
-      "description": "10 Regolith filters for automating Bedrock addon workflows — Aseprite conversion, spawn egg colors, documentation generation, image compositing, localization, and more.",
+      "id": "regolith-aseprite-convert",
+      "image": "",
+      "href": "https://github.com/thePixelmancer/regolith-filters/tree/main/aseprite_convert",
+      "title": "Aseprite Convert",
+      "description": "Turn Aseprite files into Minecraft-ready PNG textures with sprite sheets, frame exports, and atlas-style layer splits.",
       "status": "active",
       "tags": [
         {
-          "name": "Tool",
+          "name": "Regolith",
           "primary": true
         },
         {
           "name": "Python"
-        },
-        {
-          "name": "TypeScript"
-        },
-        {
-          "name": "Regolith"
         }
-      ],
-      "stats": [
+      ]
+    },
+    {
+      "id": "regolith-addon-docs",
+      "image": "",
+      "href": "https://github.com/thePixelmancer/regolith-filters/tree/main/addon_docs",
+      "title": "Addon Docs",
+      "description": "Generate clean Markdown docs from your add-on files using templates, so documentation stays up to date as you build.",
+      "status": "active",
+      "tags": [
         {
-          "label": "Filters",
-          "value": "10"
+          "name": "Regolith",
+          "primary": true
         },
         {
-          "label": "Stars",
-          "value": "5"
+          "name": "Deno"
+        }
+      ]
+    },
+    {
+      "id": "regolith-auto-spawn-egg",
+      "image": "",
+      "href": "https://github.com/thePixelmancer/regolith-filters/tree/main/auto_spawn_egg",
+      "title": "Auto Spawn Egg",
+      "description": "Automatically picks spawn egg colors from your entity textures, so custom mobs get matching eggs without manual color tuning.",
+      "status": "active",
+      "tags": [
+        {
+          "name": "Regolith",
+          "primary": true
         },
         {
-          "label": "License",
-          "value": "MIT"
+          "name": "Python"
+        }
+      ]
+    },
+    {
+      "id": "regolith-fetcher",
+      "image": "",
+      "href": "https://github.com/thePixelmancer/regolith-filters/tree/main/fetcher",
+      "title": "Fetcher",
+      "description": "Pull files or folders from GitHub straight into your project, great for shared scripts, templates, and external assets.",
+      "status": "active",
+      "tags": [
+        {
+          "name": "Regolith",
+          "primary": true
         },
         {
-          "label": "Visibility",
-          "value": "Public"
+          "name": "Python"
+        }
+      ]
+    },
+    {
+      "id": "regolith-image-mixer",
+      "image": "images/items/regolith-image-mixer.png",
+      "href": "https://github.com/thePixelmancer/regolith-filters/tree/main/image_mixer",
+      "title": "Image Mixer",
+      "description": "Build many texture variants from layered PNGs using configurable positioning, scaling, and combination rules.",
+      "status": "active",
+      "tags": [
+        {
+          "name": "Regolith",
+          "primary": true
+        },
+        {
+          "name": "Python"
+        }
+      ]
+    },
+    {
+      "id": "regolith-mclocalize",
+      "image": "",
+      "href": "https://github.com/thePixelmancer/regolith-filters/tree/main/mclocalize",
+      "title": "MCLocalize",
+      "description": "Translate your .lang files into multiple languages to bootstrap localization, then refine the results before release.",
+      "status": "active",
+      "tags": [
+        {
+          "name": "Regolith",
+          "primary": true
+        },
+        {
+          "name": "Python"
+        }
+      ]
+    },
+    {
+      "id": "regolith-replacements",
+      "image": "",
+      "href": "https://github.com/thePixelmancer/regolith-filters/tree/main/replacements",
+      "title": "Replacements",
+      "description": "Run fast project-wide text replacements for namespaces and placeholders when starting, cloning, or rebranding packs.",
+      "status": "active",
+      "tags": [
+        {
+          "name": "Regolith",
+          "primary": true
+        },
+        {
+          "name": "Python"
+        }
+      ]
+    },
+    {
+      "id": "regolith-jsonify",
+      "image": "",
+      "href": "https://github.com/thePixelmancer/regolith-filters/tree/main/jsonify",
+      "title": "Jsonify",
+      "description": "Convert YAML, JSON5, JSONC, and TOML into standard JSON so your data pipeline stays Minecraft-tool friendly.",
+      "status": "active",
+      "tags": [
+        {
+          "name": "Regolith",
+          "primary": true
+        },
+        {
+          "name": "Python"
+        }
+      ]
+    },
+    {
+      "id": "regolith-multifeature",
+      "image": "images/items/regolith-multifeature.png",
+      "href": "https://github.com/thePixelmancer/regolith-filters/tree/main/multifeature",
+      "title": "MultiFeature",
+      "description": "Write multiple feature definitions in one source file and split them into Minecraft-ready JSON during build.",
+      "status": "active",
+      "tags": [
+        {
+          "name": "Regolith",
+          "primary": true
+        },
+        {
+          "name": "Python"
+        }
+      ]
+    },
+    {
+      "id": "regolith-recipe-image-gen",
+      "image": "",
+      "href": "https://github.com/thePixelmancer/regolith-filters/tree/main/recipe_image_gen",
+      "title": "Recipe Image Gen",
+      "description": "Automatically generate visual crafting recipe images from your recipe files for docs, wikis, and player guides.",
+      "status": "active",
+      "tags": [
+        {
+          "name": "Regolith",
+          "primary": true
+        },
+        {
+          "name": "Python"
         }
       ]
     },
@@ -55,9 +184,6 @@
         },
         {
           "name": "JavaScript"
-        },
-        {
-          "name": "Canvas"
         }
       ],
       "stats": [
@@ -88,14 +214,11 @@
       "status": "active",
       "tags": [
         {
-          "name": "VS Code Ext",
+          "name": "VS Code",
           "primary": true
         },
         {
           "name": "JavaScript"
-        },
-        {
-          "name": "Bedrock"
         }
       ],
       "stats": [
@@ -118,7 +241,7 @@
       "status": "active",
       "tags": [
         {
-          "name": "VS Code Ext",
+          "name": "VS Code",
           "primary": true
         },
         {
@@ -153,9 +276,6 @@
         },
         {
           "name": "TypeScript"
-        },
-        {
-          "name": "Bedrock"
         }
       ],
       "stats": [

@@ -8,6 +8,7 @@
 let allQuests = [];
 let activeFilter = "all";
 let tagColorLookup = new Map();
+let revealRunId = 0;
 
 const DEFAULT_BADGE_CLASSES = "bg-dark-800 text-gray-100 border-dark-700";
 
@@ -16,10 +17,8 @@ const TAG_BADGE_BY_COLOR = {
   blue: "bg-blue-900 text-blue-100 border-blue-600",
   fuchsia: "bg-fuchsia-900 text-fuchsia-100 border-fuchsia-600",
   green: "bg-green-900 text-green-100 border-green-600",
-  purple: "bg-purple-900 text-purple-100 border-purple-600",
   orange: "bg-orange-900 text-orange-100 border-orange-600",
-  gray: "bg-dark-800 text-gray-100 border-dark-700",
-  white: "bg-dark-800 text-white border-white/60",
+  purple: "bg-purple-900 text-purple-100 border-purple-600",
 };
 
 function normalizeTagName(name) {
@@ -129,10 +128,34 @@ async function loadQuests() {
   }
 }
 
+function animateQuestReveal(container) {
+  const cards = Array.from(container.querySelectorAll(".sequential-reveal-item"));
+  if (!cards.length) return;
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  cards.forEach((card) => card.classList.remove("is-visible"));
+
+  if (prefersReducedMotion) {
+    cards.forEach((card) => card.classList.add("is-visible"));
+    return;
+  }
+
+  revealRunId += 1;
+  const runId = revealRunId;
+
+  cards.forEach((card, index) => {
+    window.setTimeout(() => {
+      if (runId !== revealRunId) return;
+      card.classList.add("is-visible");
+    }, 30 + index * 55);
+  });
+}
+
 function renderQuests(quests) {
   const container = document.getElementById("quests-container");
   if (!container) return;
   container.innerHTML = quests.map((quest) => createQuestHTML(quest, allQuests.indexOf(quest))).join("");
+  animateQuestReveal(container);
 
   container.onclick = (e) => {
     const card = e.target.closest("[data-quest-index]");
@@ -158,7 +181,7 @@ function createQuestHTML(quest, index) {
       : `<div class="aspect-video bg-dark-900/60 border-3 border-dark-700"></div>`;
 
     return `
-      <article class="card-paper group cursor-pointer p-6 col-span-1 md:col-span-2 xl:col-span-3"
+      <article class="card-paper sequential-reveal-item group cursor-pointer p-6 col-span-1 md:col-span-2 xl:col-span-3"
                data-quest-index="${index}">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div class="md:col-span-2">${heroImageEl}</div>
@@ -189,7 +212,7 @@ function createQuestHTML(quest, index) {
       : "";
 
     return `
-      <article class="card-paper group cursor-pointer flex flex-col gap-3 p-5 col-span-1 xl:col-span-2"
+      <article class="card-paper sequential-reveal-item group cursor-pointer flex flex-col gap-3 p-5 col-span-1 xl:col-span-2"
                data-quest-index="${index}">
         ${featImageEl}
         <div class="flex items-center justify-between gap-3">
@@ -208,7 +231,7 @@ function createQuestHTML(quest, index) {
     : "";
 
   return `
-    <article class="card-paper group cursor-pointer flex flex-col gap-4 p-6"
+    <article class="card-paper sequential-reveal-item group cursor-pointer flex flex-col gap-4 p-6"
              data-quest-index="${index}">
       ${imageEl}
       <div class="flex flex-wrap items-center gap-2">${tagBadges}</div>
