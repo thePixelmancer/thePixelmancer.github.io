@@ -57,60 +57,77 @@
   /* ─── Sticky back-navigation bar ──────────────────────────────────────────── */
 
   .page-header {
-    @apply sticky top-0 z-20 flex items-center gap-3 px-4 md:px-6 py-3 md:py-4 bg-dark-900/95 border-b-2 border-dark-700;
-    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.35);
+    @apply relative z-20 flex items-center justify-center px-4 md:px-6 py-3 md:py-4;
+    max-width: 72rem;
+    margin: clamp(3.25rem, 10vh, 5.75rem) auto 1.25rem;
+    min-height: clamp(4.75rem, 9vh, 5.75rem);
   }
   .page-back-btn {
-    @apply inline-flex items-center justify-center flex-shrink-0 px-3 md:px-4 py-2 text-[8px] md:text-[9px] uppercase no-underline border-2 border-dark-700 bg-dark-800 transition-all duration-100;
-    min-width: 5.5rem;
-    letter-spacing: 0.24em;
-    color: rgb(156, 163, 175);
-    box-shadow: var(--shadow-sharp);
-  }
-  .page-back-btn::before {
-    content: "\2190";
-    margin-right: 0.35rem;
+    @apply inline-flex items-center justify-center no-underline transition-all duration-100 font-title;
+    position: absolute;
+    left: 1rem;
+    top: 0;
+    bottom: 0;
+    width: 2.25rem;
+    font-size: clamp(1.45rem, 3.2vw, 2rem);
+    line-height: 0.85;
+    letter-spacing: -0.08em;
     color: var(--header-accent-text, rgb(209, 213, 219));
-    text-shadow: 0 0 8px var(--header-accent-glow, rgba(156, 163, 175, 0.35));
+    text-shadow: 0 0 10px var(--header-accent-glow, rgba(156, 163, 175, 0.35));
   }
   .page-back-btn:hover {
     color: rgb(243, 244, 246);
-    border-color: var(--header-accent-line, rgba(156, 163, 175, 0.45));
-    background: rgb(31, 41, 55);
     transform: translateX(-1px);
+    text-shadow: 0 0 10px var(--header-accent-glow, rgba(156, 163, 175, 0.45));
   }
   .page-back-btn:active {
-    transform: translate(0, 1px);
-    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.25);
+    transform: translateY(1px);
   }
   .page-header > [aria-hidden="true"] {
-    width: 5.5rem;
-    flex-shrink: 0;
+    @apply hidden;
+  }
+  .page-header > .flex-1 {
+    width: 100%;
+    padding-left: clamp(2.75rem, 6vw, 4rem);
+    padding-right: clamp(2.75rem, 6vw, 4rem);
   }
   .page-title {
-    @apply text-2xl font-title text-center;
+    @apply font-title text-center leading-none;
+    font-size: clamp(2rem, 6vw, 3.25rem);
+    letter-spacing: 0.06em;
     color: var(--header-accent-text, rgb(252, 211, 77));
-    text-shadow: 0 0 18px var(--header-accent-glow, rgba(245, 158, 11, 0.5));
+    text-shadow:
+      0 0 14px var(--header-accent-glow, rgba(245, 158, 11, 0.55)),
+      0 0 28px color-mix(in srgb, var(--header-accent-glow, rgba(245, 158, 11, 0.55)) 75%, transparent);
   }
   .page-title-line {
     @apply hidden;
   }
   .page-subtitle {
-    @apply text-[8px] uppercase text-center;
-    letter-spacing: 0.22em;
-    color: rgb(156, 163, 175);
+    @apply text-[7px] md:text-[8px] uppercase text-center;
+    letter-spacing: 0.26em;
+    color: rgb(148, 163, 184);
+    text-shadow: 0 0 8px rgba(15, 23, 42, 0.6);
   }
 
   @media (max-width: 640px) {
-    .page-back-btn {
-      min-width: 4.75rem;
-      padding-left: 0.6rem;
-      padding-right: 0.6rem;
-      letter-spacing: 0.18em;
+    .page-header {
+      margin-top: 2.65rem;
+      margin-bottom: 0.65rem;
+      min-height: 4.2rem;
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
     }
 
-    .page-header > [aria-hidden="true"] {
-      width: 4.75rem;
+    .page-back-btn {
+      left: 0.75rem;
+      width: 2rem;
+      font-size: 1.35rem;
+    }
+
+    .page-header > .flex-1 {
+      padding-left: 2.35rem;
+      padding-right: 2.35rem;
     }
   }
 
