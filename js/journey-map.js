@@ -28,6 +28,13 @@ window.JourneyMap = (function () {
   const EDGE_FADE_PX = 20; // fade distance at canvas edges before hard clip
   const DEBUG_REGION_POINT_SCREEN_RADIUS = 5; // on-screen radius for region debug dots
   const DEV_REGION_POINT_SCREEN_RADIUS = 9; // on-screen radius for editable dev Voronoi seeds
+  const CURRENT_FLAG_OFFSET = 18; // vertical gap between a current node and its flag marker
+  const CURRENT_FLAG_POLE_H = 34; // pole height for the current-state flag marker
+  const CURRENT_FLAG_W = 44; // banner width for the current-state flag marker
+  const CURRENT_FLAG_H = 44; // banner height for the current-state flag marker
+  const CURRENT_FLAG_TAIL_H = 8; // swallowtail cut depth for the current-state flag marker
+  const CURRENT_FLAG_CROSSBAR_W = 30; // crossbar width for the current-state flag marker
+  const CURRENT_FLAG_IMAGE_PATH = "images/banner.png"; // banner art used for current-state markers
 
   const DEBUG = {
     showNodes: true,
@@ -122,20 +129,26 @@ window.JourneyMap = (function () {
   const regionTip = document.getElementById("journey-region-tooltip");
   const regionTipContent = document.getElementById("jr-content");
 
+  function formatPeriodHTML(period) {
+    if (typeof period !== "string") return "";
+    return period.replace(/Present/gi, '<span style="color:#fbbf24">Present</span>');
+  }
+
   function showTip(node) {
     const wrap = document.getElementById("journey-canvas-wrap");
     const rect = wrap.getBoundingClientRect();
+    const paperRect = wrap.parentElement?.getBoundingClientRect() || rect;
     const px = (lastMouseScreen.x / viewW) * rect.width;
     const py = (lastMouseScreen.y / viewH) * rect.height;
 
     const tw = 244,
       th = 180;
     let left = px + 20,
-      top = py - 18;
-    if (left + tw > rect.width - 8) left = px - tw - 20;
-    if (top + th > rect.height - 8) top = rect.height - th - 8;
-    if (top < 4) top = 4;
-    if (left < 4) left = 4;
+      top = py + 18;
+    if (paperRect.left + left + tw > window.innerWidth - 8) left = px - tw - 20;
+    if (paperRect.top + top + th > window.innerHeight - 8) top = py - th - 18;
+    left = clamp(left, 4 - paperRect.left, window.innerWidth - tw - paperRect.left - 8);
+    top = clamp(top, 4 - paperRect.top, window.innerHeight - th - paperRect.top - 8);
 
     tip.style.left = left + "px";
     tip.style.top = top + "px";
@@ -154,7 +167,7 @@ window.JourneyMap = (function () {
     tipDesc.classList.toggle("hidden", !desc);
 
     const period = labels.length > 2 ? labels[labels.length - 1]?.text || "" : "";
-    tipPeriod.textContent = period;
+    tipPeriod.innerHTML = formatPeriodHTML(period);
     tipPeriod.classList.toggle("hidden", !period);
 
     tip.classList.remove("hidden");
@@ -207,18 +220,19 @@ window.JourneyMap = (function () {
 
     const wrap = document.getElementById("journey-canvas-wrap");
     const rect = wrap.getBoundingClientRect();
+    const paperRect = wrap.parentElement?.getBoundingClientRect() || rect;
     const px = (screenPt.x / viewW) * rect.width;
     const py = (screenPt.y / viewH) * rect.height;
 
     const tw = Math.min(280, Math.max(220, rect.width - 24));
     const th = 230;
     let left = px + 18;
-    let top = py - 18;
+    let top = py + 18;
 
-    if (left + tw > rect.width - 8) left = px - tw - 18;
-    if (top + th > rect.height - 8) top = rect.height - th - 8;
-    if (top < 4) top = 4;
-    if (left < 4) left = 4;
+    if (paperRect.left + left + tw > window.innerWidth - 8) left = px - tw - 18;
+    if (paperRect.top + top + th > window.innerHeight - 8) top = py - th - 18;
+    left = clamp(left, 4 - paperRect.left, window.innerWidth - tw - paperRect.left - 8);
+    top = clamp(top, 4 - paperRect.top, window.innerHeight - th - paperRect.top - 8);
 
     regionTip.style.left = `${left}px`;
     regionTip.style.top = `${top}px`;
@@ -453,6 +467,17 @@ window.JourneyMap = (function () {
         node.x + Math.max(markerEdge + NODE_BOUNDS_PAD, labels.length ? LABEL_HALF_W + dx : 0),
         Math.max(node.y + markerEdge + NODE_BOUNDS_PAD, labelBottom),
       );
+
+      if (node.opts.current) {
+        const poleBottom = node.y - markerEdge - CURRENT_FLAG_OFFSET;
+        const poleTop = poleBottom - CURRENT_FLAG_POLE_H;
+        expandBounds(
+          node.x - CURRENT_FLAG_CROSSBAR_W / 2 - 3,
+          poleTop - 4,
+          node.x + CURRENT_FLAG_CROSSBAR_W / 2 + 3,
+          poleBottom,
+        );
+      }
     }
 
     for (const region of regions) {
@@ -870,6 +895,29 @@ window.JourneyMap = (function () {
     p.circle(x, y, glowRadius * 2);
   }
 
+  function drawCurrentFlag(p, x, y, baseSize, rgb, pulse01) {
+    const poleBottom = y - baseSize - CURRENT_FLAG_OFFSET;
+    const poleTop = poleBottom - CURRENT_FLAG_POLE_H;
+    const bannerLeft = x - CURRENT_FLAG_W / 2;
+    const bannerTop = poleTop + 5;
+    const bannerImg = imageCache[CURRENT_FLAG_IMAGE_PATH];
+
+    if (!bannerImg) return;
+
+    p.push();
+    p.translate(0, -pulse01 * 1.4);
+    p.drawingContext.save();
+    p.drawingContext.shadowColor = "rgba(0,0,0,0.3)";
+    p.drawingContext.shadowBlur = 6;
+    p.drawingContext.shadowOffsetX = 2;
+    p.drawingContext.shadowOffsetY = 2;
+    p.drawingContext.imageSmoothingEnabled = false;
+    p.image(bannerImg, bannerLeft, bannerTop, CURRENT_FLAG_W, CURRENT_FLAG_H);
+    p.drawingContext.restore();
+
+    p.pop();
+  }
+
   function pulseCurrentAura(p, x, y, baseSize, rgb) {
     const t = (p.frameCount % 120) / 120;
     const t2 = ((p.frameCount + 40) % 120) / 120;
@@ -910,6 +958,7 @@ window.JourneyMap = (function () {
         : kind === "promotion" ? MINOR_S + 4
         : ORIGIN_S;
       drawCurrentGlow(p, x, y, base, rgb, currentPulse);
+      drawCurrentFlag(p, x, y, base, rgb, currentPulse);
     }
 
     if (kind === "origin") {

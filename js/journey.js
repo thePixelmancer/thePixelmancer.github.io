@@ -137,6 +137,7 @@ JourneyMap.init(function (map) {
   }
 
   map.preloadIcon("images/icon_placeholder.png");
+  map.preloadIcon("images/banner.png");
 
   // ─── Nodes ───────────────────────────────────────────────────────────────
 
@@ -223,7 +224,6 @@ JourneyMap.init(function (map) {
   const xp = map.minorNode(...getNodePosition("xp", 250, -250), {
     devKey: "xp",
     color: "#4ade80",
-    current: true,
     description: "Running my own creative brand while shipping client work, original add-ons, and creator tooling.",
     label: [
       { text: "Developer", style: S.title },
