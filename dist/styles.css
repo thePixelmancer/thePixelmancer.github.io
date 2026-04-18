@@ -1959,14 +1959,12 @@
     gap: calc(var(--spacing) * 1);
   }
   .page-title {
-    display: inline-flex;
-    align-items: baseline;
-    justify-content: center;
-    gap: calc(var(--spacing) * 2);
+    display: inline-block;
     text-align: center;
     font-family: var(--font-title);
     --tw-leading: 1;
     line-height: 1;
+    position: relative;
     font-size: clamp(2rem, 6vw, 3.25rem);
     letter-spacing: 0.06em;
     color: var(--header-accent-text, rgb(252, 211, 77));
@@ -1977,8 +1975,12 @@
   }
   .page-title-prefix {
     display: inline-flex;
-    align-items: center;
+    align-items: flex-start;
     gap: calc(var(--spacing) * 1);
+    position: absolute;
+    right: calc(100% + 0.5rem);
+    top: 0.2em;
+    transform: none;
     letter-spacing: 0.14em;
     white-space: nowrap;
   }
@@ -2005,8 +2007,7 @@
     }
   }
   .page-title-current {
-    display: inline-flex;
-    align-items: baseline;
+    display: inline-block;
     letter-spacing: 0.06em;
   }
   .page-title-line {
@@ -2033,17 +2034,19 @@
     }
     .page-title {
       line-height: 1;
-      gap: 0.3rem;
     }
     .page-title-prefix {
-      gap: 0.2rem;
+      gap: 0.1rem;
+      right: calc(100% + 0.6rem);
       letter-spacing: 0.12em;
+      top: 0.2em;
+      transform: none;
     }
     .page-title-home {
-      font-size: 0.72rem;
+      font-size: 1rem;
     }
     .page-title-sep {
-      font-size: 0.84rem;
+      font-size: 1rem;
     }
   }
   .ambient-glow {
