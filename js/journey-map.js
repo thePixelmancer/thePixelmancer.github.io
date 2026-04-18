@@ -713,6 +713,14 @@ window.JourneyMap = (function () {
     ];
   }
 
+  function brightenRgb(rgb, amount = 0.2) {
+    return [
+      Math.max(0, Math.min(255, Math.round(rgb[0] + (255 - rgb[0]) * amount))),
+      Math.max(0, Math.min(255, Math.round(rgb[1] + (255 - rgb[1]) * amount))),
+      Math.max(0, Math.min(255, Math.round(rgb[2] + (255 - rgb[2]) * amount))),
+    ];
+  }
+
   function drawCurrentGlow(p, x, y, baseSize, rgb, pulse01) {
     const glowRadius = baseSize + 8 + pulse01 * 5;
     const glowAlpha = 34 + pulse01 * 20;
@@ -846,46 +854,24 @@ window.JourneyMap = (function () {
     const pts = region.points;
     if (!pts || pts.length < 3) return;
     const rgb = hexToRgb(region.color || "#6b7280");
+    const isHoveredColor = hoveredRegion?.color === region.color;
     const alph = Math.min(REGION_ALPHA, 255);
 
+    if (!isHoveredColor) return;
+
+    const fillRgb = brightenRgb(rgb, 0.2);
+    const fillAlpha = Math.min(alph + 44, 190);
     p.noStroke();
-    p.fill(rgb[0], rgb[1], rgb[2], alph);
+    p.fill(fillRgb[0], fillRgb[1], fillRgb[2], fillAlpha);
     p.beginShape();
     for (const [x, y] of pts) p.vertex(x, y);
     p.endShape(p.CLOSE);
-
-    if (region.stroke !== false) {
-      p.noFill();
-      p.stroke(rgb[0], rgb[1], rgb[2], Math.min(alph * 2.5, 120));
-      p.strokeWeight(1);
-      p.beginShape();
-      for (const [x, y] of pts) p.vertex(x, y);
-      p.endShape(p.CLOSE);
-      p.noStroke();
-    }
   }
 
-  function makePointKey(x, y) {
-    return `${x.toFixed(3)},${y.toFixed(3)}`;
-  }
-
-  function makeEdgeKey(a, b) {
-    const aKey = makePointKey(a[0], a[1]);
-    const bKey = makePointKey(b[0], b[1]);
-    return aKey < bKey ? `${aKey}|${bKey}` : `${bKey}|${aKey}`;
-  }
-
-  function drawHoveredRegionOutline() {
-    if (!hoveredRegion?.color) return;
-    const p = p5inst;
-    if (!p) return;
-
-    const selected = manualVoronoiRegions.filter((region) => region.color === hoveredRegion.color && region.points?.length >= 3);
-    if (!selected.length) return;
-
+  function getOuterBoundaryEdges(selectedRegions) {
     const edgeCounts = new Map();
 
-    for (const region of selected) {
+    for (const region of selectedRegions) {
       const pts = region.points;
       const pointCount = pts.length;
       if (pointCount < 3) continue;
@@ -903,15 +889,73 @@ window.JourneyMap = (function () {
       }
     }
 
+    const edges = [];
+    for (const edge of edgeCounts.values()) {
+      if (edge.count === 1) edges.push(edge);
+    }
+    return edges;
+  }
+
+  function drawCollectiveRegionOutlines() {
+    const p = p5inst;
+    if (!p || !manualVoronoiRegions.length) return;
+
+    const groups = new Map();
+    for (const region of manualVoronoiRegions) {
+      if (!region.points?.length || !region.color) continue;
+      if (!groups.has(region.color)) groups.set(region.color, []);
+      groups.get(region.color).push(region);
+    }
+
     p.push();
     p.noFill();
-    p.stroke(255, 255, 255, 190);
-    p.strokeWeight(2.5);
+    p.stroke(31, 41, 55, 215);
+    p.strokeWeight(1.15);
     p.drawingContext.lineJoin = "round";
     p.drawingContext.lineCap = "round";
 
-    for (const edge of edgeCounts.values()) {
-      if (edge.count !== 1) continue;
+    for (const [color, groupedRegions] of groups.entries()) {
+      if (hoveredRegion?.color && color === hoveredRegion.color) continue;
+      const edges = getOuterBoundaryEdges(groupedRegions);
+      for (const edge of edges) {
+        p.line(edge.a[0], edge.a[1], edge.b[0], edge.b[1]);
+      }
+    }
+
+    p.pop();
+  }
+
+  function makePointKey(x, y) {
+    return `${x.toFixed(3)},${y.toFixed(3)}`;
+  }
+
+  function makeEdgeKey(a, b) {
+    const aKey = makePointKey(a[0], a[1]);
+    const bKey = makePointKey(b[0], b[1]);
+    return aKey < bKey ? `${aKey}|${bKey}` : `${bKey}|${aKey}`;
+  }
+
+  function drawHoveredRegionOutline() {
+    if (!hoveredRegion?.color) return;
+    const p = p5inst;
+    if (!p) return;
+
+    const baseRgb = hexToRgb(hoveredRegion.color);
+    const outerRgb = brightenRgb(baseRgb, 0.45);
+
+    const selected = manualVoronoiRegions.filter((region) => region.color === hoveredRegion.color && region.points?.length >= 3);
+    if (!selected.length) return;
+    const edges = getOuterBoundaryEdges(selected);
+    if (!edges.length) return;
+
+    p.push();
+    p.noFill();
+    p.stroke(outerRgb[0], outerRgb[1], outerRgb[2], 196);
+    p.strokeWeight(2.4);
+    p.drawingContext.lineJoin = "round";
+    p.drawingContext.lineCap = "round";
+
+    for (const edge of edges) {
       p.line(edge.a[0], edge.a[1], edge.b[0], edge.b[1]);
     }
 
@@ -1142,6 +1186,7 @@ window.JourneyMap = (function () {
         p.scale(camera.zoom);
         for (const r of manualVoronoiRegions) drawRegion(r);
         for (const r of regions) drawRegion(r);
+        drawCollectiveRegionOutlines();
         drawHoveredRegionOutline();
         if (DEBUG.showLabels) {
           for (const l of mapLabels) drawMapLabel(l);

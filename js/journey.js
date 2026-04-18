@@ -114,7 +114,7 @@ JourneyMap.init(function (map) {
   map.defineVoronoiRegions(
     [
       {
-        color: "#000000",
+        color: "#9ca3af",
         tooltip: "guild-java-modding",
         points: [[-500, 350]],
       },
