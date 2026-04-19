@@ -35,6 +35,9 @@ window.JourneyMap = (function () {
   const CURRENT_FLAG_TAIL_H = 8; // swallowtail cut depth for the current-state flag marker
   const CURRENT_FLAG_CROSSBAR_W = 30; // crossbar width for the current-state flag marker
   const CURRENT_FLAG_IMAGE_PATH = "images/banner.png"; // banner art used for current-state markers
+  const WORLD_MAP_IMAGE_PATH = "images/worldmap.png"; // world background art drawn behind map layers
+  const WORLD_MAP_SOURCE_W = 320; // source art width used for 4:3 scaling
+  const WORLD_MAP_SOURCE_H = 240; // source art height used for 4:3 scaling
 
   const DEBUG = {
     showNodes: true,
@@ -941,6 +944,26 @@ window.JourneyMap = (function () {
     p.circle(x, y, (baseSize + 10) * 2);
   }
 
+  function drawWorldBackground() {
+    const p = p5inst;
+    if (!p) return;
+    const bg = imageCache[WORLD_MAP_IMAGE_PATH];
+    if (!bg) return;
+
+    const boundsW = Math.max(contentBounds.maxX - contentBounds.minX, 1);
+    const boundsH = Math.max(contentBounds.maxY - contentBounds.minY, 1);
+    const bgScale = Math.max(boundsW / WORLD_MAP_SOURCE_W, boundsH / WORLD_MAP_SOURCE_H);
+    const drawW = WORLD_MAP_SOURCE_W * bgScale;
+    const drawH = WORLD_MAP_SOURCE_H * bgScale;
+    const centerX = (contentBounds.minX + contentBounds.maxX) / 2;
+    const centerY = (contentBounds.minY + contentBounds.maxY) / 2;
+
+    p.push();
+    p.imageMode(p.CENTER);
+    p.image(bg, centerX, centerY, drawW, drawH);
+    p.pop();
+  }
+
   // -- Node rendering ------------------------------------------------------------
 
   function drawNode(node) {
@@ -1265,6 +1288,7 @@ window.JourneyMap = (function () {
 
       p.preload = function () {
         for (const { path } of pendingIcons) imageCache[path] = p.loadImage(path);
+        imageCache[WORLD_MAP_IMAGE_PATH] = p.loadImage(WORLD_MAP_IMAGE_PATH);
       };
 
       p.setup = function () {
@@ -1274,7 +1298,11 @@ window.JourneyMap = (function () {
         cnv.parent(wrap);
         cnv.style("background", "transparent");
         canvasEl.style.touchAction = "none";
+        canvasEl.style.imageRendering = "pixelated";
+        canvasEl.style.imageRendering = "crisp-edges";
         p.textFont("Silkscreen");
+        p.pixelDensity(1);
+        p.noSmooth();
         p.frameRate(30);
         p.noLoop();
 
@@ -1510,10 +1538,13 @@ window.JourneyMap = (function () {
       };
 
       p.draw = function () {
+        p.noSmooth();
+        p.drawingContext.imageSmoothingEnabled = false;
         p.clear();
         p.push();
         p.translate(viewW / 2 + camera.panX, viewH / 2 + camera.panY);
         p.scale(camera.zoom);
+        drawWorldBackground();
         for (const r of manualVoronoiRegions) drawRegion(r);
         for (const r of regions) drawRegion(r);
         drawVoronoiDevCells();
