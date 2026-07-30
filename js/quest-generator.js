@@ -60,6 +60,12 @@ function createQuestDescriptionHTML(text, classes) {
   return `<p class="mt-2 ${classes}">${text}</p>`;
 }
 
+function getQuestPaperClass(quest) {
+  if (quest.featured === "superhero") return "card-paper-2";
+  if (quest.featured === "hero") return "card-paper-3";
+  return "card-paper-1";
+}
+
 async function loadQuests() {
   try {
     const { data, tagDefinitions } = await window.AngeloCore.loadDataWithTags({
@@ -95,6 +101,7 @@ function renderQuests(quests) {
 function createQuestHTML(quest, index) {
   const isHero = quest.featured === "superhero";
   const isFeatured = quest.featured === "hero";
+  const paperClass = getQuestPaperClass(quest);
   const tagBadges = createTagBadgesHTML(quest);
 
   if (isHero) {
@@ -108,7 +115,7 @@ function createQuestHTML(quest, index) {
       : `<div class="aspect-video bg-dark-900/60 border-3 border-dark-700"></div>`;
 
     return `
-      <article class="card-paper sequential-reveal-item group cursor-pointer p-6 col-span-1 md:col-span-2 xl:col-span-3"
+      <article class="card-paper ${paperClass} sequential-reveal-item group cursor-pointer p-6 col-span-1 md:col-span-2 xl:col-span-3"
                data-quest-index="${index}">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div class="md:col-span-2">${heroImageEl}</div>
@@ -139,7 +146,7 @@ function createQuestHTML(quest, index) {
       : "";
 
     return `
-      <article class="card-paper sequential-reveal-item group cursor-pointer flex flex-col gap-3 p-5 col-span-1 xl:col-span-2"
+      <article class="card-paper ${paperClass} sequential-reveal-item group cursor-pointer flex flex-col gap-3 p-5 col-span-1 xl:col-span-2"
                data-quest-index="${index}">
         ${featImageEl}
         <div class="flex items-center justify-between gap-3">
@@ -158,7 +165,7 @@ function createQuestHTML(quest, index) {
     : "";
 
   return `
-    <article class="card-paper sequential-reveal-item group cursor-pointer flex flex-col gap-4 p-6"
+    <article class="card-paper ${paperClass} sequential-reveal-item group cursor-pointer flex flex-col gap-4 p-6"
              data-quest-index="${index}">
       ${imageEl}
       <div class="flex flex-wrap items-center gap-2">${tagBadges}</div>

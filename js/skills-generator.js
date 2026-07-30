@@ -56,7 +56,7 @@ function renderAllPaths() {
               data-skill="${skill.id}"
               aria-label="Open ${skill.label} spellbook">
         <div class="w-11 h-11 flex-shrink-0 flex items-center justify-center border-2 ${cfg.iconBgClass} ${cfg.iconBorderClass}">
-          <img src="${skill.icon ?? ""}" alt="" class="skill-icon-image w-7 h-7 [image-rendering:pixelated]" />
+          <img src="${skill.icon ?? ""}" alt="" class="skill-icon-image w-full h-full object-cover [image-rendering:pixelated]" />
           <span class="skill-icon-fallback hidden text-base ${cfg.iconTextClass}">✦</span>
         </div>
         <span class="skill-label flex-1 text-xs text-gray-400 transition-colors duration-100 ${cfg.labelToneClass}">${skill.label}</span>

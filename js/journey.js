@@ -1,37 +1,44 @@
 // Paste these positions into js/journey.js
 const nodePositions = {
-  builder: [-302, 223],
-  freelance: [-267, 466],
-  modder: [-673, 503],
-  nitric: [152, 213],
-  pixelmancer: [27, -37],
-  shapeAsset: [-607, -6],
-  shapeDirector: [-295, -191],
-  shapeLead: [-535, -267],
-  simplyBrilliant: [468, 108],
-  tsunamiDev: [139, -261],
-  tsunamiLead: [428, -279],
-  xp: [-39, 265],
+  builder: [-353, 114],
+  freelance: [-169, 256],
+  modder: [-502, 315],
+  nitric: [210, 268],
+  pixelmancer: [135, -17],
+  shapeAsset: [-517, -166],
+  shapeDirector: [-261, -161],
+  shapeLead: [-363, -291],
+  simplyBrilliant: [484, 132],
+  tsunamiDev: [105, -323],
+  tsunamiLead: [389, -325],
+  xp: [58, 270],
 };
 
 const regionSeedPoints = {
   independent: [
-    [-269, 464],
-    [36, -30],
+    [131, 271],
+    [-354, 114],
+    [141, -14],
+    [-111, 155],
   ],
-  javaModding: [[-717, 543]],
+  javaModding: [
+    [-717, 543],
+    [-498, 317],
+  ],
   shapescape: [
-    [-601, -6],
-    [-535, -269],
-    [-222, -347],
+    [-517, -171],
+    [-362, -44],
+    [-259, -159],
+    [-546, 41],
+    [-374, -273],
   ],
-  simplyBrilliant: [[603, 163]],
+  simplyBrilliant: [[545, 269]],
   tsunamiStudios: [
     [121, -300],
-    [572, -112],
+    [391, -320],
+    [-98, -329],
   ],
 };
-
 const regionDefinitions = [
   {
     id: "javaModding",
@@ -138,6 +145,9 @@ JourneyMap.init(function (map) {
 
   map.preloadIcon("images/icon_placeholder.png");
   map.preloadIcon("images/banner.png");
+  map.preloadIcon("images/tsunami_logo.png");
+  map.preloadIcon("images/avatar.png");
+  map.preloadIcon("images/shapescape_logo.jpg");
 
   // ─── Nodes ───────────────────────────────────────────────────────────────
 
@@ -178,7 +188,7 @@ JourneyMap.init(function (map) {
   const shapeAsset = map.majorNode(...getNodePosition("shapeAsset", -60, 120), {
     devKey: "shapeAsset",
     color: "#c084fc",
-    iconPath: "images/icon_placeholder.png",
+    iconPath: "images/shapescape_logo.jpg",
     description: "Joined Shapescape as an Asset Creator and began shipping marketplace content at studio scale.",
     label: [
       { text: "Asset Creator", style: S.title },
@@ -214,6 +224,7 @@ JourneyMap.init(function (map) {
     devKey: "pixelmancer",
     color: "#4ade80",
     current: true,
+    iconPath: "images/avatar.png",
     description: "Running my own creative brand while shipping client work, original add-ons, and creator tooling.",
     label: [
       { text: "Add-On Developer", style: S.title },
@@ -244,7 +255,7 @@ JourneyMap.init(function (map) {
   const tsunamiDev = map.majorNode(...getNodePosition("tsunamiDev", 430, -150), {
     devKey: "tsunamiDev",
     color: "#60a5fa",
-    iconPath: "images/icon_placeholder.png",
+    iconPath: "images/tsunami_logo.png",
     description: "Joined Tsunami as Developer and Artist, delivering systems, assets, and gameplay content.",
     label: [
       { text: "Artist & Developer", style: S.title },

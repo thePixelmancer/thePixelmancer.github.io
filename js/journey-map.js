@@ -3,15 +3,13 @@
 window.JourneyMap = (function () {
   // -- Canvas constants ----------------------------------------------------------
 
-  const FALLBACK_VIEW_W = 800; // fallback canvas width when container has no measurable width yet
-  const FALLBACK_VIEW_H = 600; // fallback canvas height when container has no measurable height yet
-  const FALLBACK_WORLD_W = 800; // default world width used when no map content exists
-  const FALLBACK_WORLD_H = 600; // default world height used when no map content exists
-  const CONTENT_FIT_PAD = 100; // extra world-space padding around computed content bounds
+  const LOGICAL_RES_W = 320*4; // single logical map width used for world-space and internal canvas resolution
+  const LOGICAL_RES_H = 240*4; // single logical map height used for world-space and internal canvas resolution
+  const CONTENT_FIT_PAD = 0; // extra world-space padding around computed content bounds
   const LABEL_HALF_W = 170; // half-width reserved for labels when computing content bounds
-  const MOBILE_START_ZOOM_MULT = 1.0; // initial zoom multiplier on phones relative to fitted min zoom
+  const DESKTOP_START_ZOOM_MULT = 1.0; // initial desktop zoom multiplier relative to min zoom
+  const MOBILE_START_ZOOM_MULT = 1.0; // initial phone zoom multiplier relative to min zoom
   const MAX_ZOOM_MULT = 4; // max zoom multiplier relative to fitted min zoom
-  const MOBILE_USE_COVER_FIT = true; // if true, phone start fit uses cover (fills view and allows clipping)
   const WHEEL_ZOOM_SPEED = 0.0015; // wheel sensitivity for exponential zoom
   const DRAG_START_THRESHOLD_PX = 4; // pointer movement needed before drag is considered active
   const HIT_RADIUS_WORLD_PAD = 12; // extra world-space hit radius around node markers
@@ -24,7 +22,6 @@ window.JourneyMap = (function () {
   const REGION_PADDING = 120; // extra world-space padding around Voronoi regions
   const REGION_ALPHA = 100; // fill alpha for regions
   const PHONE_BREAKPOINT_PX = 768; // viewport breakpoint where phone-specific zoom start is used
-  const MIN_BOUNDS_SIZE = 1; // lower bound to avoid divide-by-zero when fitting zoom
   const EDGE_FADE_PX = 20; // fade distance at canvas edges before hard clip
   const DEBUG_REGION_POINT_SCREEN_RADIUS = 5; // on-screen radius for region debug dots
   const DEV_REGION_POINT_SCREEN_RADIUS = 9; // on-screen radius for editable dev Voronoi seeds
@@ -36,8 +33,9 @@ window.JourneyMap = (function () {
   const CURRENT_FLAG_CROSSBAR_W = 30; // crossbar width for the current-state flag marker
   const CURRENT_FLAG_IMAGE_PATH = "images/banner.png"; // banner art used for current-state markers
   const WORLD_MAP_IMAGE_PATH = "images/worldmap.png"; // world background art drawn behind map layers
-  const WORLD_MAP_SOURCE_W = 320; // source art width used for 4:3 scaling
-  const WORLD_MAP_SOURCE_H = 240; // source art height used for 4:3 scaling
+  const REGION_HOVER_GLOW_CENTER_ALPHA = 0.5; // center glow alpha (0-1)
+  const REGION_HOVER_GLOW_START_RADIUS_MULT = 0; // gradient start radius as fraction of region extent
+  const REGION_HOVER_GLOW_END_RADIUS_MULT = 1; // gradient end radius as fraction of region extent
 
   const DEBUG = {
     showNodes: true,
@@ -95,8 +93,8 @@ window.JourneyMap = (function () {
   let guildHallDocPromise = null;
   let regionTipRequestToken = 0;
   let lastMouseScreen = { x: 0, y: 0 };
-  let viewW = FALLBACK_VIEW_W;
-  let viewH = FALLBACK_VIEW_H;
+  let viewW = LOGICAL_RES_W;
+  let viewH = LOGICAL_RES_H;
   let camera = {
     zoom: 1,
     minZoom: 1,
@@ -115,10 +113,10 @@ window.JourneyMap = (function () {
   };
   let devDragState = null;
   let contentBounds = {
-    minX: -FALLBACK_WORLD_W / 2,
-    minY: -FALLBACK_WORLD_H / 2,
-    maxX: FALLBACK_WORLD_W / 2,
-    maxY: FALLBACK_WORLD_H / 2,
+    minX: -LOGICAL_RES_W / 2,
+    minY: -LOGICAL_RES_H / 2,
+    maxX: LOGICAL_RES_W / 2,
+    maxY: LOGICAL_RES_H / 2,
   };
 
   // -- Tooltip -------------------------------------------------------------------
@@ -334,7 +332,11 @@ window.JourneyMap = (function () {
     hoveredRegion = region;
 
     if (region) {
-      showRegionTip(region, screenPt);
+      if (devLayout.enabled) {
+        hideRegionTip();
+      } else {
+        showRegionTip(region, screenPt);
+      }
       if (!hovered) updateCursor("pointer");
     } else {
       hideRegionTip();
@@ -346,7 +348,6 @@ window.JourneyMap = (function () {
   }
 
   function refreshLayoutState() {
-    recomputeContentBounds();
     rebuildManualVoronoiRegions();
     clampCamera();
   }
@@ -365,7 +366,8 @@ window.JourneyMap = (function () {
       return null;
     }
 
-    region.points[seedPoint.pointIndex] = [x, y];
+    const clamped = clampPointToBounds(x, y);
+    region.points[seedPoint.pointIndex] = [clamped.x, clamped.y];
     refreshLayoutState();
     const updated = manualRegionSeedPoints.find(
       (point) => point.regionId === seedPoint.regionId && point.pointIndex === seedPoint.pointIndex,
@@ -378,7 +380,8 @@ window.JourneyMap = (function () {
     const region = manualVoronoiConfig.regions?.find((entry) => entry.id === regionId);
     if (!region) return null;
     if (!Array.isArray(region.points)) region.points = [];
-    region.points.push([x, y]);
+    const clamped = clampPointToBounds(x, y);
+    region.points.push([clamped.x, clamped.y]);
     refreshLayoutState();
     return manualRegionSeedPoints.find(
       (point) => point.regionId === regionId && point.pointIndex === region.points.length - 1,
@@ -433,6 +436,13 @@ window.JourneyMap = (function () {
     return Math.min(Math.max(value, min), max);
   }
 
+  function clampPointToBounds(x, y) {
+    return {
+      x: clamp(x, contentBounds.minX, contentBounds.maxX),
+      y: clamp(y, contentBounds.minY, contentBounds.maxY),
+    };
+  }
+
   function normalizeHexColor(color) {
     if (typeof color !== "string" || !color) return "#9ca3af";
     const c = color.trim().toLowerCase();
@@ -453,67 +463,12 @@ window.JourneyMap = (function () {
   }
 
   function recomputeContentBounds() {
-    contentBounds = { minX: Infinity, minY: Infinity, maxX: -Infinity, maxY: -Infinity };
-
-    for (const node of nodes) {
-      const markerEdge =
-        node.kind === "major" ? MAJOR_S
-        : node.kind === "promotion" ? MINOR_S + 4
-        : ORIGIN_S;
-      const labels = node.opts.label || [];
-      const [dx, dy] = node.opts.labelOffset ?? [0, markerEdge + LABEL_GAP + LINE_H];
-      const labelTop = labels.length ? node.y + dy - LABEL_TOP_PAD : node.y;
-      const labelBottom = labels.length ? node.y + dy + LINE_H * labels.length : node.y;
-      expandBounds(
-        node.x - Math.max(markerEdge + NODE_BOUNDS_PAD, labels.length ? LABEL_HALF_W - dx : 0),
-        Math.min(node.y - markerEdge - NODE_BOUNDS_PAD, labelTop),
-        node.x + Math.max(markerEdge + NODE_BOUNDS_PAD, labels.length ? LABEL_HALF_W + dx : 0),
-        Math.max(node.y + markerEdge + NODE_BOUNDS_PAD, labelBottom),
-      );
-
-      if (node.opts.current) {
-        const poleBottom = node.y - markerEdge - CURRENT_FLAG_OFFSET;
-        const poleTop = poleBottom - CURRENT_FLAG_POLE_H;
-        expandBounds(
-          node.x - CURRENT_FLAG_CROSSBAR_W / 2 - 3,
-          poleTop - 4,
-          node.x + CURRENT_FLAG_CROSSBAR_W / 2 + 3,
-          poleBottom,
-        );
-      }
-    }
-
-    for (const region of regions) {
-      if (!region.points?.length) continue;
-      for (const [x, y] of region.points) expandBounds(x, y, x, y);
-    }
-
-    for (const lbl of mapLabels) {
-      const size = lbl.size || MAP_LABEL_DEFAULT_SIZE;
-      const halfW = Math.max((lbl.text?.length || 0) * size * MAP_LABEL_WIDTH_FACTOR, MAP_LABEL_MIN_HALF_W);
-      expandBounds(lbl.x - halfW, lbl.y - size, lbl.x + halfW, lbl.y + size);
-    }
-
-    if (
-      !Number.isFinite(contentBounds.minX) ||
-      !Number.isFinite(contentBounds.minY) ||
-      !Number.isFinite(contentBounds.maxX) ||
-      !Number.isFinite(contentBounds.maxY)
-    ) {
-      contentBounds = {
-        minX: -FALLBACK_WORLD_W / 2,
-        minY: -FALLBACK_WORLD_H / 2,
-        maxX: FALLBACK_WORLD_W / 2,
-        maxY: FALLBACK_WORLD_H / 2,
-      };
-      return;
-    }
-
+    // Keep a fixed world area so node/region coordinates stay in one stable 100% space.
     contentBounds = {
-      minX: contentBounds.minX - CONTENT_FIT_PAD,
-      minY: contentBounds.minY - CONTENT_FIT_PAD,
-      maxX: contentBounds.maxX + CONTENT_FIT_PAD,
-      maxY: contentBounds.maxY + CONTENT_FIT_PAD,
+      minX: -LOGICAL_RES_W / 2,
+      minY: -LOGICAL_RES_H / 2,
+      maxX: LOGICAL_RES_W / 2,
+      maxY: LOGICAL_RES_H / 2,
     };
   }
 
@@ -603,13 +558,8 @@ window.JourneyMap = (function () {
   }
 
   function updateViewSize() {
-    const wrap = document.getElementById("journey-canvas-wrap");
-    if (!wrap) return;
-    const rect = wrap.getBoundingClientRect();
-    const measuredW = Math.round(rect.width || wrap.clientWidth || 0);
-    const measuredH = Math.round(rect.height || wrap.clientHeight || 0);
-    viewW = measuredW > 0 ? measuredW : FALLBACK_VIEW_W;
-    viewH = measuredH > 0 ? measuredH : FALLBACK_VIEW_H;
+    viewW = LOGICAL_RES_W;
+    viewH = LOGICAL_RES_H;
   }
 
   function clampCamera() {
@@ -631,13 +581,10 @@ window.JourneyMap = (function () {
 
   function resetCamera() {
     const isPhone = window.matchMedia(`(max-width: ${PHONE_BREAKPOINT_PX}px)`).matches;
-    const boundsW = Math.max(contentBounds.maxX - contentBounds.minX, MIN_BOUNDS_SIZE);
-    const boundsH = Math.max(contentBounds.maxY - contentBounds.minY, MIN_BOUNDS_SIZE);
-    const containZoom = Math.min(viewW / boundsW, viewH / boundsH);
-    const coverZoom = Math.max(viewW / boundsW, viewH / boundsH);
-    camera.minZoom = isPhone && MOBILE_USE_COVER_FIT ? coverZoom : containZoom;
+    camera.minZoom = 1;
     camera.maxZoom = camera.minZoom * MAX_ZOOM_MULT;
-    camera.zoom = isPhone ? clamp(camera.minZoom * MOBILE_START_ZOOM_MULT, camera.minZoom, camera.maxZoom) : camera.minZoom;
+    const startMult = isPhone ? MOBILE_START_ZOOM_MULT : DESKTOP_START_ZOOM_MULT;
+    camera.zoom = clamp(camera.minZoom * startMult, camera.minZoom, camera.maxZoom);
     camera.panX = -((contentBounds.minX + contentBounds.maxX) / 2) * camera.zoom;
     camera.panY = -((contentBounds.minY + contentBounds.maxY) / 2) * camera.zoom;
   }
@@ -952,9 +899,11 @@ window.JourneyMap = (function () {
 
     const boundsW = Math.max(contentBounds.maxX - contentBounds.minX, 1);
     const boundsH = Math.max(contentBounds.maxY - contentBounds.minY, 1);
-    const bgScale = Math.max(boundsW / WORLD_MAP_SOURCE_W, boundsH / WORLD_MAP_SOURCE_H);
-    const drawW = WORLD_MAP_SOURCE_W * bgScale;
-    const drawH = WORLD_MAP_SOURCE_H * bgScale;
+    const sourceW = Math.max(bg.width || 1, 1);
+    const sourceH = Math.max(bg.height || 1, 1);
+    const bgScale = Math.max(boundsW / sourceW, boundsH / sourceH);
+    const drawW = sourceW * bgScale;
+    const drawH = sourceH * bgScale;
     const centerX = (contentBounds.minX + contentBounds.maxX) / 2;
     const centerY = (contentBounds.minY + contentBounds.maxY) / 2;
 
@@ -1068,17 +1017,88 @@ window.JourneyMap = (function () {
     if (!pts || pts.length < 3) return;
     const rgb = hexToRgb(region.color || "#6b7280");
     const isHoveredColor = hoveredRegion?.color === region.color;
-    const alph = Math.min(REGION_ALPHA, 255);
 
     if (!isHoveredColor && !devLayout.enabled) return;
 
-    const fillRgb = brightenRgb(rgb, 0.2);
-    const fillAlpha = devLayout.enabled && !isHoveredColor ? 32 : Math.min(alph + 44, 190);
+    if (devLayout.enabled && !isHoveredColor) {
+      const fillRgb = brightenRgb(rgb, 0.2);
+      p.noStroke();
+      p.fill(fillRgb[0], fillRgb[1], fillRgb[2], 32);
+      p.beginShape();
+      for (const [x, y] of pts) p.vertex(x, y);
+      p.endShape(p.CLOSE);
+      return;
+    }
+
+    const centroid = getPolygonCentroid(pts);
+    if (!centroid) return;
+
+    let maxDist = 1;
+    for (const [x, y] of pts) {
+      maxDist = Math.max(maxDist, Math.hypot(x - centroid.x, y - centroid.y));
+    }
+
+    const innerRadius = maxDist * REGION_HOVER_GLOW_START_RADIUS_MULT;
+    const outerRadius = maxDist * REGION_HOVER_GLOW_END_RADIUS_MULT;
+    const fillRgb = brightenRgb(rgb, 0.25);
+    const ctx = p.drawingContext;
+
+    p.push();
     p.noStroke();
-    p.fill(fillRgb[0], fillRgb[1], fillRgb[2], fillAlpha);
-    p.beginShape();
-    for (const [x, y] of pts) p.vertex(x, y);
-    p.endShape(p.CLOSE);
+    const grad = ctx.createRadialGradient(
+      centroid.x,
+      centroid.y,
+      innerRadius,
+      centroid.x,
+      centroid.y,
+      outerRadius,
+    );
+    grad.addColorStop(0, `rgba(${fillRgb[0]},${fillRgb[1]},${fillRgb[2]},${REGION_HOVER_GLOW_CENTER_ALPHA})`);
+    grad.addColorStop(1, `rgba(${fillRgb[0]},${fillRgb[1]},${fillRgb[2]},0)`);
+    ctx.fillStyle = grad;
+    p.circle(centroid.x, centroid.y, outerRadius * 2);
+    p.pop();
+  }
+
+  function getPolygonCentroid(points) {
+    if (!Array.isArray(points) || points.length < 3) return null;
+
+    let signedArea = 0;
+    let cx = 0;
+    let cy = 0;
+    const pointCount = points.length;
+    const maxIndex =
+      points[0][0] === points[pointCount - 1][0] && points[0][1] === points[pointCount - 1][1]
+        ? pointCount - 1
+        : pointCount;
+
+    for (let i = 0; i < maxIndex; i++) {
+      const x0 = points[i][0];
+      const y0 = points[i][1];
+      const x1 = points[(i + 1) % maxIndex][0];
+      const y1 = points[(i + 1) % maxIndex][1];
+      const cross = x0 * y1 - x1 * y0;
+      signedArea += cross;
+      cx += (x0 + x1) * cross;
+      cy += (y0 + y1) * cross;
+    }
+
+    signedArea *= 0.5;
+    if (Math.abs(signedArea) < 1e-6) {
+      let avgX = 0;
+      let avgY = 0;
+      for (let i = 0; i < maxIndex; i++) {
+        avgX += points[i][0];
+        avgY += points[i][1];
+      }
+      return { x: avgX / maxIndex, y: avgY / maxIndex };
+    }
+
+    const factor = 1 / (6 * signedArea);
+    return {
+      x: cx * factor,
+      y: cy * factor,
+    };
   }
 
   function getOuterBoundaryEdges(selectedRegions) {
@@ -1111,7 +1131,7 @@ window.JourneyMap = (function () {
 
   function drawCollectiveRegionOutlines() {
     const p = p5inst;
-    if (!p || !manualVoronoiRegions.length) return;
+    if (!p || !manualVoronoiRegions.length || !devLayout.enabled) return;
 
     const groups = new Map();
     for (const region of manualVoronoiRegions) {
@@ -1149,7 +1169,7 @@ window.JourneyMap = (function () {
   }
 
   function drawHoveredRegionOutline() {
-    if (!hoveredRegion?.color) return;
+    if (!hoveredRegion?.color || !devLayout.enabled) return;
     const p = p5inst;
     if (!p) return;
 
@@ -1293,7 +1313,7 @@ window.JourneyMap = (function () {
 
       p.setup = function () {
         const wrap = document.getElementById("journey-canvas-wrap");
-        const cnv = p.createCanvas(FALLBACK_VIEW_W, FALLBACK_VIEW_H);
+        const cnv = p.createCanvas(LOGICAL_RES_W, LOGICAL_RES_H);
         const canvasEl = cnv.elt;
         cnv.parent(wrap);
         cnv.style("background", "transparent");
@@ -1306,9 +1326,8 @@ window.JourneyMap = (function () {
         p.frameRate(30);
         p.noLoop();
 
-  recomputeContentBounds();
+      recomputeContentBounds();
         rebuildManualVoronoiRegions();
-        recomputeContentBounds();
         updateViewSize();
         p.resizeCanvas(viewW, viewH);
         resetCamera();
@@ -1423,8 +1442,9 @@ window.JourneyMap = (function () {
                 setRegionSeedPointHover(updatedPoint);
               }
             } else {
-              devDragState.node.x = world.x - devDragState.offsetX;
-              devDragState.node.y = world.y - devDragState.offsetY;
+              const clamped = clampPointToBounds(world.x - devDragState.offsetX, world.y - devDragState.offsetY);
+              devDragState.node.x = clamped.x;
+              devDragState.node.y = clamped.y;
               refreshLayoutState();
               if (hovered === devDragState.node) showTip(devDragState.node);
             }
@@ -1516,25 +1536,7 @@ window.JourneyMap = (function () {
           }
         });
 
-        if (window.ResizeObserver) {
-          wrapResizeObserver?.disconnect();
-          wrapResizeObserver = new ResizeObserver(() => {
-            updateViewSize();
-            p.resizeCanvas(viewW, viewH);
-            resetCamera();
-            setHoveredNode(null);
-            setHoveredRegion(null);
-          });
-          wrapResizeObserver.observe(wrap);
-        }
-
-        window.addEventListener("resize", () => {
-          updateViewSize();
-          p.resizeCanvas(viewW, viewH);
-          resetCamera();
-          setHoveredNode(null);
-          setHoveredRegion(null);
-        });
+        wrapResizeObserver?.disconnect();
       };
 
       p.draw = function () {
@@ -1601,17 +1603,20 @@ window.JourneyMap = (function () {
 
   const publicAPI = {
     originNode(x, y, opts = {}) {
-      const node = { x, y, kind: "origin", opts: { color: "#9ca3af", ...opts } };
+      const clamped = clampPointToBounds(x, y);
+      const node = { x: clamped.x, y: clamped.y, kind: "origin", opts: { color: "#9ca3af", ...opts } };
       nodes.push(node);
       return node;
     },
     majorNode(x, y, opts = {}) {
-      const node = { x, y, kind: "major", opts: { color: "#c084fc", ...opts } };
+      const clamped = clampPointToBounds(x, y);
+      const node = { x: clamped.x, y: clamped.y, kind: "major", opts: { color: "#c084fc", ...opts } };
       nodes.push(node);
       return node;
     },
     minorNode(x, y, opts = {}) {
-      const node = { x, y, kind: "promotion", opts: { color: "#c084fc", ...opts } };
+      const clamped = clampPointToBounds(x, y);
+      const node = { x: clamped.x, y: clamped.y, kind: "promotion", opts: { color: "#c084fc", ...opts } };
       nodes.push(node);
       return node;
     },

@@ -1,6 +1,41 @@
 {
   "items": [
     {
+      "id": "perlin-fiddle",
+      "image": "images/perlin-fiddle-icon.png",
+      "href": "https://github.com/thePixelmancer/perlin-fiddle",
+      "title": "Perlin Fiddle",
+      "description": "Interactive browser tool for visualizing and tuning Perlin noise in real time. v2.0 features sandboxed code execution, seeded noise, shareable links, and a redesigned UI.",
+      "status": "active",
+      "tags": [
+        {
+          "name": "Web App",
+          "primary": true
+        },
+        {
+          "name": "JavaScript"
+        }
+      ],
+      "stats": [
+        {
+          "label": "Version",
+          "value": "2.0"
+        },
+        {
+          "label": "Stars",
+          "value": "3"
+        },
+        {
+          "label": "License",
+          "value": "MIT"
+        },
+        {
+          "label": "Visibility",
+          "value": "Public"
+        }
+      ]
+    },
+    {
       "id": "regolith-aseprite-convert",
       "image": "",
       "href": "https://github.com/thePixelmancer/regolith-filters/tree/main/aseprite_convert",
@@ -40,7 +75,7 @@
       "href": "https://github.com/thePixelmancer/regolith-filters/tree/main/auto_spawn_egg",
       "title": "Auto Spawn Egg",
       "description": "Automatically picks spawn egg colors from your entity textures, so custom mobs get matching eggs without manual color tuning.",
-      "status": "active",
+      "status": "archived",
       "tags": [
         {
           "name": "Regolith",
@@ -57,7 +92,7 @@
       "href": "https://github.com/thePixelmancer/regolith-filters/tree/main/fetcher",
       "title": "Fetcher",
       "description": "Pull files or folders from GitHub straight into your project, great for shared scripts, templates, and external assets.",
-      "status": "active",
+      "status": "archived",
       "tags": [
         {
           "name": "Regolith",
@@ -91,7 +126,7 @@
       "href": "https://github.com/thePixelmancer/regolith-filters/tree/main/mclocalize",
       "title": "MCLocalize",
       "description": "Translate your .lang files into multiple languages to bootstrap localization, then refine the results before release.",
-      "status": "active",
+      "status": "archived",
       "tags": [
         {
           "name": "Regolith",
@@ -170,41 +205,7 @@
         }
       ]
     },
-    {
-      "id": "perlin-fiddle",
-      "image": "images/perlin-fiddle-icon.png",
-      "href": "https://github.com/thePixelmancer/perlin-fiddle",
-      "title": "Perlin Fiddle",
-      "description": "Interactive browser tool for visualizing and tuning Perlin noise in real time. v2.0 features sandboxed code execution, seeded noise, shareable links, and a redesigned UI.",
-      "status": "active",
-      "tags": [
-        {
-          "name": "Web App",
-          "primary": true
-        },
-        {
-          "name": "JavaScript"
-        }
-      ],
-      "stats": [
-        {
-          "label": "Version",
-          "value": "2.0"
-        },
-        {
-          "label": "Stars",
-          "value": "3"
-        },
-        {
-          "label": "License",
-          "value": "MIT"
-        },
-        {
-          "label": "Visibility",
-          "value": "Public"
-        }
-      ]
-    },
+
     {
       "id": "controller-view",
       "image": "",

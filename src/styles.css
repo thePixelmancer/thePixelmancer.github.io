@@ -350,6 +350,15 @@
       transform 100ms ease-in-out,
       box-shadow 100ms ease-in-out;
   }
+  .card-paper-1 {
+    border-image-source: url("../images/borders/border-paper.png");
+  }
+  .card-paper-2 {
+    border-image-source: url("../images/borders/border-paper2.png");
+  }
+  .card-paper-3 {
+    border-image-source: url("../images/borders/border-paper3.png");
+  }
   .card-paper:hover {
     transform: translateY(-2px);
     box-shadow:

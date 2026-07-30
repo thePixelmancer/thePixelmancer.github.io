@@ -1,11 +1,77 @@
 {
   "quests": [
     {
+      "title": "Expanse",
+      "alt": "Wildlife and ecosystem expansion for Bedrock",
+      "description": "A world-building add-on focused on creatures, behavior, and exploration flow. Built to feel natural inside core Minecraft gameplay.",
+      "image": "https://content2.prod.catalog.playfab.com/pf-namespace-b63a0803d3653643/4068aafb-4137-4874-b32c-29ff010e2c71/Expanse_Thumbnail_0.jpg",
+      "featured": "superhero",
+      "date": "",
+      "link": "https://www.minecraft.net/en-us/marketplace/pdp/tsunami-studios/into-the-wild-add--on/aa25d7d4-eee4-4ce9-974a-21c07a7e2db2",
+      "team": "Tsunami Studios",
+      "tags": [
+        {
+          "name": "Add-On",
+          "primary": true
+        },
+        {
+          "name": "dev"
+        },
+        {
+          "name": "artist"
+        }
+      ]
+    },
+    {
+      "title": "Backrooms",
+      "alt": "Wildlife and ecosystem expansion for Bedrock",
+      "description": "A world-building add-on focused on creatures, behavior, and exploration flow. Built to feel natural inside core Minecraft gameplay.",
+      "image": "https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/091819f3-66ed-4d60-8035-0b774f1c019d/BACKROOMS_Thumbnail_0.jpg",
+      "featured": "superhero",
+      "date": "",
+      "link": "https://www.minecraft.net/en-us/marketplace/pdp/tsunami-studios/into-the-wild-add--on/aa25d7d4-eee4-4ce9-974a-21c07a7e2db2",
+      "team": "Tsunami Studios",
+      "tags": [
+        {
+          "name": "Add-On",
+          "primary": true
+        },
+        {
+          "name": "dev"
+        },
+        {
+          "name": "artist"
+        }
+      ]
+    },
+    {
+      "title": "Dungeon Crawler",
+      "alt": "Wildlife and ecosystem expansion for Bedrock",
+      "description": "A world-building add-on focused on creatures, behavior, and exploration flow. Built to feel natural inside core Minecraft gameplay.",
+      "image": "https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/e5692971-27e4-442e-9667-91919abd1cc4/DungeonCrawler_Thumbnail_0.jpg",
+      "featured": "hero",
+      "date": "",
+      "link": "https://www.minecraft.net/en-us/marketplace/pdp/tsunami-studios/into-the-wild-add--on/aa25d7d4-eee4-4ce9-974a-21c07a7e2db2",
+      "team": "Tsunami Studios",
+      "tags": [
+        {
+          "name": "Add-On",
+          "primary": true
+        },
+        {
+          "name": "dev"
+        },
+        {
+          "name": "artist"
+        }
+      ]
+    },
+    {
       "title": "Into The Wild",
       "alt": "Wildlife and ecosystem expansion for Bedrock",
       "description": "A world-building add-on focused on creatures, behavior, and exploration flow. Built to feel natural inside core Minecraft gameplay.",
       "image": "https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/e4f8d267-23db-4e41-84a9-6eec54d59c00/IntoTheWild_Thumbnail_0.jpg",
-      "featured": "superhero",
+      "featured": "hero",
       "date": "",
       "link": "https://www.minecraft.net/en-us/marketplace/pdp/tsunami-studios/into-the-wild-add--on/aa25d7d4-eee4-4ce9-974a-21c07a7e2db2",
       "team": "Tsunami Studios",
@@ -189,6 +255,7 @@
       "description": "Complex dragon-focused project with custom behavior design, animation, and full production integration.",
       "image": "https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/6341532e-736e-46c0-b8d0-5c6b3d266b6c/DRAGONS_Thumbnail_0.jpg",
       "date": "",
+      "featured": "hero",
       "link": "https://www.minecraft.net/en-us/marketplace/pdp/tsunami-studios/dragons!-add--on/e0b5320f-aece-4de8-80e5-139ebc1089b1",
       "team": "Tsunami Studios",
       "tags": [
@@ -272,7 +339,7 @@
       "title": "Gladiators",
       "alt": "Arena-style combat content",
       "description": "Combat-forward project tuned around encounter pacing, spectacle, and replayable challenge.",
-      "image": "https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/77e0868b-2741-426a-8b43-4aea416fe500/GLAD_Thumbnail_0.jpg",
+      "image": "https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/771a4449-f70f-4436-be4c-c31e60544657/GLAD_Thumbnail_0.jpg",
       "date": "",
       "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/gladiators----updated!/1d43528f-816e-417d-be58-b5e25b158b6e",
       "team": "Shapescape",
@@ -503,7 +570,7 @@
       "title": "Immersion: London",
       "alt": "Realistic London recreation",
       "description": "Large-scale city recreation project featuring authentic architecture, landmarks, and immersive urban exploration.",
-      "image": "https://xforgeassets002.xboxlive.com/pf-namespace-b63a0803d3653643/3c1e8fdf-01a6-4497-a121-c18fcfe1c8d8/London_Thumbnail_0.jpg",
+      "image": "https://xforgeassets001.xboxlive.com/pf-namespace-b63a0803d3653643/2e102dc5-0479-455c-a8da-2df5004a9a0e/London_Thumbnail_0.jpg",
       "date": "",
       "link": "https://www.minecraft.net/en-us/marketplace/pdp/shapescape/immersion:-london/e417d755-7368-40be-9f65-768e2908d7de",
       "team": "Shapescape",
